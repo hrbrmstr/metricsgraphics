@@ -4,8 +4,8 @@
 \alias{mjs_plot}
 \title{Create a new metricsgraphics.js  plot}
 \usage{
-mjs_plot(data, x, y, width = 350, height = 220, left = 80, right = 10,
-  top = 40, bottom = 60, buffer = 8)
+mjs_plot(data, x, y, left = 80, right = 10, top = 40, bottom = 60,
+  buffer = 8, width = NULL, height = NULL)
 }
 \arguments{
 \item{data}{data frame}
@@ -13,10 +13,6 @@ mjs_plot(data, x, y, width = 350, height = 220, left = 80, right = 10,
 \item{x}{bare name of column to use for x values}
 
 \item{y}{bare name of column to use for y values}
-
-\item{width}{the width of the entire graphic in pixels.}
-
-\item{height}{the height of the entire graphic in pixels.}
 
 \item{left}{the size of the left margin in pixels.}
 
@@ -27,6 +23,10 @@ mjs_plot(data, x, y, width = 350, height = 220, left = 80, right = 10,
 \item{bottom}{the size of the bottom margin in pixels.}
 
 \item{buffer}{the buffer size in pixels between the actual chart area and the margins.}
+
+\item{width}{Width in pixels (optional, defaults to automatic sizing)}
+
+\item{height}{Height in pixels (optional, defaults to automatic sizing)}
 }
 \description{
 \code{mjs_plot()} initializes the metricsgraphics.js html widget
