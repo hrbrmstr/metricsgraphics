@@ -9,8 +9,22 @@ HTMLWidgets.widget({
     return {  }
 
   },
-
+  
   renderValue: function(el, params, instance) {
+    
+    // save params for reference from resize method
+    instance.params = params;
+    
+    // draw the graphic
+    this.drawGraphic(el, params, el.offsetWidth, el.offsetHeight);
+    
+  },
+
+  drawGraphic: function(el, params, width, height) {
+
+    // remove existing children
+    while (el.firstChild)
+      el.removeChild(el.firstChild);
 
     dbg = params
 
@@ -46,8 +60,8 @@ HTMLWidgets.widget({
         binned: params.binned,
         bins: params.bins,
 
-        height: params.height,
-        width: params.width,
+        height: height,
+        width: width,
         bottom: params.bottom,
         top: params.top,
         right: params.right,
@@ -79,7 +93,8 @@ HTMLWidgets.widget({
   },
 
   resize: function(el, width, height, instance) {
-
+    if (instance.params)
+      this.drawGraphic(el, instance.params, width, height);
   }
 
 });

@@ -20,13 +20,13 @@ The following functions are implemented:
 
 ### Installation
 
-``` {.r}
+``` r
 devtools::install_github("hrbrmstr/metricsgraphics")
 ```
 
 ### Usage
 
-``` {.r}
+``` r
 library(dplyr)
 library(metricsgraphics)
 
@@ -34,29 +34,23 @@ tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
 
 tmp %>%
   mjs_plot(x=year, y=uspop) %>%
-  mjs_line() %>%
-  mjs_labs(title="Populations Recorded by the US Census", 
-           description="This data set gives the population of the United States (in millions) as recorded by the decennial census for the period 1790–1970.")
+  mjs_line()
 
 tmp %>%
-  mjs_plot(x=year, y=uspop, width=600) %>%
-  mjs_line(area=TRUE) %>%
-  mjs_labs(title="Populations Recorded by the US Census", 
-           description="This data set gives the population of the United States (in millions) as recorded by the decennial census for the period 1790–1970.")
+  mjs_plot(x=year, y=uspop) %>%
+  mjs_line(area=TRUE)
 
 tmp %>% 
-  mjs_plot(x=year, y=uspop, width=300, height=400) %>%
-  mjs_bar() %>%
-  mjs_labs(title="Sample Bar Chart")
+  mjs_plot(x=year, y=uspop) %>%
+  mjs_bar()
 
 mtcars %>% 
-  mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
+  mjs_plot(x=wt, y=mpg) %>%
   mjs_point(color_accessor=carb, size_accessor=carb) %>%
-  mjs_labs(x="Weight of Car", y="Miles per Gallon", title="Scatterplot w/color & size")
-
+  mjs_labs(x="Weight of Car", y="Miles per Gallon")
 
 mtcars %>% 
-  mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
+  mjs_plot(x=wt, y=mpg) %>%
   mjs_point(least_squares=TRUE) %>%
-  mjs_labs(x="Weight of Car", y="Miles per Gallon", title="Scatterplot w/least squares")
+  mjs_labs(x="Weight of Car", y="Miles per Gallon")
 ```
