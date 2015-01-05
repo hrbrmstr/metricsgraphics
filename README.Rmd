@@ -52,22 +52,25 @@ tmp %>%
   mjs_line()
 
 tmp %>%
-  mjs_plot(x=year, y=uspop) %>%
+  mjs_plot(x=year, y=uspop, width=600) %>%
   mjs_line(area=TRUE)
 
 tmp %>% 
-  mjs_plot(x=year, y=uspop) %>%
+  mjs_plot(x=year, y=uspop, width=300, height=400) %>%
   mjs_bar()
 
 mtcars %>% 
-  mjs_plot(x=wt, y=mpg) %>%
+  mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
   mjs_point(color_accessor=carb, size_accessor=carb) %>%
   mjs_labs(x="Weight of Car", y="Miles per Gallon")
 
+
 mtcars %>% 
-  mjs_plot(x=wt, y=mpg) %>%
+  mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
   mjs_point(least_squares=TRUE) %>%
   mjs_labs(x="Weight of Car", y="Miles per Gallon")
 ```
 
-
+```{r echo=FALSE, eval=TRUE, results='asis'}
+cat("<iframe src='http://rpubs.com/hrbrmstr/metricsgraphics0-1'></iframe>\n")
+```
