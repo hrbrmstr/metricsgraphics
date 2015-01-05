@@ -11,6 +11,7 @@
 #' @param data data frame
 #' @param x bare name of column to use for x values
 #' @param y bare name of column to use for y values
+#' @param show_rollover_text determines whether or not to show any text when a data point is rolled over.
 #' @param left the size of the left margin in pixels.
 #' @param right the size of the right margin in pixels.
 #' @param top the size of the top margin in pixels.
@@ -28,12 +29,16 @@
 #' }
 #'
 mjs_plot <- function(data, x, y,
+                     show_rollover_text = TRUE,
                      left = 80, right = 10,
                      top = 40, bottom = 60, buffer = 8,
                      width = NULL, height = NULL) {
 
   params = list(
+    markers=list(),
     data=data,
+    x_axis=TRUE,
+    y_axis=TRUE,
     chart_type="line",
     xax_format="plain",
     x_label=NULL,
@@ -61,6 +66,7 @@ mjs_plot <- function(data, x, y,
     min_y=NULL,
     max_y=NULL,
     least_squares=FALSE,
+    show_rollover_text=show_rollover_text,
     x_accessor=substitute(x),
     y_accessor=substitute(y),
     geom="line"
@@ -126,6 +132,13 @@ mjs_line <- function(mjs,
   mjs
 }
 
+
+#' @export
+mjs_multiline <- function(mjs,
+                          value_column) {
+  mjs$x$area <- FALSE
+}
+
 #' metricsgraphics.js scatterplot "geom"
 #'
 #' This function adds a point/scatterplot "geom" to a metricsgraphics.js html widget.
@@ -179,6 +192,7 @@ mjs_labs <- function(mjs,
 #' Configure x axis ticks & limits
 #'
 #' @param mjs plot object
+#' @param show display the axis? (default: \code{TRUE} - yes)
 #' @param xax_count tick count
 #' @param min_x min limit for x axis
 #' @param max_x max limit for x axis
@@ -186,16 +200,22 @@ mjs_labs <- function(mjs,
 #' @note xax_format is likely to undergo a drastic change in future releases but support for these three formats will also likely remain.
 #' @export
 mjs_axis_x <- function(mjs,
+                       show=TRUE,
                        xax_count=6,
                        min_x=NULL, max_x=NULL,
                        xax_format="plain") {
+  mjs$x$x_axis <- show
   mjs$x$xax_count <- xax_count
+  mjs$x$min_x <- min_x
+  mjs$x$max_x <- max_x
+  mjs$x$xax_format <- xax_format
   mjs
 }
 
 #' Configure y axis ticks & limits
 #'
 #' @param mjs plot object
+#' @param show display the axis? (default: \code{TRUE} - yes)
 #' @param yax_count tick count
 #' @param min_y min limit for y axis
 #' @param max_y max limit for y axis
@@ -203,11 +223,28 @@ mjs_axis_x <- function(mjs,
 #' @export
 #' @export
 mjs_axis_y <- function(mjs,
+                       show=TRUE,
                        yax_count=5,
                        min_y=NULL, max_y=NULL,
                        y_scale_type="linear") {
+  mjs$x$y_axis <- show
   mjs$x$yax_count <- yax_count
+  mjs$x$min_y <- min_y
+  mjs$x$max_y <- max_y
+  mjs$x$yax_format <- yax_format
   mjs$x$y_scale_type <- y_scale_type
+  mjs
+}
+
+#' @export
+mjs_add_marker <- function(mjs,
+               x_val, y_val) {
+  markers <- mjs$x$markers
+  new_marker <- list()
+  new_marker[[mjs$x$x_accessor]] <- x_val
+  new_marker[[mjs$x$y_accessor]] <- y_val
+  markers <- c(markers, new_marker)
+  mjs$x$markers <- markers
   mjs
 }
 

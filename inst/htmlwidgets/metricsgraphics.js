@@ -9,15 +9,15 @@ HTMLWidgets.widget({
     return {  }
 
   },
-  
+
   renderValue: function(el, params, instance) {
-    
+
     // save params for reference from resize method
     instance.params = params;
-    
+
     // draw the graphic
     this.drawGraphic(el, params, el.offsetWidth, el.offsetHeight);
-    
+
   },
 
   drawGraphic: function(el, params, width, height) {
@@ -48,6 +48,11 @@ HTMLWidgets.widget({
         target: '#' + el.id,
         xax_format: xax_format,
 
+        x_axis: params.x_axis,
+        y_axis: params.y_axis,
+
+        show_rollover_text: params.show_rollover_text,
+
         y_scale_type: params.y_scale_type,
 
         chart_type: params.chart_type,
@@ -55,6 +60,8 @@ HTMLWidgets.widget({
         y_accessor: params.y_accessor,
         color_accessor: params.color_accessor,
         size_accessor: params.size_accessor,
+
+        show_rollover_text: params.show_rollover_text,
 
         bar_margin: params.bar_margin,
         binned: params.binned,

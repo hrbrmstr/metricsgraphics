@@ -4,8 +4,8 @@
 \alias{mjs_plot}
 \title{Create a new metricsgraphics.js  plot}
 \usage{
-mjs_plot(data, x, y, left = 80, right = 10, top = 40, bottom = 60,
-  buffer = 8, width = NULL, height = NULL)
+mjs_plot(data, x, y, show_rollover_text = TRUE, left = 80, right = 10,
+  top = 40, bottom = 60, buffer = 8, width = NULL, height = NULL)
 }
 \arguments{
 \item{data}{data frame}
@@ -13,6 +13,8 @@ mjs_plot(data, x, y, left = 80, right = 10, top = 40, bottom = 60,
 \item{x}{bare name of column to use for x values}
 
 \item{y}{bare name of column to use for y values}
+
+\item{show_rollover_text}{determines whether or not to show any text when a data point is rolled over.}
 
 \item{left}{the size of the left margin in pixels.}
 

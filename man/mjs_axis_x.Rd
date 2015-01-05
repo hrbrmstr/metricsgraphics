@@ -4,11 +4,13 @@
 \alias{mjs_axis_x}
 \title{Configure x axis ticks & limits}
 \usage{
-mjs_axis_x(mjs, xax_count = 6, min_x = NULL, max_x = NULL,
+mjs_axis_x(mjs, show = TRUE, xax_count = 6, min_x = NULL, max_x = NULL,
   xax_format = "plain")
 }
 \arguments{
 \item{mjs}{plot object}
+
+\item{show}{display the axis? (default: \code{TRUE} - yes)}
 
 \item{xax_count}{tick count}
 

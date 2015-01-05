@@ -4,11 +4,13 @@
 \alias{mjs_axis_y}
 \title{Configure y axis ticks & limits}
 \usage{
-mjs_axis_y(mjs, yax_count = 5, min_y = NULL, max_y = NULL,
+mjs_axis_y(mjs, show = TRUE, yax_count = 5, min_y = NULL, max_y = NULL,
   y_scale_type = "linear")
 }
 \arguments{
 \item{mjs}{plot object}
+
+\item{show}{display the axis? (default: \code{TRUE} - yes)}
 
 \item{yax_count}{tick count}
 
