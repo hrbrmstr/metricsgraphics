@@ -15,6 +15,8 @@ The following functions are implemented:
 -   `mjs_axis_x`: Configure x axis ticks & limits
 -   `mjs_axis_y`: Configure y axis ticks & limits
 -   `mjs_labs`: Configure axis labels & plot description
+-   `mjs_add_baseline`: Sets a baseline line/label
+-   `mjs_add_marker`: Sets a marker line/label
 
 ### News
 

@@ -110,7 +110,6 @@ mjs_bar <- function(mjs,
 }
 
 
-
 #' metricsgraphics.js linechart "geom"
 #'
 #' This function adds a line "geom" to a metricsgraphics.js html widget.
@@ -270,7 +269,7 @@ mjs_add_marker <- function(mjs,
   mjs
 }
 
-#' Sets a marker line/label
+#' Sets a baseline line/label
 #'
 #' metricsgraphics baselines are horizontal lines that may specify, say, a goal
 #' or target to be reached. This function lets you add baselines to a plot object.

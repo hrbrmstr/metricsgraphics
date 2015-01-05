@@ -2,7 +2,7 @@
 % Please edit documentation in R/metricsgraphics.R
 \name{mjs_add_baseline}
 \alias{mjs_add_baseline}
-\title{Sets a marker line/label}
+\title{Sets a baseline line/label}
 \usage{
 mjs_add_baseline(mjs, y_value, label)
 }
