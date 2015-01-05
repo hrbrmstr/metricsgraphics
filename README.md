@@ -1,4 +1,4 @@
-metricsgraphics is an 'htmlwidget' interface to the MetricsGraphics.js D3 chart library.
+metricsgraphics is an 'htmlwidget' interface to the [MetricsGraphics.js](http://metricsgraphicsjs.org/) D3 chart library.
 
 The current `htmlwidget` wrapper for it is minimaly functional and does not provide support for metricsgraphics histograms and also does not really take advantage of metricsgraphics' best feature - time series charts. Both will be added in the next release and support for legends will appear shortly thereafter.
 
