@@ -43,7 +43,6 @@ options(width=120)
 ### Usage
 
 ```{r eval=FALSE}
-library(dplyr)
 library(metricsgraphics)
 
 tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))

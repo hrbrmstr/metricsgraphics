@@ -27,7 +27,6 @@ devtools::install_github("hrbrmstr/metricsgraphics")
 ### Usage
 
 ``` r
-library(dplyr)
 library(metricsgraphics)
 
 tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
