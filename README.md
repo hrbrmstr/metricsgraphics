@@ -20,14 +20,13 @@ The following functions are implemented:
 
 ### Installation
 
-``` {.r}
+``` r
 devtools::install_github("hrbrmstr/metricsgraphics")
 ```
 
 ### Usage
 
-``` {.r}
-library(dplyr)
+``` r
 library(metricsgraphics)
 
 tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
