@@ -71,8 +71,8 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 tmp %&gt;%
   mjs_plot(x=year, y=uspop) %&gt;%
   mjs_line()</code></pre>
-<p><div id="htmlwidget-3113" style="width:672px;height:480px;" class="metricsgraphics"></div>
-<script type="application/json" data-for="htmlwidget-3113">{ "x": {
+<p><div id="htmlwidget-7109" style="width:672px;height:480px;" class="metricsgraphics"></div>
+<script type="application/json" data-for="htmlwidget-7109">{ "x": {
  "data": {
  "year": [              1790,              1800,              1810,              1820,              1830,              1840,              1850,              1860,              1870,              1880,              1890,              1900,              1910,              1920,              1930,              1940,              1950,              1960,              1970 ],
 "uspop": [              3.93,              5.31,              7.24, 9.640000000000001,              12.9,              17.1,              23.2,              31.4,              39.8,              50.2,              62.9,                76,                92,             105.7,             122.8,             131.7,             151.3,             179.3,             203.2 ] 
@@ -112,8 +112,8 @@ tmp %&gt;%
 <pre class="r"><code>tmp %&gt;%
   mjs_plot(x=year, y=uspop, width=600) %&gt;%
   mjs_line(area=TRUE)</code></pre>
-<p><div id="htmlwidget-6457" style="width:600px;height:480px;" class="metricsgraphics"></div>
-<script type="application/json" data-for="htmlwidget-6457">{ "x": {
+<p><div id="htmlwidget-9324" style="width:600px;height:480px;" class="metricsgraphics"></div>
+<script type="application/json" data-for="htmlwidget-9324">{ "x": {
  "data": {
  "year": [              1790,              1800,              1810,              1820,              1830,              1840,              1850,              1860,              1870,              1880,              1890,              1900,              1910,              1920,              1930,              1940,              1950,              1960,              1970 ],
 "uspop": [              3.93,              5.31,              7.24, 9.640000000000001,              12.9,              17.1,              23.2,              31.4,              39.8,              50.2,              62.9,                76,                92,             105.7,             122.8,             131.7,             151.3,             179.3,             203.2 ] 
@@ -151,10 +151,11 @@ tmp %&gt;%
 "animate_on_load": false 
 },"evals": [  ] }</script></p>
 <pre class="r"><code>tmp %&gt;% 
-  mjs_plot(x=year, y=uspop, width=300, height=400) %&gt;%
-  mjs_bar()</code></pre>
-<p><div id="htmlwidget-6117" style="width:300px;height:400px;" class="metricsgraphics"></div>
-<script type="application/json" data-for="htmlwidget-6117">{ "x": {
+  mjs_plot(x=uspop, y=year, width=500, height=400) %&gt;%
+  mjs_bar() %&gt;%
+  mjs_axis_x(xax_format = 'plain')</code></pre>
+<p><div id="htmlwidget-1397" style="width:500px;height:400px;" class="metricsgraphics"></div>
+<script type="application/json" data-for="htmlwidget-1397">{ "x": {
  "data": {
  "year": [              1790,              1800,              1810,              1820,              1830,              1840,              1850,              1860,              1870,              1880,              1890,              1900,              1910,              1920,              1930,              1940,              1950,              1960,              1970 ],
 "uspop": [              3.93,              5.31,              7.24, 9.640000000000001,              12.9,              17.1,              23.2,              31.4,              39.8,              50.2,              62.9,                76,                92,             105.7,             122.8,             131.7,             151.3,             179.3,             203.2 ] 
@@ -186,16 +187,16 @@ tmp %&gt;%
 "min_y": null,
 "max_y": null,
 "least_squares": false,
-"x_accessor": "year",
-"y_accessor": "uspop",
+"x_accessor": "uspop",
+"y_accessor": "year",
 "geom": "bar" 
 },"evals": [  ] }</script></p>
 <pre class="r"><code>mtcars %&gt;% 
   mjs_plot(x=wt, y=mpg, width=400, height=300) %&gt;%
   mjs_point(color_accessor=carb, size_accessor=carb) %&gt;%
   mjs_labs(x=&quot;Weight of Car&quot;, y=&quot;Miles per Gallon&quot;)</code></pre>
-<p><div id="htmlwidget-2331" style="width:400px;height:300px;" class="metricsgraphics"></div>
-<script type="application/json" data-for="htmlwidget-2331">{ "x": {
+<p><div id="htmlwidget-1127" style="width:400px;height:300px;" class="metricsgraphics"></div>
+<script type="application/json" data-for="htmlwidget-1127">{ "x": {
  "data": {
  "mpg": [                21,                21,              22.8,              21.4,              18.7,              18.1,              14.3,              24.4,              22.8,              19.2,              17.8,              16.4,              17.3,              15.2,              10.4,              10.4,              14.7,              32.4,              30.4,              33.9,              21.5,              15.5,              15.2,              13.3,              19.2,              27.3,                26,              30.4,              15.8,              19.7,                15,              21.4 ],
 "cyl": [                 6,                 6,                 4,                 6,                 8,                 6,                 8,                 4,                 4,                 6,                 6,                 8,                 8,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 4,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 8,                 6,                 8,                 4 ],
@@ -244,8 +245,8 @@ tmp %&gt;%
   mjs_plot(x=wt, y=mpg, width=400, height=300) %&gt;%
   mjs_point(least_squares=TRUE) %&gt;%
   mjs_labs(x=&quot;Weight of Car&quot;, y=&quot;Miles per Gallon&quot;)</code></pre>
-<p><div id="htmlwidget-4199" style="width:400px;height:300px;" class="metricsgraphics"></div>
-<script type="application/json" data-for="htmlwidget-4199">{ "x": {
+<p><div id="htmlwidget-360" style="width:400px;height:300px;" class="metricsgraphics"></div>
+<script type="application/json" data-for="htmlwidget-360">{ "x": {
  "data": {
  "mpg": [                21,                21,              22.8,              21.4,              18.7,              18.1,              14.3,              24.4,              22.8,              19.2,              17.8,              16.4,              17.3,              15.2,              10.4,              10.4,              14.7,              32.4,              30.4,              33.9,              21.5,              15.5,              15.2,              13.3,              19.2,              27.3,                26,              30.4,              15.8,              19.7,                15,              21.4 ],
 "cyl": [                 6,                 6,                 4,                 6,                 8,                 6,                 8,                 4,                 4,                 6,                 6,                 8,                 8,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 4,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 8,                 6,                 8,                 4 ],

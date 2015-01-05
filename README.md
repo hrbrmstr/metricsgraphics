@@ -4,6 +4,8 @@ The current `htmlwidget` wrapper for it is minimaly functional and does not prov
 
 Charts look best in a Boostrap page (unless you customize your own CSS).
 
+You can see what the output below produces [on RPubs](http://rpubs.com/hrbrmstr/metricsgraphics0-1).
+
 The following functions are implemented:
 
 -   `mjs_plot`: Create a new metricsgraphics.js plot
@@ -40,8 +42,9 @@ tmp %>%
   mjs_line(area=TRUE)
 
 tmp %>% 
-  mjs_plot(x=year, y=uspop, width=300, height=400) %>%
-  mjs_bar()
+  mjs_plot(x=uspop, y=year, width=500, height=400) %>%
+  mjs_bar() %>%
+  mjs_axis_x(xax_format='plain')
 
 mtcars %>% 
   mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
@@ -54,6 +57,3 @@ mtcars %>%
   mjs_point(least_squares=TRUE) %>%
   mjs_labs(x="Weight of Car", y="Miles per Gallon")
 ```
-
-<iframe src="http://rpubs.com/hrbrmstr/metricsgraphics0-1">
-</iframe>

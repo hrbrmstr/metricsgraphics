@@ -19,8 +19,9 @@ tmp %>%
   mjs_line(area=TRUE)
 
 tmp %>% 
-  mjs_plot(x=year, y=uspop, width=300, height=400) %>%
-  mjs_bar()
+  mjs_plot(x=uspop, y=year, width=500, height=400) %>%
+  mjs_bar() %>%
+  mjs_axis_x(xax_format = 'plain')
 
 mtcars %>% 
   mjs_plot(x=wt, y=mpg, width=400, height=300) %>%

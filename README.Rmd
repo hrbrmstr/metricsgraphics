@@ -1,7 +1,7 @@
 ---
 title: "README"
 author: "Bob Rudis"
-date: January 04, 2015
+date: January 05, 2015
 output:
   md_document:
     variant: markdown_github
@@ -15,6 +15,8 @@ best feature - time series charts. Both will be added in the next release and su
 legends will appear shortly thereafter.
 
 Charts look best in a Boostrap page (unless you customize your own CSS).
+
+You can see what the output below produces [on RPubs](http://rpubs.com/hrbrmstr/metricsgraphics0-1).
 
 The following functions are implemented:
 
@@ -56,8 +58,9 @@ tmp %>%
   mjs_line(area=TRUE)
 
 tmp %>% 
-  mjs_plot(x=year, y=uspop, width=300, height=400) %>%
-  mjs_bar()
+  mjs_plot(x=uspop, y=year, width=500, height=400) %>%
+  mjs_bar() %>%
+  mjs_axis_x(xax_format='plain')
 
 mtcars %>% 
   mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
@@ -71,6 +74,3 @@ mtcars %>%
   mjs_labs(x="Weight of Car", y="Miles per Gallon")
 ```
 
-```{r echo=FALSE, eval=TRUE, results='asis'}
-cat("<iframe src='http://rpubs.com/hrbrmstr/metricsgraphics0-1'></iframe>\n")
-```
