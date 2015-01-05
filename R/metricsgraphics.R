@@ -11,13 +11,13 @@
 #' @param data data frame
 #' @param x bare name of column to use for x values
 #' @param y bare name of column to use for y values
-#' @param width the width of the entire graphic in pixels.
-#' @param height the height of the entire graphic in pixels.
 #' @param left the size of the left margin in pixels.
 #' @param right the size of the right margin in pixels.
 #' @param top the size of the top margin in pixels.
 #' @param bottom the size of the bottom margin in pixels.
 #' @param buffer the buffer size in pixels between the actual chart area and the margins.
+#' @param width Width in pixels (optional, defaults to automatic sizing)
+#' @param height Height in pixels (optional, defaults to automatic sizing)
 #' @import htmlwidgets
 #' @export
 #' @examples \dontrun{
@@ -28,9 +28,9 @@
 #' }
 #'
 mjs_plot <- function(data, x, y,
-                     width = 350, height = 220,
                      left = 80, right = 10,
-                     top = 40, bottom = 60, buffer = 8) {
+                     top = 40, bottom = 60, buffer = 8,
+                     width = NULL, height = NULL) {
 
   params = list(
     data=data,
@@ -40,8 +40,6 @@ mjs_plot <- function(data, x, y,
     y_label=NULL,
     title=NULL,
     description=NULL,
-    width=width,
-    height=height,
     left=left,
     right=right,
     bottom=bottom,
@@ -168,15 +166,11 @@ mjs_point <- function(mjs,
 #' mtcars %>%
 #'  mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
 #'  mjs_point(color_accessor=carb, size_accessor=carb) %>%
-#'  mjs_labs(x="Weight of Car", y="Miles per Gallon",
-#'           title="Scatterplot w/color & size")
+#'  mjs_labs(x="Weight of Car", y="Miles per Gallon")
 #' }
 #'
 mjs_labs <- function(mjs,
-                     title=NULL, description=NULL,
                      x_label=NULL, y_label=NULL) {
-  mjs$x$title <- title
-  mjs$x$description <- description
   mjs$x$x_label <- x_label
   mjs$x$y_label <- y_label
   mjs

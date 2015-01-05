@@ -4,8 +4,7 @@
 \alias{mjs_labs}
 \title{Configure axis labels & plot description}
 \usage{
-mjs_labs(mjs, title = NULL, description = NULL, x_label = NULL,
-  y_label = NULL)
+mjs_labs(mjs, x_label = NULL, y_label = NULL)
 }
 \description{
 Configure axis labels & plot description
@@ -15,8 +14,7 @@ Configure axis labels & plot description
 mtcars \%>\%
  mjs_plot(x=wt, y=mpg, width=400, height=300) \%>\%
  mjs_point(color_accessor=carb, size_accessor=carb) \%>\%
- mjs_labs(x="Weight of Car", y="Miles per Gallon",
-          title="Scatterplot w/color & size")
+ mjs_labs(x="Weight of Car", y="Miles per Gallon")
 }
 }
 
