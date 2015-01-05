@@ -35,14 +35,16 @@ mjs_plot <- function(data, x, y,
                      width = NULL, height = NULL) {
 
   params = list(
-    markers=list(),
     data=data,
     x_axis=TRUE,
     y_axis=TRUE,
+    show_confidence_band=NULL,
     chart_type="line",
     xax_format="plain",
     x_label=NULL,
     y_label=NULL,
+    markers=NULL,
+    baselines=NULL,
     title=NULL,
     description=NULL,
     left=left,
@@ -133,12 +135,6 @@ mjs_line <- function(mjs,
 }
 
 
-#' @export
-mjs_multiline <- function(mjs,
-                          value_column) {
-  mjs$x$area <- FALSE
-}
-
 #' metricsgraphics.js scatterplot "geom"
 #'
 #' This function adds a point/scatterplot "geom" to a metricsgraphics.js html widget.
@@ -209,6 +205,12 @@ mjs_axis_x <- function(mjs,
   mjs$x$min_x <- min_x
   mjs$x$max_x <- max_x
   mjs$x$xax_format <- xax_format
+
+  if (xax_format == "date") {
+    mjs$x$data[,as.character(mjs$x$x_accessor)] <-
+      format(mjs$x$data[,as.character(mjs$x$x_accessor)], "%Y-%m-%d")
+  }
+
   mjs
 }
 
@@ -236,17 +238,69 @@ mjs_axis_y <- function(mjs,
   mjs
 }
 
+
+#' Sets a marker line/label
+#'
+#' metricsgraphics marker lines are vertical lines that identify, say, events or
+#' dates worth annotating. This function lets you add a marker to a plot object.
+#' you can add as many as you need to.
+#'
+#' @param mjs plot object
+#' @param x_value which x value to draw the marker at
+#' @param label text label for the marker
 #' @export
+#' @examples \dontrun{
+#' tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
+#'
+#' tmp %>%
+#'   mjs_plot(x=year, y=uspop) %>%
+#'   mjs_line() %>%
+#'   mjs_add_marker(1850, "Something Wonderful") %>%
+#'   mjs_add_baseline(150, "Something Awful")
+#' }
 mjs_add_marker <- function(mjs,
-               x_val, y_val) {
+                           x_value, label) {
   markers <- mjs$x$markers
+  if (is.null(markers)) markers <- list()
   new_marker <- list()
-  new_marker[[mjs$x$x_accessor]] <- x_val
-  new_marker[[mjs$x$y_accessor]] <- y_val
-  markers <- c(markers, new_marker)
+  new_marker[[as.character(mjs$x$x_accessor)]] <- x_value
+  new_marker[["label"]] <- label
+  markers[[length(markers)+1]] <- new_marker
   mjs$x$markers <- markers
   mjs
 }
+
+#' Sets a marker line/label
+#'
+#' metricsgraphics baselines are horizontal lines that may specify, say, a goal
+#' or target to be reached. This function lets you add baselines to a plot object.
+#' you can add as many as you need to.
+#'
+#' @param mjs plot object
+#' @param y_value which y value to draw the baseline at
+#' @param label text label for the marker
+#' @export
+#' @examples \dontrun{
+#' tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
+#'
+#' tmp %>%
+#'   mjs_plot(x=year, y=uspop) %>%
+#'   mjs_line() %>%
+#'   mjs_add_marker(1850, "Something Wonderful") %>%
+#'   mjs_add_baseline(150, "Something Awful")
+#' }
+mjs_add_baseline <- function(mjs,
+                             y_value, label) {
+  baselines <- mjs$x$baselines
+  if (is.null(baselines)) baselines <- list()
+  new_baseline <- list()
+  new_baseline[["value"]] <- y_value
+  new_baseline[["label"]] <- label
+  baselines[[length(baselines)+1]] <- new_baseline
+  mjs$x$baselines <- baselines
+  mjs
+}
+
 
 #' Widget output function for use in Shiny
 #'

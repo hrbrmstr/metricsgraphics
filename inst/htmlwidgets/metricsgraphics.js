@@ -38,7 +38,11 @@ HTMLWidgets.widget({
 
     var xax_format = mjs_plain;
 
-    if (params.xax_format == "date") xax_format = mjs_date ;
+    if (params.xax_format == "date") {
+      xax_format = mjs_date ;
+      MG.convert.date(wide, params.x_accessor)
+    }
+
     if (params.xax_format == "comma") xax_format = mjs_comma ;
 
     // convert date string to Date object
@@ -50,6 +54,9 @@ HTMLWidgets.widget({
 
         x_axis: params.x_axis,
         y_axis: params.y_axis,
+
+        markers: params.markers,
+        baselines: params.baselines,
 
         show_rollover_text: params.show_rollover_text,
 
