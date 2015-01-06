@@ -12,6 +12,9 @@
 #' @param x bare name of column to use for x values
 #' @param y bare name of column to use for y values
 #' @param show_rollover_text determines whether or not to show any text when a data point is rolled over.
+#' @param decimals the number of decimals to show in a rollover (default: \code{2})
+#' @param format sets the format of the data object, which is to say, counts or percentages
+#' @param missing_is_zero if true and if the data object is a time series, missing data points will be treated as zeros
 #' @param left the size of the left margin in pixels.
 #' @param right the size of the right margin in pixels.
 #' @param top the size of the top margin in pixels.
@@ -30,6 +33,8 @@
 #'
 mjs_plot <- function(data, x, y,
                      show_rollover_text = TRUE,
+                     decimals=2, format="count",
+                     missing_is_zero=FALSE,
                      left = 80, right = 10,
                      top = 40, bottom = 60, buffer = 8,
                      width = NULL, height = NULL) {
@@ -57,8 +62,12 @@ mjs_plot <- function(data, x, y,
     x_rug=FALSE,
     y_rug=FALSE,
     area=FALSE,
+    missing_is_zero=missing_is_zero,
     size_accessor=NULL,
     color_accessor=NULL,
+    color_type="number",
+    color_range=c("blue", "red"),
+    size_range=c(1, 5),
     bar_height=20,
     bar_margin=1,
     bins=NULL,
@@ -68,6 +77,8 @@ mjs_plot <- function(data, x, y,
     min_y=NULL,
     max_y=NULL,
     least_squares=FALSE,
+    interpolate="cardinal",
+    decimals=decimals,
     show_rollover_text=show_rollover_text,
     x_accessor=substitute(x),
     y_accessor=substitute(y),
@@ -117,6 +128,7 @@ mjs_bar <- function(mjs,
 #' @param mjs plot object
 #' @param area fill in area under line? (default: \code{FALSE} - no)
 #' @param animate_on_load animate the drawing of the plot on page load? (default: \code{FALSE} - no)
+#' @param interpolate the interpolation function to use when rendering lines. possible values: ("cardinal", "linear", "linear-closed", "step", "step-before", "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal-open", "cardinal-closed", "monotone")
 #' @export
 #' @examples \dontrun{
 #' data.frame(year=seq(1790, 1970, 10),
@@ -126,10 +138,12 @@ mjs_bar <- function(mjs,
 #' }
 #'
 mjs_line <- function(mjs,
-                     area=FALSE, animate_on_load=FALSE) {
+                     area=FALSE, animate_on_load=FALSE,
+                     interpolate="cardinal") {
   mjs$x$area <- area
   mjs$x$animate_on_load <- animate_on_load
   mjs$x$geom <- "line"
+  mjs$x$interpolate <- interpolate
   mjs
 }
 
@@ -139,11 +153,15 @@ mjs_line <- function(mjs,
 #' This function adds a point/scatterplot "geom" to a metricsgraphics.js html widget.
 #'
 #' @param mjs plot object
+#' @param point_size the radius of the dots in the scatterplot
 #' @param least_squares add a least squares line? (default: \code{FALSE} - no)
 #' @param size_accessor bare name of a column to use to scale the size of the points
 #' @param color_accessor bare name of a column to use to scale the color of the points
+#' @param color_type specifies whether the color scale is quantitative or qualitative. By setting this option to category, you can color the points according to some other discrete value
+#' @param size_range specifies the range of point sizes, when point sizes are mapped to data
 #' @param x_rug show a "rug" plot next to the x axis? (default: \code{FALSE} - no)
 #' @param y_rug show a "rug" plot next to the y axis? (default: \code{FALSE} - no)
+#' @param color_range the range of colors, used to color different groups of points.
 #' @export
 #' @examples \dontrun{
 #' mtcars %>%
@@ -152,9 +170,13 @@ mjs_line <- function(mjs,
 #' }
 #'
 mjs_point <- function(mjs,
+                      point_size=2.5,
                       least_squares=FALSE,
                       size_accessor=NULL,
                       color_accessor=NULL,
+                      color_type="number",
+                      color_range=c('blue', 'red'),
+                      size_range=c(1, 5),
                       x_rug=FALSE,
                       y_rug=FALSE) {
   mjs$x$chart_type <- "point"
@@ -163,6 +185,9 @@ mjs_point <- function(mjs,
   mjs$x$y_rug <- y_rug
   mjs$x$size_accessor <- substitute(size_accessor)
   mjs$x$color_accessor <- substitute(color_accessor)
+  mjs$x$color_type <- color_type
+  mjs$x$color_range <- color_range
+  mjs$x$size_range <- size_range
   mjs$x$geom <- "point"
   mjs
 }
@@ -232,7 +257,6 @@ mjs_axis_y <- function(mjs,
   mjs$x$yax_count <- yax_count
   mjs$x$min_y <- min_y
   mjs$x$max_y <- max_y
-  mjs$x$yax_format <- yax_format
   mjs$x$y_scale_type <- y_scale_type
   mjs
 }

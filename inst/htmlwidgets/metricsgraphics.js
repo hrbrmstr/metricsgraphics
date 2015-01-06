@@ -55,6 +55,15 @@ HTMLWidgets.widget({
         x_axis: params.x_axis,
         y_axis: params.y_axis,
 
+        interpolate: params.interpolate,
+        decimals: params.decimals,
+        format: params.format,
+
+        color_type: params.color_type,
+        color_range: params.color_range,
+        point_size: params.point_size,
+        size_range: params.size_range,
+
         markers: params.markers,
         baselines: params.baselines,
 

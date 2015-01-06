@@ -1,11 +1,3 @@
----
-title: "test"
-author: "Bob Rudis (@hrbrmstr)"
-date: "January 5, 2015"
-output: html_document
----
-
-```{r}
 library(metricsgraphics)
 library(RColorBrewer)
 
@@ -75,4 +67,12 @@ stocks %>%
   mjs_axis_x(show=FALSE) %>%
   mjs_axis_y(show=FALSE)
 
-```
+
+
+
+
+
+
+
+
+
