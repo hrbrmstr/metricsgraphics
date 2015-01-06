@@ -1,9 +1,11 @@
 ---
-title: "test"
+title: "metricsgraphics.js htmlwidget wrapper v0.3"
 author: "Bob Rudis (@hrbrmstr)"
 date: "January 5, 2015"
 output: html_document
 ---
+
+[github repo](https://github.com/hrbrmstr/metricsgraphics)
 
 ```{r}
 library(metricsgraphics)
@@ -75,4 +77,13 @@ stocks %>%
   mjs_axis_x(show=FALSE) %>%
   mjs_axis_y(show=FALSE)
 
+stocks %>%
+  mjs_plot(x=time, y=X) %>%
+  mjs_line() %>%
+  mjs_add_line(Y) %>%
+  mjs_add_line(Z) %>%
+  mjs_axis_x(xax_format="date")
+
 ```
+
+fin

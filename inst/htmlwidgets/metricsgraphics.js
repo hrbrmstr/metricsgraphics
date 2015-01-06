@@ -33,14 +33,50 @@ HTMLWidgets.widget({
     if (params.geom == "histogram") {
       wide = params.data;
     } else {
+
       wide = HTMLWidgets.dataframeToD3(params.data);
+
+      if (params.multi_line != null) {
+
+        tmp = [];
+        tmp.push(HTMLWidgets.dataframeToD3(params.data));
+
+        n = params.multi_line.length ;
+
+        for (var i=0; i<n; i++) {
+          tmp.push(HTMLWidgets.dataframeToD3(params.data)) ;
+        }
+
+        wide = tmp ;
+
+      }
     }
 
     var xax_format = mjs_plain;
 
     if (params.xax_format == "date") {
       xax_format = mjs_date ;
-      MG.convert.date(wide, params.x_accessor)
+      if (params.multi_line == null) {
+        MG.convert.date(wide, params.x_accessor)
+      } else {
+        for (var i=0; i<wide.length; i++) {
+          wide[i] = MG.convert.date(wide[i], params.x_accessor);
+        }
+      }
+    }
+
+    if (params.multi_line != null) {
+      for (var i=0; i<wide.length; i++) {
+        if (i>0) {
+          for (var j=0; j<wide[i].length; j++) {
+            delete wide[i][j][params.y_accessor]
+          }
+          for (var j=0; j<wide[i].length; j++) {
+            wide[i][j][params.y_accessor] = wide[i][j][params.multi_line[i-1]]
+          }
+        }
+      }
+
     }
 
     if (params.xax_format == "comma") xax_format = mjs_comma ;

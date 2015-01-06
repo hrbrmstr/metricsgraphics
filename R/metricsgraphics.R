@@ -82,6 +82,7 @@ mjs_plot <- function(data, x, y,
     show_rollover_text=show_rollover_text,
     x_accessor=substitute(x),
     y_accessor=substitute(y),
+    multi_line=NULL,
     geom="line"
   )
 
@@ -145,6 +146,43 @@ mjs_line <- function(mjs,
   mjs$x$geom <- "line"
   mjs$x$interpolate <- interpolate
   mjs
+}
+
+#' Add a new line to a metricsgraphics.js linechart "geom"
+#'
+#' This function adds a line to an existing \code{mjs_line} "geom". Specify
+#' the bare name of the column to use in \code{y_accessor} and it will be added
+#' to the plot.
+#'
+#' @note You must have called \code{mjs_line} first before adding additional columns
+#' @param mjs plot object
+#' @param y_accessor bare name of column to add to the existing line plot
+#' @export
+#' @examples \dontrun{
+#' set.seed(1492)
+#' library(dplyr)
+#' stocks <- data.frame(
+#'   time = as.Date('2009-01-01') + 0:9,
+#'   X = rnorm(10, 0, 1),
+#'   Y = rnorm(10, 0, 2),
+#'   Z = rnorm(10, 0, 4))
+#'
+#' stocks %>%
+#'   mjs_plot(x=time, y=X) %>%
+#'   mjs_line() %>%
+#'   mjs_add_line(Y) %>%
+#'   mjs_add_line(Z) %>%
+#'   mjs_axis_x(xax_format="date")
+#' }
+mjs_add_line <- function(mjs,
+                         y_accessor) {
+  multi_line <- mjs$x$multi_line
+  if (is.null(multi_line)) multi_line <- list()
+  new_line <- as.character(substitute(y_accessor))
+  multi_line <- c(multi_line, new_line)
+  mjs$x$multi_line <- multi_line
+  mjs
+
 }
 
 
