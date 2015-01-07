@@ -64,12 +64,13 @@ stocks <- data.frame(
 stocks %>%
   mjs_plot(x=time, y=X) %>%
   mjs_line() %>%
-  mjs_axis_x(show=FALSE) %>%
-  mjs_axis_y(show=FALSE)
+  mjs_add_line(Y) %>%
+  mjs_add_line(Z) %>%
+  mjs_axis_x(xax_format="date") %>%
+  saveWidget("~/Desktop/multi.html", selfcontained=TRUE)
 
 stocks %>%
   mjs_plot(x=time, y=X) %>%
   mjs_line() %>%
-  mjs_add_line(Y) %>%
-  mjs_add_line(Z) %>%
-  mjs_axis_x(xax_format="date")
+  mjs_axis_x(show=FALSE) %>%
+  mjs_axis_y(show=FALSE)

@@ -55,7 +55,9 @@ HTMLWidgets.widget({
     var xax_format = mjs_plain;
 
     if (params.xax_format == "date") {
+
       xax_format = mjs_date ;
+
       if (params.multi_line == null) {
         MG.convert.date(wide, params.x_accessor)
       } else {
@@ -63,9 +65,18 @@ HTMLWidgets.widget({
           wide[i] = MG.convert.date(wide[i], params.x_accessor);
         }
       }
+
+      if (params.markers != null) {
+        for (var i=0; i<params.markers.length; i++) {
+          params.markers[i][params.x_accessor] =
+            d3.time.format("%Y-%m-%d").parse(params.markers[0]["start_day"]);
+        }
+      }
+
     }
 
     if (params.multi_line != null) {
+
       for (var i=0; i<wide.length; i++) {
         if (i>0) {
           for (var j=0; j<wide[i].length; j++) {
