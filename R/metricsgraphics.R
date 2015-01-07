@@ -321,6 +321,9 @@ mjs_axis_y <- function(mjs,
 #' }
 mjs_add_marker <- function(mjs,
                            x_value, label) {
+
+  if (class(x_value) == "Date") x_value <- format(x_value, "%Y-%m-%d")
+
   markers <- mjs$x$markers
   if (is.null(markers)) markers <- list()
   new_marker <- list()
@@ -328,7 +331,9 @@ mjs_add_marker <- function(mjs,
   new_marker[["label"]] <- label
   markers[[length(markers)+1]] <- new_marker
   mjs$x$markers <- markers
+
   mjs
+
 }
 
 #' Sets a baseline line/label

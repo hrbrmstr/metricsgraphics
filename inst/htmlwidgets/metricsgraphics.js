@@ -69,7 +69,7 @@ HTMLWidgets.widget({
       if (params.markers != null) {
         for (var i=0; i<params.markers.length; i++) {
           params.markers[i][params.x_accessor] =
-            d3.time.format("%Y-%m-%d").parse(params.markers[0]["start_day"]);
+            d3.time.format("%Y-%m-%d").parse(params.markers[i][params.x_accessor]);
         }
       }
 
