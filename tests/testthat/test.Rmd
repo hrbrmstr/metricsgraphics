@@ -121,17 +121,13 @@ s2 <- stocks2 %>%
 cat("<table><tr><td width='50%'>")
 ```
 
-```{r echo=FALSE}
-s1
-```
+`r s1`
 
 ```{r results='asis', echo=FALSE}
 cat("</td><td>")
 ```
 
-```{r echo=FALSE}
-s2
-```
+`r s2`
 
 ```{r results='asis', echo=FALSE}
 cat("</td><tr></table>")

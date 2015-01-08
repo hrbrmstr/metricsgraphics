@@ -85,9 +85,9 @@ tmp %&gt;%
   mjs_line() %&gt;%
   mjs_add_marker(1850, &quot;Something Wonderful&quot;) %&gt;%
   mjs_add_baseline(150, &quot;Something Awful&quot;)</code></pre>
-<p><div id="mjs-b5e6f46351f92fe9a18dda166123e0" class="metricsgraphics" style="width:672px;height:480px;"></div>
-<div id="mjs-b5e6f46351f92fe9a18dda166123e0-legend" class="metricsgraphics-legend"></div>
-<script type="application/json" data-for="mjs-b5e6f46351f92fe9a18dda166123e0">{ "x": {
+<p><div id="mjs-089f7b93e92210a998415bae1eaad5" class="metricsgraphics" style="width:672px;height:480px;"></div>
+<div id="mjs-089f7b93e92210a998415bae1eaad5-legend" class="metricsgraphics-legend"></div>
+<script type="application/json" data-for="mjs-089f7b93e92210a998415bae1eaad5">{ "x": {
  "data": {
  "year": [              1790,              1800,              1810,              1820,              1830,              1840,              1850,              1860,              1870,              1880,              1890,              1900,              1910,              1920,              1930,              1940,              1950,              1960,              1970 ],
 "uspop": [              3.93,              5.31,              7.24, 9.640000000000001,              12.9,              17.1,              23.2,              31.4,              39.8,              50.2,              62.9,                76,                92,             105.7,             122.8,             131.7,             151.3,             179.3,             203.2 ] 
@@ -148,15 +148,15 @@ tmp %&gt;%
 "geom": "line",
 "legend": null,
 "legend_target": null,
-"target": "#mjs-b5e6f46351f92fe9a18dda166123e0",
+"target": "#mjs-089f7b93e92210a998415bae1eaad5",
 "animate_on_load": false 
 },"evals": [  ] }</script></p>
 <pre class="r"><code>tmp %&gt;%
   mjs_plot(x=year, y=uspop, width=600) %&gt;%
   mjs_line(area=TRUE)</code></pre>
-<p><div id="mjs-476b28e866873b65417d0944557e28" class="metricsgraphics" style="width:600px;height:480px;"></div>
-<div id="mjs-476b28e866873b65417d0944557e28-legend" class="metricsgraphics-legend"></div>
-<script type="application/json" data-for="mjs-476b28e866873b65417d0944557e28">{ "x": {
+<p><div id="mjs-1e6e1b75a734912813bbaf12fc309f" class="metricsgraphics" style="width:600px;height:480px;"></div>
+<div id="mjs-1e6e1b75a734912813bbaf12fc309f-legend" class="metricsgraphics-legend"></div>
+<script type="application/json" data-for="mjs-1e6e1b75a734912813bbaf12fc309f">{ "x": {
  "data": {
  "year": [              1790,              1800,              1810,              1820,              1830,              1840,              1850,              1860,              1870,              1880,              1890,              1900,              1910,              1920,              1930,              1940,              1950,              1960,              1970 ],
 "uspop": [              3.93,              5.31,              7.24, 9.640000000000001,              12.9,              17.1,              23.2,              31.4,              39.8,              50.2,              62.9,                76,                92,             105.7,             122.8,             131.7,             151.3,             179.3,             203.2 ] 
@@ -207,16 +207,16 @@ tmp %&gt;%
 "geom": "line",
 "legend": null,
 "legend_target": null,
-"target": "#mjs-476b28e866873b65417d0944557e28",
+"target": "#mjs-1e6e1b75a734912813bbaf12fc309f",
 "animate_on_load": false 
 },"evals": [  ] }</script></p>
 <pre class="r"><code>tmp %&gt;%
   mjs_plot(x=uspop, y=year, width=500, height=400) %&gt;%
   mjs_bar() %&gt;%
   mjs_axis_x(xax_format = 'plain')</code></pre>
-<p><div id="mjs-9dc68db9eb1c5e5c032f2aa91199ed" class="metricsgraphics" style="width:500px;height:400px;"></div>
-<div id="mjs-9dc68db9eb1c5e5c032f2aa91199ed-legend" class="metricsgraphics-legend"></div>
-<script type="application/json" data-for="mjs-9dc68db9eb1c5e5c032f2aa91199ed">{ "x": {
+<p><div id="mjs-4ced336aa56def6b95486a343f5221" class="metricsgraphics" style="width:500px;height:400px;"></div>
+<div id="mjs-4ced336aa56def6b95486a343f5221-legend" class="metricsgraphics-legend"></div>
+<script type="application/json" data-for="mjs-4ced336aa56def6b95486a343f5221">{ "x": {
  "data": {
  "year": [              1790,              1800,              1810,              1820,              1830,              1840,              1850,              1860,              1870,              1880,              1890,              1900,              1910,              1920,              1930,              1940,              1950,              1960,              1970 ],
 "uspop": [              3.93,              5.31,              7.24, 9.640000000000001,              12.9,              17.1,              23.2,              31.4,              39.8,              50.2,              62.9,                76,                92,             105.7,             122.8,             131.7,             151.3,             179.3,             203.2 ] 
@@ -265,15 +265,15 @@ tmp %&gt;%
 "geom": "bar",
 "legend": null,
 "legend_target": null,
-"target": "#mjs-9dc68db9eb1c5e5c032f2aa91199ed" 
+"target": "#mjs-4ced336aa56def6b95486a343f5221" 
 },"evals": [  ] }</script></p>
 <pre class="r"><code>mtcars %&gt;%
   mjs_plot(x=wt, y=mpg, width=600, height=500) %&gt;%
   mjs_point(color_accessor=carb, size_accessor=carb) %&gt;%
   mjs_labs(x=&quot;Weight of Car&quot;, y=&quot;Miles per Gallon&quot;)</code></pre>
-<p><div id="mjs-9f726ab30a433fc978ad12a5786604" class="metricsgraphics" style="width:600px;height:500px;"></div>
-<div id="mjs-9f726ab30a433fc978ad12a5786604-legend" class="metricsgraphics-legend"></div>
-<script type="application/json" data-for="mjs-9f726ab30a433fc978ad12a5786604">{ "x": {
+<p><div id="mjs-42ac7ab3712aa4cd818120832201a3" class="metricsgraphics" style="width:600px;height:500px;"></div>
+<div id="mjs-42ac7ab3712aa4cd818120832201a3-legend" class="metricsgraphics-legend"></div>
+<script type="application/json" data-for="mjs-42ac7ab3712aa4cd818120832201a3">{ "x": {
  "data": {
  "mpg": [                21,                21,              22.8,              21.4,              18.7,              18.1,              14.3,              24.4,              22.8,              19.2,              17.8,              16.4,              17.3,              15.2,              10.4,              10.4,              14.7,              32.4,              30.4,              33.9,              21.5,              15.5,              15.2,              13.3,              19.2,              27.3,                26,              30.4,              15.8,              19.7,                15,              21.4 ],
 "cyl": [                 6,                 6,                 4,                 6,                 8,                 6,                 8,                 4,                 4,                 6,                 6,                 8,                 8,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 4,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 8,                 6,                 8,                 4 ],
@@ -333,7 +333,7 @@ tmp %&gt;%
 "geom": "point",
 "legend": null,
 "legend_target": null,
-"target": "#mjs-9f726ab30a433fc978ad12a5786604" 
+"target": "#mjs-42ac7ab3712aa4cd818120832201a3" 
 },"evals": [  ] }</script></p>
 <pre class="r"><code>mtcars %&gt;%
   mjs_plot(x=wt, y=mpg, width=600, height=500) %&gt;%
@@ -344,9 +344,9 @@ tmp %&gt;%
             color_type=&quot;category&quot;,
             color_range=brewer.pal(n=11, name=&quot;RdBu&quot;)[c(1, 5, 11)]) %&gt;%
   mjs_labs(x=&quot;Weight of Car&quot;, y=&quot;Miles per Gallon&quot;)</code></pre>
-<p><div id="mjs-42594e157b4e7a47e2fb6eed66465a" class="metricsgraphics" style="width:600px;height:500px;"></div>
-<div id="mjs-42594e157b4e7a47e2fb6eed66465a-legend" class="metricsgraphics-legend"></div>
-<script type="application/json" data-for="mjs-42594e157b4e7a47e2fb6eed66465a">{ "x": {
+<p><div id="mjs-d52b2313b9c669304dc2bfa7de2af5" class="metricsgraphics" style="width:600px;height:500px;"></div>
+<div id="mjs-d52b2313b9c669304dc2bfa7de2af5-legend" class="metricsgraphics-legend"></div>
+<script type="application/json" data-for="mjs-d52b2313b9c669304dc2bfa7de2af5">{ "x": {
  "data": {
  "mpg": [                21,                21,              22.8,              21.4,              18.7,              18.1,              14.3,              24.4,              22.8,              19.2,              17.8,              16.4,              17.3,              15.2,              10.4,              10.4,              14.7,              32.4,              30.4,              33.9,              21.5,              15.5,              15.2,              13.3,              19.2,              27.3,                26,              30.4,              15.8,              19.7,                15,              21.4 ],
 "cyl": [                 6,                 6,                 4,                 6,                 8,                 6,                 8,                 4,                 4,                 6,                 6,                 8,                 8,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 4,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 8,                 6,                 8,                 4 ],
@@ -406,15 +406,15 @@ tmp %&gt;%
 "geom": "point",
 "legend": null,
 "legend_target": null,
-"target": "#mjs-42594e157b4e7a47e2fb6eed66465a" 
+"target": "#mjs-d52b2313b9c669304dc2bfa7de2af5" 
 },"evals": [  ] }</script></p>
 <pre class="r"><code>mtcars %&gt;%
   mjs_plot(x=wt, y=mpg, width=400, height=300) %&gt;%
   mjs_point(least_squares=TRUE) %&gt;%
   mjs_labs(x=&quot;Weight of Car&quot;, y=&quot;Miles per Gallon&quot;)</code></pre>
-<p><div id="mjs-812e2f36d1fe7660b80fdf60f5b4f2" class="metricsgraphics" style="width:400px;height:300px;"></div>
-<div id="mjs-812e2f36d1fe7660b80fdf60f5b4f2-legend" class="metricsgraphics-legend"></div>
-<script type="application/json" data-for="mjs-812e2f36d1fe7660b80fdf60f5b4f2">{ "x": {
+<p><div id="mjs-5c84b23625f54d2e0ba988a3b29fe5" class="metricsgraphics" style="width:400px;height:300px;"></div>
+<div id="mjs-5c84b23625f54d2e0ba988a3b29fe5-legend" class="metricsgraphics-legend"></div>
+<script type="application/json" data-for="mjs-5c84b23625f54d2e0ba988a3b29fe5">{ "x": {
  "data": {
  "mpg": [                21,                21,              22.8,              21.4,              18.7,              18.1,              14.3,              24.4,              22.8,              19.2,              17.8,              16.4,              17.3,              15.2,              10.4,              10.4,              14.7,              32.4,              30.4,              33.9,              21.5,              15.5,              15.2,              13.3,              19.2,              27.3,                26,              30.4,              15.8,              19.7,                15,              21.4 ],
 "cyl": [                 6,                 6,                 4,                 6,                 8,                 6,                 8,                 4,                 4,                 6,                 6,                 8,                 8,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 4,                 8,                 8,                 8,                 8,                 4,                 4,                 4,                 8,                 6,                 8,                 4 ],
@@ -472,7 +472,7 @@ tmp %&gt;%
 "geom": "point",
 "legend": null,
 "legend_target": null,
-"target": "#mjs-812e2f36d1fe7660b80fdf60f5b4f2" 
+"target": "#mjs-5c84b23625f54d2e0ba988a3b29fe5" 
 },"evals": [  ] }</script></p>
 <pre class="r"><code>set.seed(1492)
 dat &lt;- data.frame(date=seq(as.Date(&quot;2014-01-01&quot;),
