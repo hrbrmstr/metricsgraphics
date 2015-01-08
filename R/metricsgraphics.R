@@ -194,8 +194,6 @@ mjs_line <- function(mjs,
 mjs_add_line <- function(mjs,
                          y_accessor) {
 
-  stopifnot(y_accessor %in% colnames(mjs))
-
   multi_line <- mjs$x$multi_line
   if (is.null(multi_line)) multi_line <- list()
   new_line <- as.character(substitute(y_accessor))

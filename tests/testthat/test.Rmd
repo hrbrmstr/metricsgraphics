@@ -19,7 +19,6 @@ tmp %>%
   mjs_add_marker(1850, "Something Wonderful") %>%
   mjs_add_baseline(150, "Something Awful")
 
-
 tmp %>%
   mjs_plot(x=year, y=uspop, width=600) %>%
   mjs_line(area=TRUE)
@@ -118,7 +117,7 @@ s2 <- stocks2 %>%
 ```
 
 ```{r results='asis', echo=FALSE}
-cat("<table><tr><td width='50%'>")
+cat("<table width='100%'><tr><td width='50%'>")
 ```
 
 `r s1`
