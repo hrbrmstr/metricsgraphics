@@ -41,6 +41,8 @@ mjs_plot <- function(data, x, y,
                      top = 40, bottom = 60, buffer = 8,
                      width = NULL, height = NULL) {
 
+  stopifnot(format %in% c("percentage", "count"))
+
   eid <- sprintf("mjs-%s", paste(sample(c(letters[1:6],0:9),30,replace=TRUE),collapse=""))
 
   params = list(
@@ -150,6 +152,13 @@ mjs_bar <- function(mjs,
 mjs_line <- function(mjs,
                      area=FALSE, animate_on_load=FALSE,
                      interpolate="cardinal") {
+
+  stopifnot(interpolate %in% c("cardinal", "linear", "linear-closed", "step",
+                               "step-before", "step-after", "basis", "basis-open",
+                               "basis-closed", "bundle", "cardinal-open",
+                               "cardinal-closed", "monotone"))
+
+
   mjs$x$area <- area
   mjs$x$animate_on_load <- animate_on_load
   mjs$x$geom <- "line"
@@ -184,6 +193,9 @@ mjs_line <- function(mjs,
 #' }
 mjs_add_line <- function(mjs,
                          y_accessor) {
+
+  stopifnot(y_accessor %in% colnames(mjs))
+
   multi_line <- mjs$x$multi_line
   if (is.null(multi_line)) multi_line <- list()
   new_line <- as.character(substitute(y_accessor))
@@ -225,6 +237,9 @@ mjs_point <- function(mjs,
                       size_range=c(1, 5),
                       x_rug=FALSE,
                       y_rug=FALSE) {
+
+  stopifnot(color_type %in% c("category", "number"))
+
   mjs$x$chart_type <- "point"
   mjs$x$least_squares<- least_squares
   mjs$x$x_rug <- x_rug
@@ -270,6 +285,9 @@ mjs_axis_x <- function(mjs,
                        xax_count=6,
                        min_x=NULL, max_x=NULL,
                        xax_format="plain") {
+
+  stopifnot(xax_format %in% c("plain", "comma", "date"))
+
   mjs$x$x_axis <- show
   mjs$x$xax_count <- xax_count
   mjs$x$min_x <- min_x
@@ -299,6 +317,9 @@ mjs_axis_y <- function(mjs,
                        yax_count=5,
                        min_y=NULL, max_y=NULL,
                        y_scale_type="linear") {
+
+  stopifnot(y_scale_type %in% c("linear", "log"))
+
   mjs$x$y_axis <- show
   mjs$x$yax_count <- yax_count
   mjs$x$min_y <- min_y

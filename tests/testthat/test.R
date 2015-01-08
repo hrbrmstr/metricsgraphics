@@ -73,7 +73,7 @@ stocks2 <- data.frame(
 
 stocks %>%
   mjs_plot(x=time, y=X) %>%
-  mjs_line() %>%
+  mjs_line(interpolate="fish") %>%
   mjs_add_line(Y) %>%
   mjs_add_line(Z) %>%
   mjs_axis_x(xax_format="date") %>%
