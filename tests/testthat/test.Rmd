@@ -1,5 +1,5 @@
 ---
-title: "metricsgraphics.js htmlwidget wrapper v0.4"
+title: "metricsgraphics.js htmlwidget wrapper v0.4.1"
 author: "Bob Rudis (@hrbrmstr)"
 date: "January 8, 2015"
 output: html_document
@@ -92,6 +92,49 @@ stocks %>%
   mjs_axis_x(xax_format="date") %>%
   mjs_add_legend(legend=c("X", "Y", "Z"))
 
+
+set.seed(1999)
+stocks2 <- data.frame(
+  time = as.Date('2009-01-01') + 0:9,
+  X = rnorm(10, 0, 1),
+  Y = rnorm(10, 0, 2),
+  Z = rnorm(10, 0, 4))
+
+s1 <- stocks %>%
+  mjs_plot(x=time, y=X, linked=TRUE, width=350, height=275) %>%
+  mjs_line() %>%
+  mjs_add_line(Y) %>%
+  mjs_add_line(Z) %>%
+  mjs_axis_x(xax_format="date") %>%
+  mjs_add_legend(legend=c("X", "Y", "Z"))
+
+s2 <- stocks2 %>%
+  mjs_plot(x=time, y=X, linked=TRUE, width=350, height=275) %>%
+  mjs_line() %>%
+  mjs_add_line(Y) %>%
+  mjs_add_line(Z) %>%
+  mjs_axis_x(xax_format="date") %>%
+  mjs_add_legend(legend=c("X", "Y", "Z"))
+```
+
+```{r results='asis', echo=FALSE}
+cat("<table><tr><td width='50%'>")
+```
+
+```{r echo=FALSE}
+s1
+```
+
+```{r results='asis', echo=FALSE}
+cat("</td><td>")
+```
+
+```{r echo=FALSE}
+s2
+```
+
+```{r results='asis', echo=FALSE}
+cat("</td><tr></table>")
 ```
 
 fin

@@ -62,6 +62,15 @@ stocks <- data.frame(
   Y = rnorm(10, 0, 2),
   Z = rnorm(10, 0, 4))
 
+
+set.seed(1999)
+stocks2 <- data.frame(
+  time = as.Date('2009-01-01') + 0:9,
+  X = rnorm(10, 0, 1),
+  Y = rnorm(10, 0, 2),
+  Z = rnorm(10, 0, 4))
+
+
 stocks %>%
   mjs_plot(x=time, y=X) %>%
   mjs_line() %>%

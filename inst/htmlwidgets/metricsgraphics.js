@@ -133,6 +133,8 @@ HTMLWidgets.widget({
         binned: params.binned,
         bins: params.bins,
 
+        linked: params.linked,
+
         height: height,
         width: width,
         bottom: params.bottom,

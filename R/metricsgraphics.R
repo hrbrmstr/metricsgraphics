@@ -12,6 +12,7 @@
 #' @param x bare name of column to use for x values
 #' @param y bare name of column to use for y values
 #' @param show_rollover_text determines whether or not to show any text when a data point is rolled over.
+#' @param linked inks together all other graphs whose linked option is set to true. When one graphic in that set is rolled over, the corresponding values in the other graphics are also rolled over (default: \code{FALSE} - not linked)
 #' @param decimals the number of decimals to show in a rollover (default: \code{2})
 #' @param format sets the format of the data object, which is to say, counts or percentages
 #' @param missing_is_zero if true and if the data object is a time series, missing data points will be treated as zeros
@@ -33,6 +34,7 @@
 #'
 mjs_plot <- function(data, x, y,
                      show_rollover_text = TRUE,
+                     linked = FALSE,
                      decimals=2, format="count",
                      missing_is_zero=FALSE,
                      left = 80, right = 10,
@@ -52,6 +54,7 @@ mjs_plot <- function(data, x, y,
     y_label=NULL,
     markers=NULL,
     baselines=NULL,
+    linked=linked,
     title=NULL,
     description=NULL,
     left=left,
