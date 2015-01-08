@@ -1,7 +1,7 @@
 ---
-title: "metricsgraphics.js htmlwidget wrapper v0.3"
+title: "metricsgraphics.js htmlwidget wrapper v0.4"
 author: "Bob Rudis (@hrbrmstr)"
-date: "January 5, 2015"
+date: "January 8, 2015"
 output: html_document
 ---
 
@@ -83,6 +83,14 @@ stocks %>%
   mjs_add_line(Y) %>%
   mjs_add_line(Z) %>%
   mjs_axis_x(xax_format="date")
+
+stocks %>%
+  mjs_plot(x=time, y=X) %>%
+  mjs_line() %>%
+  mjs_add_line(Y) %>%
+  mjs_add_line(Z) %>%
+  mjs_axis_x(xax_format="date") %>%
+  mjs_add_legend(legend=c("X", "Y", "Z"))
 
 ```
 

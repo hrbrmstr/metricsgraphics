@@ -1,7 +1,7 @@
 Package: metricsgraphics
 Type: Package
 Title: An htmlwidgets interface to the metricsgraphics.js d3 charting library
-Version: 0.3.1
+Version: 0.4
 Date: 2015-01-07
 Author: Bob Rudis (@hrbrmstr)
 Maintainer: Bob Rudis <bob@rudis.net>
@@ -14,7 +14,8 @@ Suggests:
     testthat
 Depends:
     R (>= 3.0.0),
-    htmlwidgets
+    htmlwidgets,
+    htmltools
 Imports:
     magrittr
 

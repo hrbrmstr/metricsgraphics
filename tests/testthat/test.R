@@ -34,7 +34,8 @@ mtcars %>%
             size_range=c(5, 10),
             color_type="category",
             color_range=brewer.pal(n=11, name="RdBu")[c(1, 5, 11)]) %>%
-  mjs_labs(x="Weight of Car", y="Miles per Gallon")
+  mjs_labs(x="Weight of Car", y="Miles per Gallon") %>%
+  mjs_add_legend(legend="X")
 
 
 mtcars %>%
@@ -67,10 +68,49 @@ stocks %>%
   mjs_add_line(Y) %>%
   mjs_add_line(Z) %>%
   mjs_axis_x(xax_format="date") %>%
-  saveWidget("~/Desktop/multi.html", selfcontained=TRUE)
+  mjs_add_legend(legend=c("X", "Y", "Z"))
+
 
 stocks %>%
   mjs_plot(x=time, y=X) %>%
   mjs_line() %>%
   mjs_axis_x(show=FALSE) %>%
   mjs_axis_y(show=FALSE)
+
+
+library(shiny)
+library(metricsgraphics)
+
+ui = shinyUI(fluidPage(
+  h3("MetricsGraphics Example", style="text-align:center"),
+  metricsgraphicsOutput('mjs1'),
+  metricsgraphicsOutput('mjs2')
+))
+
+server = function(input, output) {
+  output$mjs1 <- renderMetricsgraphics(
+    mtcars %>%
+      mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
+      mjs_point(color_accessor=carb, size_accessor=carb) %>%
+      mjs_labs(x="Weight of Car", y="Miles per Gallon")
+  ),
+  output$mjs2 <- renderMetricsgraphics(
+    set.seed(1492)
+    stocks <- data.frame(
+      time = as.Date('2009-01-01') + 0:9,
+      X = rnorm(10, 0, 1),
+      Y = rnorm(10, 0, 2),
+      Z = rnorm(10, 0, 4))
+    stocks %>%
+      mjs_plot(x=time, y=X) %>%
+      mjs_line() %>%
+      mjs_add_line(Y) %>%
+      mjs_add_line(Z) %>%
+      mjs_axis_x(xax_format="date") %>%
+      mjs_add_legend(legend=c("X", "Y", "Z"))
+  )
+}
+
+shinyApp(ui = ui, server = server)
+
+

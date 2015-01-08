@@ -22,7 +22,7 @@
 #' @param buffer the buffer size in pixels between the actual chart area and the margins.
 #' @param width Width in pixels (optional, defaults to automatic sizing)
 #' @param height Height in pixels (optional, defaults to automatic sizing)
-#' @import htmlwidgets
+#' @import htmlwidgets htmltools
 #' @export
 #' @examples \dontrun{
 #' data.frame(year=seq(1790, 1970, 10),
@@ -38,6 +38,8 @@ mjs_plot <- function(data, x, y,
                      left = 80, right = 10,
                      top = 40, bottom = 60, buffer = 8,
                      width = NULL, height = NULL) {
+
+  eid <- sprintf("mjs-%s", paste(sample(c(letters[1:6],0:9),30,replace=TRUE),collapse=""))
 
   params = list(
     data=data,
@@ -83,7 +85,10 @@ mjs_plot <- function(data, x, y,
     x_accessor=substitute(x),
     y_accessor=substitute(y),
     multi_line=NULL,
-    geom="line"
+    geom="line",
+    legend=NULL,
+    legend_target=NULL,
+    target=sprintf("#%s", eid)
   )
 
   htmlwidgets::createWidget(
@@ -91,7 +96,8 @@ mjs_plot <- function(data, x, y,
     x = params,
     width = width,
     height = height,
-    package = 'metricsgraphics'
+    package = 'metricsgraphics',
+    elementId = eid
   )
 
 }
@@ -160,7 +166,6 @@ mjs_line <- function(mjs,
 #' @export
 #' @examples \dontrun{
 #' set.seed(1492)
-#' library(dplyr)
 #' stocks <- data.frame(
 #'   time = as.Date('2009-01-01') + 0:9,
 #'   X = rnorm(10, 0, 1),
@@ -367,6 +372,31 @@ mjs_add_baseline <- function(mjs,
   mjs
 }
 
+#' Adds a legend to a metricsgraphics chart
+#'
+#' @param legend character vector of labels for the legend
+#' @export
+#' @examples \dontrun{
+#' set.seed(1492)
+#' stocks <- data.frame(
+#'   time = as.Date('2009-01-01') + 0:9,
+#'   X = rnorm(10, 0, 1),
+#'   Y = rnorm(10, 0, 2),
+#'   Z = rnorm(10, 0, 4))
+#'
+#' stocks %>%
+#'   mjs_plot(x=time, y=X) %>%
+#'   mjs_line() %>%
+#'   mjs_add_line(Y) %>%
+#'   mjs_add_line(Z) %>%
+#'   mjs_axis_x(xax_format="date") %>%
+#'   mjs_add_legend(legend=c("X", "Y", "Z"))
+#' }
+mjs_add_legend <- function(mjs, legend) {
+  mjs$x$legend <- legend
+  mjs$x$legend_target <- sprintf("#%s-legend", mjs$elementId)
+  mjs
+}
 
 #' Widget output function for use in Shiny
 #'
@@ -381,4 +411,9 @@ metricsgraphicsOutput <- function(outputId, width = '100%', height = '400px'){
 renderMetricsgraphics <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   shinyRenderWidget(expr, metricsgraphicsOutput, env, quoted = TRUE)
+}
+
+metricsgraphics_html <- function(id, style, class, ...) {
+  list(tags$div(id = id, class = class, style=style),
+       tags$div(id = sprintf("%s-legend", id), class = sprintf("%s-legend", class)))
 }

@@ -11,6 +11,7 @@ The following functions are implemented:
 -   `mjs_plot`: Create a new metricsgraphics.js plot
 -   `mjs_line`: metricsgraphics.js linechart "geom"
 -   `mjs_add_line`: used to add additional columns for a multi-line chart
+-   `mjs_add_legend`: adds a legend to a line (or mult-line) chart
 -   `mjs_point`: metricsgraphics.js scatterplot "geom"
 -   `mjs_bar`: metricsgraphics.js bar chart "geom"
 -   `mjs_axis_x`: Configure x axis ticks & limits
@@ -25,16 +26,17 @@ The following functions are implemented:
 -   Version 0.2 released - added support for markers & baselines + minimal support for time-series
 -   Version 0.3 released - coded up more config parameters (including color and point sizes) and added support for multi-line plots
 -   Version 0.3.1 released - `mjs_marker` will now convert dates properly
+-   Version 0.4 released - added `mjs_add_legend` to support legends in line/multi-line charts
 
 ### Installation
 
-``` {.r}
+``` r
 devtools::install_github("hrbrmstr/metricsgraphics")
 ```
 
 ### Usage
 
-``` {.r}
+``` r
 library(metricsgraphics)
 library(RColorBrewer)
 
@@ -110,4 +112,23 @@ stocks %>%
   mjs_add_line(Y) %>%
   mjs_add_line(Z) %>%
   mjs_axis_x(xax_format="date")
+
+library(shiny)
+library(metricsgraphics)
+
+ui = shinyUI(fluidPage(
+  h3("MetricsGraphics Example", style="text-align:center"),
+  metricsgraphicsOutput('mjs')
+))
+
+server = function(input, output) {
+  output$mjs <- renderMetricsgraphics(
+    mtcars %>% 
+      mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
+      mjs_point(color_accessor=carb, size_accessor=carb) %>%
+      mjs_labs(x="Weight of Car", y="Miles per Gallon")
+  )
+}
+
+shinyApp(ui = ui, server = server)
 ```

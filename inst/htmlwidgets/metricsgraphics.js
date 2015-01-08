@@ -126,6 +126,9 @@ HTMLWidgets.widget({
 
         show_rollover_text: params.show_rollover_text,
 
+        legend: params.legend,
+        legend_target: params.legend_target,
+
         bar_margin: params.bar_margin,
         binned: params.binned,
         bins: params.bins,
