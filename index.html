@@ -32,7 +32,7 @@
 
 <p>I had been pondering building an R package to help generate these charts when Ramnath Vaidyanathan, Kenton Russell &amp; JJ Allaire came up with the insanely awesome <a href="http://www.htmlwidgets.org/">htmlwidgets</a> R package, which is the best javascript&lt;-&gt;R bridge to-date. Here's a quick take on how to make a basic line chart before going into some package (and MetricsGraphics) details:</p>
 
-<div class="highlight highlight-r"><pre>library(<span class="pl-vo">metricsgraphics</span>)
+<div class="highlight highlight-R"><pre>library(<span class="pl-vo">metricsgraphics</span>)
 
 <span class="pl-vo">tmp</span> <span class="pl-k">&lt;-</span> <span class="pl-st">data.frame</span>(<span class="pl-v">year</span><span class="pl-k">=</span>seq(<span class="pl-c1">1790</span>, <span class="pl-c1">1970</span>, <span class="pl-c1">10</span>), <span class="pl-v">uspop</span><span class="pl-k">=</span>as.numeric(<span class="pl-vo">uspop</span>))
 
@@ -42,11 +42,11 @@
   mjs_add_marker(<span class="pl-c1">1850</span>, <span class="pl-s1"><span class="pl-pds">"</span>Something Wonderful<span class="pl-pds">"</span></span>) %<span class="pl-k">&gt;</span>%
   mjs_add_baseline(<span class="pl-c1">150</span>, <span class="pl-s1"><span class="pl-pds">"</span>Something Awful<span class="pl-pds">"</span></span>)</pre></div>
 
-<p></p><b>Example of Basic MetricsGrahics Chart</b>
+<center><b>Example of Basic MetricsGrahics Chart</b><iframe style="max-width=100%" src="1.html" sandbox="allow-same-origin allow-scripts" width="100%" height="350" scrolling="no" seamless="seamless" frameBorder="0"></iframe></center>
 
 <p>One of the package goals (which should be evident from the example) is that it had to conform to the new "piping" idiom, made popular through the <a href="https://github.com/smbache/magrittr">magrittr</a>, <a href="http://ggvis.rstudio.com/">ggvis</a> and <a href="http://github.com/dplyr">dplyr</a> packages. This made it possible to avoid one function with a ton of parameters and help break out the chart building into logical steps. While it may not have the flexibility of <code>ggplot2</code>, you can do some neat things with MetricsGraphics charts, like use multiple lines:</p>
 
-<div class="highlight highlight-r"><pre>set.seed(<span class="pl-c1">1492</span>)
+<div class="highlight highlight-R"><pre>set.seed(<span class="pl-c1">1492</span>)
 <span class="pl-vo">stocks</span> <span class="pl-k">&lt;-</span> <span class="pl-st">data.frame</span>(
   <span class="pl-v">time</span> <span class="pl-k">=</span> as.Date(<span class="pl-s1"><span class="pl-pds">'</span>2009-01-01<span class="pl-pds">'</span></span>) <span class="pl-k">+</span> <span class="pl-c1">0</span><span class="pl-k">:</span><span class="pl-c1">9</span>,
   <span class="pl-v">X</span> <span class="pl-k">=</span> rnorm(<span class="pl-c1">10</span>, <span class="pl-c1">0</span>, <span class="pl-c1">1</span>),
@@ -61,11 +61,11 @@
   mjs_axis_x(<span class="pl-v">xax_format</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>date<span class="pl-pds">"</span></span>) %<span class="pl-k">&gt;</span>%
   mjs_add_legend(c(<span class="pl-s1"><span class="pl-pds">"</span>X<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>Y<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>Z<span class="pl-pds">"</span></span>))</pre></div>
 
-<p></p><b>Stocks X, Y &amp; Z over time</b>
+<center><b>Stocks X, Y &amp; Z over time</b><iframe style="max-width=100%" src="2.html" sandbox="allow-same-origin allow-scripts" width="100%" height="450" scrolling="no" seamless="seamless" frameBorder="0"></iframe></center>
 
 <p>and, pretty configurable scatterplots:</p>
 
-<div class="highlight highlight-r"><pre>library(<span class="pl-vo">RColorBrewer</span>)
+<div class="highlight highlight-R"><pre>library(<span class="pl-vo">RColorBrewer</span>)
 
 <span class="pl-vo">mtcars</span> %<span class="pl-k">&gt;</span>%
   mjs_plot(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-vo">wt</span>, <span class="pl-v">y</span><span class="pl-k">=</span><span class="pl-vo">mpg</span>, <span class="pl-v">width</span><span class="pl-k">=</span><span class="pl-c1">500</span>, <span class="pl-v">height</span><span class="pl-k">=</span><span class="pl-c1">350</span>) %<span class="pl-k">&gt;</span>%
@@ -77,7 +77,7 @@
             <span class="pl-v">color_range</span><span class="pl-k">=</span>brewer.pal(<span class="pl-v">n</span><span class="pl-k">=</span><span class="pl-c1">11</span>, <span class="pl-v">name</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>RdBu<span class="pl-pds">"</span></span>)[c(<span class="pl-c1">1</span>, <span class="pl-c1">5</span>, <span class="pl-c1">11</span>)]) %<span class="pl-k">&gt;</span>%
   mjs_labs(<span class="pl-v">x</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Weight of Car<span class="pl-pds">"</span></span>, <span class="pl-v">y</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Miles per Gallon<span class="pl-pds">"</span></span>)</pre></div>
 
-<p></p><b>Motor Trend Cars - mpg~wt</b>
+<center><b>Motor Trend Cars - mpg~wt</b><iframe style="max-width=100%" src="3.html" sandbox="allow-same-origin allow-scripts" width="100%" height="350" scrolling="no" seamless="seamless" frameBorder="0"></iframe></center>
 
 <p>The <code>htmlwidgets</code> developers go into <a href="http://www.htmlwidgets.org/develop_intro.html">great detail</a> on how to create a widget, but there are some central points I'll cover and potentially reiterate. </p>
 
