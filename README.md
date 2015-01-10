@@ -1,6 +1,6 @@
 metricsgraphics is an 'htmlwidget' interface to the [MetricsGraphics.js](http://metricsgraphicsjs.org/) D3 chart library.
 
-The current `htmlwidget` wrapper for it is minimaly functional and does not provide support for metricsgraphics histograms and provides nascent support for metricsgraphics' best feature - time series charts.
+The current `htmlwidget` wrapper for it is functional but does not provide support for metricsgraphics histograms. It does provide basic support for metricsgraphics' best feature - time series charts.
 
 Charts look best in a Boostrap page (unless you customize your own CSS).
 
