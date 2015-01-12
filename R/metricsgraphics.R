@@ -61,6 +61,7 @@ mjs_plot <- function(data, x, y,
     description=NULL,
     left=left,
     right=right,
+    top=top,
     bottom=bottom,
     buffer=buffer,
     y_scale_type="linear",
@@ -93,7 +94,8 @@ mjs_plot <- function(data, x, y,
     geom="line",
     legend=NULL,
     legend_target=NULL,
-    target=sprintf("#%s", eid)
+    target=sprintf("#%s", eid),
+    grid=FALSE
   )
 
   htmlwidgets::createWidget(
@@ -414,6 +416,33 @@ mjs_add_baseline <- function(mjs,
 mjs_add_legend <- function(mjs, legend) {
   mjs$x$legend <- legend
   mjs$x$legend_target <- sprintf("#%s-legend", mjs$elementId)
+  mjs
+}
+
+
+#' Draw separate charts for each line
+#'
+#' @param grid if TRUE, draw separate charts for each line
+#' @export
+#' @examples \dontrun{
+#' set.seed(1492)
+#' stocks <- data.frame(
+#'   time = as.Date('2009-01-01') + 0:9,
+#'   X = rnorm(10, 0, 1),
+#'   Y = rnorm(10, 0, 2),
+#'   Z = rnorm(10, 0, 4))
+#'
+#' stocks %>%
+#'   mjs_plot(x=time, y=X) %>%
+#'   mjs_line() %>%
+#'   mjs_add_line(Y) %>%
+#'   mjs_add_line(Z) %>%
+#'   mjs_axis_x(xax_format="date") %>%
+#'   mjs_add_legend(legend=c("X", "Y", "Z")) %>%
+#'   mjs_grid()
+#' }
+mjs_grid <- function(mjs, grid = TRUE) {
+  mjs$x$grid <- grid
   mjs
 }
 
