@@ -36,16 +36,21 @@ HTMLWidgets.widget({
 
       wide = HTMLWidgets.dataframeToD3(params.data);
 
-      if (params.multi_line != null) {
+      var is_multi_line = params.y_accessor instanceof Array;
+
+      if (is_multi_line) {
 
         tmp = [];
-        tmp.push(HTMLWidgets.dataframeToD3(params.data));
-
-        n = params.multi_line.length ;
+        n = params.y_accessor.length ;
 
         for (var i=0; i<n; i++) {
-          tmp.push(HTMLWidgets.dataframeToD3(params.data)) ;
+          var data = {};
+          data["value"] = params.data[params.y_accessor[i]];
+          data["date"]  = params.data[params.x_accessor];
+          tmp.push(HTMLWidgets.dataframeToD3(data)) ;
         }
+        params.y_accessor = "value";
+        params.x_accessor = "date";
 
         wide = tmp ;
 
@@ -58,7 +63,7 @@ HTMLWidgets.widget({
 
       xax_format = mjs_date ;
 
-      if (params.multi_line == null) {
+      if (!is_multi_line) {
         MG.convert.date(wide, params.x_accessor)
       } else {
         for (var i=0; i<wide.length; i++) {
@@ -70,21 +75,6 @@ HTMLWidgets.widget({
         for (var i=0; i<params.markers.length; i++) {
           params.markers[i][params.x_accessor] =
             d3.time.format("%Y-%m-%d").parse(params.markers[i][params.x_accessor]);
-        }
-      }
-
-    }
-
-    if (params.multi_line != null) {
-
-      for (var i=0; i<wide.length; i++) {
-        if (i>0) {
-          for (var j=0; j<wide[i].length; j++) {
-            delete wide[i][j][params.y_accessor]
-          }
-          for (var j=0; j<wide[i].length; j++) {
-            wide[i][j][params.y_accessor] = wide[i][j][params.multi_line[i-1]]
-          }
         }
       }
 
