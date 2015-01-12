@@ -30,23 +30,21 @@ HTMLWidgets.widget({
 
     wide = null;
 
-    is_multi_line = params.y_accessor instanceof Array;
-
     if (params.geom == "histogram") {
       wide = params.data;
     } else {
 
       wide = HTMLWidgets.dataframeToD3(params.data);
 
-      if (is_multi_line) {
+      if (params.multi_line != null) {
 
         tmp = [];
+        tmp.push(HTMLWidgets.dataframeToD3(params.data));
 
-        for (var i=0; i<params.y_accessor.length; i++) {
-          var data = {};
-          data["value"]= params.data[params.y_accessor[i]];
-          data[params.x_accessor]  = params.data[params.x_accessor];
-          tmp.push(HTMLWidgets.dataframeToD3(data));
+        n = params.multi_line.length ;
+
+        for (var i=0; i<n; i++) {
+          tmp.push(HTMLWidgets.dataframeToD3(params.data)) ;
         }
 
         wide = tmp ;
@@ -60,7 +58,7 @@ HTMLWidgets.widget({
 
       xax_format = mjs_date ;
 
-      if (!is_multi_line) {
+      if (params.multi_line == null) {
         MG.convert.date(wide, params.x_accessor)
       } else {
         for (var i=0; i<wide.length; i++) {
@@ -77,9 +75,25 @@ HTMLWidgets.widget({
 
     }
 
+    if (params.multi_line != null) {
+
+      for (var i=0; i<wide.length; i++) {
+        if (i>0) {
+          for (var j=0; j<wide[i].length; j++) {
+            delete wide[i][j][params.y_accessor]
+          }
+          for (var j=0; j<wide[i].length; j++) {
+            wide[i][j][params.y_accessor] = wide[i][j][params.multi_line[i-1]]
+          }
+        }
+      }
+
+    }
+
     if (params.xax_format == "comma") xax_format = mjs_comma ;
 
-    var mg_params = {
+    // convert date string to Date object
+    MG.data_graphic({
 
         data: wide,
         target: '#' + el.id,
@@ -149,62 +163,7 @@ HTMLWidgets.widget({
         title: params.title,
         description: params.description
 
-    };
-
-    if (!is_multi_line) {
-
-      MG.data_graphic(mg_params);
-
-    } else {
-
-      mg_params.y_accessor = "value";
-
-      if (!params.grid) {
-
-        //draw a multiline chart
-        MG.data_graphic(mg_params);
-
-      } else {
-
-        var n = params.y_accessor.length;
-
-        // arrange sizes
-        mg_params.width  = width/n;
-        mg_params.height = height/n;
-        mg_params.bottom = params.bottom/n + 10;
-        mg_params.top    = params.top/n + 10;
-        mg_params.right  = params.right/n;
-        mg_params.left   = params.left/n;
-        mg_params.buffer = params.buffer/n;
-        mg_params.yax_count = Math.ceil(params.yax_count/n);
-        mg_params.xax_count = Math.ceil(params.xax_count/n);
-
-        mg_params.linked = true;
-
-        var parentDom = document.querySelector(mg_params.target);
-
-        for (var i=0; i<n; i++) {
-          var y_accessor = params.y_accessor[i];
-          var div = document.createElement("div");
-          div.id = y_accessor;
-          div.style.float = "left";
-          parentDom.appendChild(div);
-
-          mg_params.data   = wide[i];
-          mg_params.target = "#" + y_accessor;
-
-          // add titles instead of legends
-          if (mg_params.legend instanceof Array){
-            mg_params.title = params.legend[i];
-          }
-          mg_params.legend_target = null;
-
-          //draw a separate chart
-          MG.data_graphic(mg_params);
-        }
-
-      }
-    }
+    });
 
   },
 

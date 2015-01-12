@@ -19,7 +19,6 @@ The following functions are implemented:
 -   `mjs_labs`: Configure axis labels & plot description
 -   `mjs_add_baseline`: Sets a baseline line/label
 -   `mjs_add_marker`: Sets a marker line/label
--   `mjs_grid`: Adds `ggplot2` `facet_`-like functionality (via @yutannihilation) - [demo](http://rpubs.com/yutannihilation/metricsgraphics_grid)
 
 ### News
 
@@ -29,7 +28,6 @@ The following functions are implemented:
 -   Version 0.3.1 released - `mjs_marker` will now convert dates properly
 -   Version 0.4 released - added `mjs_add_legend` to support legends in line/multi-line charts
 -   Version 0.4.1 released - added support for linked charts (currently only works in `Rmd` files and mebbe Shiny if I can get more than one plot to show up in Shiny). See the [online Rmd demo](http://rpubs.com/hrbrmstr/52765) (scroll to bottom); also added some parameter error checking
--   Version 0.4.2 released - incorporated [PR13](https://github.com/hrbrmstr/metricsgraphics/pull/13) for `mjs_grid` function
 
 ### Installation
 
