@@ -10,6 +10,7 @@ output: html_document
 ```{r}
 library(metricsgraphics)
 library(RColorBrewer)
+library(htmltools)
 
 tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
 
@@ -117,19 +118,5 @@ s2 <- stocks2 %>%
 ```
 
 ```{r results='asis', echo=FALSE}
-cat("<table width='100%'><tr><td width='50%'>")
+tagList(div(s1, style="float:left; width:50%"), div(s2, style="float:left; width:50%"))
 ```
-
-`r s1`
-
-```{r results='asis', echo=FALSE}
-cat("</td><td>")
-```
-
-`r s2`
-
-```{r results='asis', echo=FALSE}
-cat("</td><tr></table>")
-```
-
-fin

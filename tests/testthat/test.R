@@ -3,14 +3,14 @@ library(RColorBrewer)
 
 tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
 
-tmp %>%
+s1 <- tmp %>%
   mjs_plot(x=year, y=uspop) %>%
   mjs_line() %>%
   mjs_add_marker(1850, "Something Wonderful") %>%
   mjs_add_baseline(150, "Something Awful")
 
 
-tmp %>%
+s2 <- tmp %>%
   mjs_plot(x=year, y=uspop, width=600) %>%
   mjs_line(area=TRUE)
 
