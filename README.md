@@ -4,13 +4,15 @@ The current `htmlwidget` wrapper for it is minimaly functional and does not prov
 
 Charts look best in a Boostrap page (unless you customize your own CSS).
 
-You can see what the output below produces [on RPubs](http://rpubs.com/hrbrmstr/52782).
+You can see what the output below produces [on RPubs](http://rpubs.com/hrbrmstr/53741).
 
 The following functions are implemented:
 
 -   `mjs_plot`: Create a new metricsgraphics.js plot
 -   `mjs_line`: metricsgraphics.js linechart "geom"
 -   `mjs_add_line`: used to add additional columns for a multi-line chart
+-   `mjs_hist`: Shortcut for plotting MetricsGraphics histograms
+-   `mjs_histogram`: Plot Histograms with MetrisGraphics
 -   `mjs_add_legend`: adds a legend to a line (or mult-line) chart
 -   `mjs_point`: metricsgraphics.js scatterplot "geom"
 -   `mjs_bar`: metricsgraphics.js bar chart "geom"
@@ -28,6 +30,7 @@ The following functions are implemented:
 -   Version 0.3.1 released - `mjs_marker` will now convert dates properly
 -   Version 0.4 released - added `mjs_add_legend` to support legends in line/multi-line charts
 -   Version 0.4.1 released - added support for linked charts (currently only works in `Rmd` files and mebbe Shiny if I can get more than one plot to show up in Shiny). See the [online Rmd demo](http://rpubs.com/hrbrmstr/52765) (scroll to bottom); also added some parameter error checking
+-   Version 0.5 Added histograms (`mjs_histogram` & `mjs_hist`)
 
 ### Installation
 
@@ -113,6 +116,36 @@ stocks %>%
   mjs_add_line(Y) %>%
   mjs_add_line(Z) %>%
   mjs_axis_x(xax_format="date")
+
+mjs_plot(rnorm(10000)) %>%
+  mjs_histogram(bins=30, bar_margin=1)
+
+movies <- ggplot2::movies[sample(nrow(ggplot2::movies), 1000), ]
+
+mjs_plot(movies$rating) %>% mjs_histogram()
+
+mjs_plot(movies, rating) %>% 
+  mjs_histogram() %>% 
+  mjs_labs(x_label="Histogram of movie ratings", 
+           y_label="Frequency")
+
+mjs_plot(movies$rating) %>% mjs_histogram(bins=30)
+
+mjs_plot(runif(10000)) %>% 
+  mjs_labs(x_label="runif(10000)") %>%
+  mjs_histogram()
+
+
+mjs_plot(rbeta(10000, 2, 5)) %>%
+  mjs_labs(x_label="rbeta(10000, 2, 3)") %>%
+  mjs_histogram(bins=100) %>% 
+  mjs_axis_y(extended_ticks=TRUE)
+
+bimod <- c(rnorm(1000, 0, 1), rnorm(1000, 3, 1))
+mjs_plot(bimod) %>% mjs_histogram() 
+mjs_plot(bimod) %>% mjs_histogram(bins=30) 
+
+bimod %>% mjs_hist(30)
 
 library(shiny)
 library(metricsgraphics)

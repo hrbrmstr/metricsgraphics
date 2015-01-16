@@ -30,8 +30,13 @@ HTMLWidgets.widget({
 
     wide = null;
 
-    if (params.geom == "histogram") {
-      wide = params.data;
+    if (params.geom == "hist") {
+
+      if (params.binned == false) {
+         wide = params.data;
+         console.log(params);
+      }
+
     } else {
 
       wide = HTMLWidgets.dataframeToD3(params.data);
@@ -102,6 +107,10 @@ HTMLWidgets.widget({
         x_axis: params.x_axis,
         y_axis: params.y_axis,
 
+        bar_margin: params.bar_margin,
+        binnned: params.binned,
+        bins: params.bins,
+
         interpolate: params.interpolate,
         decimals: params.decimals,
         format: params.format,
@@ -117,6 +126,7 @@ HTMLWidgets.widget({
         show_rollover_text: params.show_rollover_text,
 
         y_scale_type: params.y_scale_type,
+        y_extended_ticks: params.y_extended_ticks,
 
         chart_type: params.chart_type,
         x_accessor: params.x_accessor,
@@ -128,10 +138,6 @@ HTMLWidgets.widget({
 
         legend: params.legend,
         legend_target: params.legend_target,
-
-        bar_margin: params.bar_margin,
-        binned: params.binned,
-        bins: params.bins,
 
         linked: params.linked,
 

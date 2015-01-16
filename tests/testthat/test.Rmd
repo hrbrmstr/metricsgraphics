@@ -1,7 +1,7 @@
 ---
-title: "metricsgraphics.js htmlwidget wrapper v0.4.1"
+title: "metricsgraphics.js htmlwidget wrapper v0.5"
 author: "Bob Rudis (@hrbrmstr)"
-date: "January 8, 2015"
+date: "January 16, 2015"
 output: html_document
 ---
 
@@ -130,6 +130,39 @@ cat("</td><td>")
 
 ```{r results='asis', echo=FALSE}
 cat("</td><tr></table>")
+```
+
+```{r}
+set.seed(1337)
+mjs_plot(rnorm(10000)) %>%
+  mjs_histogram(bins=30, bar_margin=1)
+
+movies <- ggplot2::movies[sample(nrow(ggplot2::movies), 1000), ]
+
+mjs_plot(movies$rating) %>% mjs_histogram()
+
+mjs_plot(movies, rating) %>% 
+  mjs_histogram() %>% 
+  mjs_labs(x_label="Histogram of movie ratings", 
+           y_label="Frequency")
+
+mjs_plot(movies$rating) %>% mjs_histogram(bins=30)
+
+mjs_plot(runif(10000)) %>% 
+  mjs_labs(x_label="runif(10000)") %>%
+  mjs_histogram()
+
+
+mjs_plot(rbeta(10000, 2, 5)) %>%
+  mjs_labs(x_label="rbeta(10000, 2, 3)") %>%
+  mjs_histogram(bins=100) %>% 
+  mjs_axis_y(extended_ticks=TRUE)
+
+bimod <- c(rnorm(1000, 0, 1), rnorm(1000, 3, 1))
+mjs_plot(bimod) %>% mjs_histogram() 
+mjs_plot(bimod) %>% mjs_histogram(bins=30) 
+
+bimod %>% mjs_hist(30)
 ```
 
 fin

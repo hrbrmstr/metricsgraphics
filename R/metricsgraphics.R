@@ -24,6 +24,7 @@
 #' @param width Width in pixels (optional, defaults to automatic sizing)
 #' @param height Height in pixels (optional, defaults to automatic sizing)
 #' @import htmlwidgets htmltools
+#' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
 #' data.frame(year=seq(1790, 1970, 10),
@@ -76,13 +77,13 @@ mjs_plot <- function(data, x, y,
     color_range=c("blue", "red"),
     size_range=c(1, 5),
     bar_height=20,
-    bar_margin=1,
-    bins=NULL,
-    binned=TRUE,
     min_x=NULL,
     max_x=NULL,
     min_y=NULL,
     max_y=NULL,
+    bar_margin=1,
+    binned=FALSE,
+    bins=NULL,
     least_squares=FALSE,
     interpolate="cardinal",
     decimals=decimals,
@@ -107,6 +108,76 @@ mjs_plot <- function(data, x, y,
 
 }
 
+#' Plot Histograms with MetrisGraphics
+#'
+#' Given a numeric vector or a data frame and numeric column name (bare),
+#' plot a histogram with the specified parameter. This function automatically a y
+#' axis label "Frequency" which you can override with a call to
+#' \code{mjs_labs}.
+#'
+#' @param mjs plot object
+#' @param bar_margin space between bars (defaults to \code{1})
+#' @param bins numbenr of bins for the histogram (\code{NULL} == let MetricsGraphcis.js library compute)
+#' @return metricsgraphics plot object
+#' @export
+#' @examples \dontrun{
+#' movies <- movies[sample(nrow(movies), 1000), ]
+#' mjs_plot(movies$rating) %>% mjs_histogram()
+#' mjs_plot(movies, rating) %>% mjs_histogram() %>% mjs_labs(x_label="Histogram of movie ratings")
+#' mjs_plot(movies$rating) %>% mjs_histogram(bins=30)
+#' mjs_plot(runif(10000)) %>% mjs_histogram() %>% mjs_labs(x_label="runif(10000)")
+#' }
+mjs_histogram <- function(mjs, bar_margin=1, bins=NULL) {
+
+  mjs$x$chart_type <- "histogram"
+  mjs$x$bar_margin <- bar_margin
+  mjs$x$binned <- FALSE
+  mjs$x$bins <- bins
+  mjs$x$y_label <- "Frequency"
+  mjs$x$geom <- "hist"
+
+  x <- as.character(mjs$x$x_accessor)
+
+  if (mjs$x$binned == FALSE) {
+    if (x != "") {
+      mjs$x$data <- as.numeric(mjs$x$data[,x])
+    } else {
+      mjs$x$data <- as.numeric(mjs$x$data)
+    }
+  }
+
+  mjs
+
+}
+
+#' Shortcut for plotting MetricsGraphics histograms
+#'
+#' This function performs the call to \code{mjs_plot} and assumes
+#' \code{data} is a numeric vector. It's intended to save keystrokes
+#' when plotting quick histograms. This function automatically a y
+#' axis label "Frequency" which you can override with a call to
+#' \code{mjs_labs}.
+#'
+#' @param data numeric vector
+#' @param bins numbenr of bins for the histogram (\code{NULL} == let MetricsGraphcis.js library compute)
+#' @param bar_margin space between bars (defaults to \code{1})
+#' @return metricsgraphics object
+#' @export
+#' @examples \dontrun{
+#' bimod <- c(rnorm(1000, 0, 1), rnorm(1000, 3, 1))
+#'
+#' mjs_plot(bimod) %>% mjs_histogram()
+#' bimod %>% mjs_hist()
+#'
+#' mjs_plot(bimod) %>% mjs_histogram(bins=30)
+#' bimod %>% mjs_hist(30)
+#' }
+mjs_hist <- function(data, bins=NULL, bar_margin=1) {
+  mjs_plot(data) %>%
+    mjs_histogram(bins=bins, bar_margin=bar_margin) %>%
+    mjs_labs(y_label="Frequency")
+}
+
 #' metricsgraphics.js bar chart "geom"
 #'
 #' This function adds a bar "geom" to a metricsgraphics.js html widget.
@@ -114,6 +185,7 @@ mjs_plot <- function(data, x, y,
 #' @param mjs plot object
 #' @param bar_height width of bars
 #' @param binned is data already binned? (default: \code{TRUE} - yes)
+#' @return metricsgraphics object
 #' @note metricsgraphics.js currently has "meh" support for bar charts
 #' @export
 #' @examples \dontrun{
@@ -141,6 +213,7 @@ mjs_bar <- function(mjs,
 #' @param area fill in area under line? (default: \code{FALSE} - no)
 #' @param animate_on_load animate the drawing of the plot on page load? (default: \code{FALSE} - no)
 #' @param interpolate the interpolation function to use when rendering lines. possible values: ("cardinal", "linear", "linear-closed", "step", "step-before", "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal-open", "cardinal-closed", "monotone")
+#' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
 #' data.frame(year=seq(1790, 1970, 10),
@@ -175,6 +248,7 @@ mjs_line <- function(mjs,
 #' @note You must have called \code{mjs_line} first before adding additional columns
 #' @param mjs plot object
 #' @param y_accessor bare name of column to add to the existing line plot
+#' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
 #' set.seed(1492)
@@ -218,6 +292,7 @@ mjs_add_line <- function(mjs,
 #' @param x_rug show a "rug" plot next to the x axis? (default: \code{FALSE} - no)
 #' @param y_rug show a "rug" plot next to the y axis? (default: \code{FALSE} - no)
 #' @param color_range the range of colors, used to color different groups of points.
+#' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
 #' mtcars %>%
@@ -254,6 +329,7 @@ mjs_point <- function(mjs,
 #' Configure axis labels & plot description
 #'
 #' @export
+#' @return metricsgraphics object
 #' @examples \dontrun{
 #' mtcars %>%
 #'  mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
@@ -307,13 +383,15 @@ mjs_axis_x <- function(mjs,
 #' @param yax_count tick count
 #' @param min_y min limit for y axis
 #' @param max_y max limit for y axis
+#' @param extended ticks extend ticks on y axis?
 #' @param y_scale_type scale for y axis; either "linear" (default) or "log"
-#' @export
+#' @return metricsgraphics object
 #' @export
 mjs_axis_y <- function(mjs,
                        show=TRUE,
                        yax_count=5,
                        min_y=NULL, max_y=NULL,
+                       extended_ticks=FALSE,
                        y_scale_type="linear") {
 
   stopifnot(y_scale_type %in% c("linear", "log"))
@@ -322,6 +400,7 @@ mjs_axis_y <- function(mjs,
   mjs$x$yax_count <- yax_count
   mjs$x$min_y <- min_y
   mjs$x$max_y <- max_y
+  mjs$x$y_extended_ticks <- extended_ticks
   mjs$x$y_scale_type <- y_scale_type
   mjs
 }
@@ -336,6 +415,7 @@ mjs_axis_y <- function(mjs,
 #' @param mjs plot object
 #' @param x_value which x value to draw the marker at
 #' @param label text label for the marker
+#' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
 #' tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
@@ -372,6 +452,7 @@ mjs_add_marker <- function(mjs,
 #' @param mjs plot object
 #' @param y_value which y value to draw the baseline at
 #' @param label text label for the marker
+#' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
 #' tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
@@ -398,6 +479,7 @@ mjs_add_baseline <- function(mjs,
 #'
 #' @param legend character vector of labels for the legend
 #' @export
+#' @return metricsgraphics object
 #' @examples \dontrun{
 #' set.seed(1492)
 #' stocks <- data.frame(
