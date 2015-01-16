@@ -17,23 +17,29 @@ tmp %>%
   mjs_plot(x=year, y=uspop) %>%
   mjs_line() %>%
   mjs_add_marker(1850, "Something Wonderful") %>%
-  mjs_add_baseline(150, "Something Awful")
+  mjs_add_baseline(150, "Something Awful") -> p1
+
+p1
 
 tmp %>%
   mjs_plot(x=year, y=uspop, width=600) %>%
-  mjs_line(area=TRUE)
+  mjs_line(area=TRUE) -> p2
+
+p2
 
 tmp %>%
   mjs_plot(x=uspop, y=year, width=500, height=400) %>%
   mjs_bar() %>%
-  mjs_axis_x(xax_format = 'plain')
+  mjs_axis_x(xax_format = 'plain') -> p3
 
+p3
 
 mtcars %>%
   mjs_plot(x=wt, y=mpg, width=600, height=500) %>%
   mjs_point(color_accessor=carb, size_accessor=carb) %>%
-  mjs_labs(x="Weight of Car", y="Miles per Gallon")
+  mjs_labs(x="Weight of Car", y="Miles per Gallon") -> p4
 
+p4
 
 mtcars %>%
   mjs_plot(x=wt, y=mpg, width=600, height=500) %>%
@@ -43,13 +49,16 @@ mtcars %>%
             size_range=c(5, 10),
             color_type="category",
             color_range=brewer.pal(n=11, name="RdBu")[c(1, 5, 11)]) %>%
-  mjs_labs(x="Weight of Car", y="Miles per Gallon")
+  mjs_labs(x="Weight of Car", y="Miles per Gallon") -> p5
 
+p5
 
 mtcars %>%
   mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
   mjs_point(least_squares=TRUE) %>%
-  mjs_labs(x="Weight of Car", y="Miles per Gallon")
+  mjs_labs(x="Weight of Car", y="Miles per Gallon") -> p6
+
+p6
 
 
 set.seed(1492)
@@ -116,20 +125,12 @@ s2 <- stocks2 %>%
   mjs_add_legend(legend=c("X", "Y", "Z"))
 ```
 
-```{r results='asis', echo=FALSE}
-cat("<table width='100%'><tr><td width='50%'>")
+```{r eval=FALSE}
+mjs_grid(s1, s2, ncol=2)
 ```
 
-`r s1`
-
 ```{r results='asis', echo=FALSE}
-cat("</td><td>")
-```
-
-`r s2`
-
-```{r results='asis', echo=FALSE}
-cat("</td><tr></table>")
+mjs_grid(s1, s2, ncol=2)
 ```
 
 ```{r}

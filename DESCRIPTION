@@ -1,8 +1,8 @@
 Package: metricsgraphics
 Type: Package
 Title: An htmlwidgets interface to the metricsgraphics.js d3 charting library
-Version: 0.5
-Date: 2015-01-08
+Version: 0.6
+Date: 2015-01-16
 Author: Bob Rudis (@hrbrmstr)
 Maintainer: Bob Rudis <bob@rudis.net>
 Description: MetricsGraphics.js is a D3-based charting libary and this package

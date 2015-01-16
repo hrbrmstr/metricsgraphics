@@ -18,7 +18,9 @@ mjs_plot(data, x, y, show_rollover_text = TRUE, linked = FALSE,
 
 \item{show_rollover_text}{determines whether or not to show any text when a data point is rolled over.}
 
-\item{linked}{inks together all other graphs whose linked option is set to true. When one graphic in that set is rolled over, the corresponding values in the other graphics are also rolled over (default: \code{FALSE} - not linked)}
+\item{linked}{inks together all other graphs whose linked option is set to true.
+When one graphic in that set is rolled over, the corresponding values in the other
+graphics are also rolled over (default: \code{FALSE} - not linked)}
 
 \item{decimals}{the number of decimals to show in a rollover (default: \code{2})}
 

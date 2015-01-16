@@ -1,0 +1,86 @@
+---
+title: "mjs_grid"
+author: '@hrbrmstr'
+date: "January 16, 2015"
+output: html_document
+---
+
+```{r}
+suppressPackageStartupMessages(library(metricsgraphics))
+suppressPackageStartupMessages(library(htmltools))
+suppressPackageStartupMessages(library(dplyr))
+```
+
+```{r}
+plots <- lapply(1:7, function(x) {
+  mjs_plot(rnorm(10000, mean=x/2, sd=x), width="300px", height="300px", linked=TRUE) %>%
+    mjs_histogram(bar_margin=2) %>%
+    mjs_labs(x_label=sprintf("Plot %d", x))
+})
+
+moar_plots <- lapply(1:7, function(x) {
+  mjs_plot(rbeta(10000, x, x), width="300px", height="300px", linked=TRUE) %>%
+    mjs_histogram(bar_margin=2) %>%
+    mjs_labs(x_label=sprintf("Plot %d", x))
+})
+```
+
+```{r eval=FALSE}
+mjs_grid(plots)
+```
+
+```{r echo=FALSE, results="asis"}
+mjs_grid(plots)
+```
+
+```{r eval=FALSE}
+mjs_grid(moar_plots, nrow=4, ncol=3, widths=c(rep(0.33, 3)))
+```
+
+```{r echo=FALSE, results="asis"}
+mjs_grid(moar_plots, nrow=4, ncol=3, widths=c(rep(0.33, 3)))
+```
+
+```{r}
+tips <- reshape2::tips
+a <- tips %>%
+  mutate(percent=tip/total_bill,
+         day=factor(day, levels=c("Thur", "Fri", "Sat", "Sun"), ordered=TRUE)) %>%
+  group_by(sex, day) %>%
+  do( plot={ x_label <- sprintf("Total Bill (%s)", unique(.$sex))
+             y_label <- sprintf("Tip %% (%s)", unique(.$day))
+             mjs_plot(., x=total_bill, y=percent, width="250px", height="250px", left=100) %>%
+               mjs_point() %>%
+               mjs_labs(x_label=x_label, y_label=y_label) })
+```
+
+```{r eval=FALSE}
+mjs_grid(a$plot, ncol=4, nrow=2, widths=c(rep(0.5, 2)))
+```
+
+```{r echo=FALSE, results="asis"}
+mjs_grid(a$plot, ncol=4, nrow=2, widths=c(rep(0.5, 2)))
+```
+
+```{r}
+tips <- reshape2::tips
+a <- tips %>%
+  mutate(percent=tip/total_bill,
+         day=factor(day, levels=c("Thur", "Fri", "Sat", "Sun"), ordered=TRUE)) %>%
+  group_by(day) %>%
+  do( plot={ day_label <- unique(.$day)
+             mjs_plot(., x=total_bill, y=percent, width="350px", height="350px", left=100) %>%
+               mjs_point(color_accessor=sex, color_type="category") %>%
+               mjs_labs(x_label=sprintf("Total Bill (%s)", day_label), y_label="Tip %") })
+```
+
+```{r eval=FALSE}
+mjs_grid(a$plot, ncol=2, nrow=2, widths=c(0.5, 0.5))
+```
+
+```{r echo=FALSE, results="asis"}
+mjs_grid(a$plot, ncol=2, nrow=2, widths=c(0.5, 0.5))
+```
+
+
+

@@ -5,7 +5,7 @@
 \title{Configure x axis ticks & limits}
 \usage{
 mjs_axis_x(mjs, show = TRUE, xax_count = 6, min_x = NULL, max_x = NULL,
-  xax_format = "plain")
+  extended_ticks = FALSE, xax_format = "plain")
 }
 \arguments{
 \item{mjs}{plot object}
@@ -19,11 +19,14 @@ mjs_axis_x(mjs, show = TRUE, xax_count = 6, min_x = NULL, max_x = NULL,
 \item{max_x}{max limit for x axis}
 
 \item{xax_format}{how to format tick labels. Currently one of "plain", "comma" or "date"}
+
+\item{extended}{ticks extend ticks on x axis?}
 }
 \description{
 Configure x axis ticks & limits
 }
 \note{
-xax_format is likely to undergo a drastic change in future releases but support for these three formats will also likely remain.
+xax_format is likely to undergo a drastic change in future releases but
+      support for these three formats will also likely remain.
 }
 

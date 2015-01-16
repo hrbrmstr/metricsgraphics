@@ -12,7 +12,9 @@
 #' @param x bare name of column to use for x values
 #' @param y bare name of column to use for y values
 #' @param show_rollover_text determines whether or not to show any text when a data point is rolled over.
-#' @param linked inks together all other graphs whose linked option is set to true. When one graphic in that set is rolled over, the corresponding values in the other graphics are also rolled over (default: \code{FALSE} - not linked)
+#' @param linked inks together all other graphs whose linked option is set to true.
+#'        When one graphic in that set is rolled over, the corresponding values in the other
+#'        graphics are also rolled over (default: \code{FALSE} - not linked)
 #' @param decimals the number of decimals to show in a rollover (default: \code{2})
 #' @param format sets the format of the data object, which is to say, counts or percentages
 #' @param missing_is_zero if true and if the data object is a time series, missing data points will be treated as zeros
@@ -94,8 +96,13 @@ mjs_plot <- function(data, x, y,
     geom="line",
     legend=NULL,
     legend_target=NULL,
+    y_extended_ticks=FALSE,
+    x_extended_ticks=FALSE,
     target=sprintf("#%s", eid)
   )
+
+  if (is.null(width)) params$full_width <- TRUE
+  if (is.null(height)) params$full_height <- TRUE
 
   htmlwidgets::createWidget(
     name = 'metricsgraphics',
@@ -212,7 +219,10 @@ mjs_bar <- function(mjs,
 #' @param mjs plot object
 #' @param area fill in area under line? (default: \code{FALSE} - no)
 #' @param animate_on_load animate the drawing of the plot on page load? (default: \code{FALSE} - no)
-#' @param interpolate the interpolation function to use when rendering lines. possible values: ("cardinal", "linear", "linear-closed", "step", "step-before", "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal-open", "cardinal-closed", "monotone")
+#' @param interpolate the interpolation function to use when rendering lines.
+#'        possible values: ("cardinal", "linear", "linear-closed", "step", "step-before",
+#'        "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal-open",
+#'        "cardinal-closed", "monotone")
 #' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
@@ -287,7 +297,8 @@ mjs_add_line <- function(mjs,
 #' @param least_squares add a least squares line? (default: \code{FALSE} - no)
 #' @param size_accessor bare name of a column to use to scale the size of the points
 #' @param color_accessor bare name of a column to use to scale the color of the points
-#' @param color_type specifies whether the color scale is quantitative or qualitative. By setting this option to category, you can color the points according to some other discrete value
+#' @param color_type specifies whether the color scale is quantitative or qualitative.
+#'        By setting this option to category, you can color the points according to some other discrete value
 #' @param size_range specifies the range of point sizes, when point sizes are mapped to data
 #' @param x_rug show a "rug" plot next to the x axis? (default: \code{FALSE} - no)
 #' @param y_rug show a "rug" plot next to the y axis? (default: \code{FALSE} - no)
@@ -351,13 +362,16 @@ mjs_labs <- function(mjs,
 #' @param xax_count tick count
 #' @param min_x min limit for x axis
 #' @param max_x max limit for x axis
+#' @param extended ticks extend ticks on x axis?
 #' @param xax_format how to format tick labels. Currently one of "plain", "comma" or "date"
-#' @note xax_format is likely to undergo a drastic change in future releases but support for these three formats will also likely remain.
+#' @note xax_format is likely to undergo a drastic change in future releases but
+#'       support for these three formats will also likely remain.
 #' @export
 mjs_axis_x <- function(mjs,
                        show=TRUE,
                        xax_count=6,
                        min_x=NULL, max_x=NULL,
+                       extended_ticks=FALSE,
                        xax_format="plain") {
 
   stopifnot(xax_format %in% c("plain", "comma", "date"))
@@ -366,6 +380,7 @@ mjs_axis_x <- function(mjs,
   mjs$x$xax_count <- xax_count
   mjs$x$min_x <- min_x
   mjs$x$max_x <- max_x
+  mjs$x$x_extended_ticks <- extended_ticks
   mjs$x$xax_format <- xax_format
 
   if (xax_format == "date") {
@@ -518,6 +533,6 @@ renderMetricsgraphics <- function(expr, env = parent.frame(), quoted = FALSE) {
 }
 
 metricsgraphics_html <- function(id, style, class, ...) {
-  list(tags$div(id = id, class = class, style=style),
+  list(tags$div(id = id, class = class, style = style),
        tags$div(id = sprintf("%s-legend", id), class = sprintf("%s-legend", class)))
 }

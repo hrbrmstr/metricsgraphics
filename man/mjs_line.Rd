@@ -14,7 +14,10 @@ mjs_line(mjs, area = FALSE, animate_on_load = FALSE,
 
 \item{animate_on_load}{animate the drawing of the plot on page load? (default: \code{FALSE} - no)}
 
-\item{interpolate}{the interpolation function to use when rendering lines. possible values: ("cardinal", "linear", "linear-closed", "step", "step-before", "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal-open", "cardinal-closed", "monotone")}
+\item{interpolate}{the interpolation function to use when rendering lines.
+possible values: ("cardinal", "linear", "linear-closed", "step", "step-before",
+"step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal-open",
+"cardinal-closed", "monotone")}
 }
 \value{
 metricsgraphics object

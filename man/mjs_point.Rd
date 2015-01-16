@@ -20,7 +20,8 @@ mjs_point(mjs, point_size = 2.5, least_squares = FALSE,
 
 \item{color_accessor}{bare name of a column to use to scale the color of the points}
 
-\item{color_type}{specifies whether the color scale is quantitative or qualitative. By setting this option to category, you can color the points according to some other discrete value}
+\item{color_type}{specifies whether the color scale is quantitative or qualitative.
+By setting this option to category, you can color the points according to some other discrete value}
 
 \item{color_range}{the range of colors, used to color different groups of points.}
 

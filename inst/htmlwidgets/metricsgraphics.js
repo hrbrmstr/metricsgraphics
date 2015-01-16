@@ -127,6 +127,7 @@ HTMLWidgets.widget({
 
         y_scale_type: params.y_scale_type,
         y_extended_ticks: params.y_extended_ticks,
+        x_extended_ticks: params.x_extended_ticks,
 
         chart_type: params.chart_type,
         x_accessor: params.x_accessor,
