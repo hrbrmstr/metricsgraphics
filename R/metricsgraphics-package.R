@@ -3,16 +3,16 @@
 #' @name metricsgraphics
 #' @docType package
 #' @author Bob Rudis (@@hrbrmstr)
-#' @import htmlwidgets
+#' @import htmlwidgets htmltools
 # @exportPattern ^[[:alpha:]]+
 NULL
 
-#' metricsgraphics exported operators 
-#' 
+#' metricsgraphics exported operators
+#'
 #' The following functions are imported and then re-exported
-#' from the dygraphs package to enable use of the magrittr 
+#' from the dygraphs package to enable use of the magrittr
 #' pipe operator with no additional library calls
-#' 
+#'
 #' @name metricsgraphics-exports
 NULL
 
