@@ -46,7 +46,8 @@ mjs_plot <- function(data, x, y,
 
   stopifnot(format %in% c("percentage", "count"))
 
-  eid <- sprintf("mjs-%s", paste(sample(c(letters[1:6],0:9),30,replace=TRUE),collapse=""))
+  eid <- sprintf("mjs-%s",
+                 paste(sample(c(letters[1:6], 0:9), 30, replace=TRUE), collapse=""))
 
   params = list(
     data=data,
@@ -90,8 +91,8 @@ mjs_plot <- function(data, x, y,
     interpolate="cardinal",
     decimals=decimals,
     show_rollover_text=show_rollover_text,
-    x_accessor=substitute(x),
-    y_accessor=substitute(y),
+    x_accessor=as.character(substitute(x)),
+    y_accessor=as.character(substitute(y)),
     multi_line=NULL,
     geom="line",
     legend=NULL,
@@ -328,8 +329,8 @@ mjs_point <- function(mjs,
   mjs$x$least_squares<- least_squares
   mjs$x$x_rug <- x_rug
   mjs$x$y_rug <- y_rug
-  mjs$x$size_accessor <- substitute(size_accessor)
-  mjs$x$color_accessor <- substitute(color_accessor)
+  if (class(substitute(size_accessor)) != "NULL") mjs$x$size_accessor <- as.character(substitute(size_accessor))
+  if (class(substitute(color_accessor)) != "NULL") mjs$x$color_accessor <-as.character(substitute(color_accessor))
   mjs$x$color_type <- color_type
   mjs$x$color_range <- color_range
   mjs$x$size_range <- size_range

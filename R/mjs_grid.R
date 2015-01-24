@@ -7,6 +7,7 @@
 #' @param widths widths of the cells per row
 #' @return \code{htmltools} tag with wrapped \code{metricsgraphics} objects suitable
 #'         for knitting with \code{echo=FALSE} & \code{results="asis"} or rendering in Viewer with \code{html_print}
+#' @note \code{mjs_grid} does not work in a Shiny context
 #' @export
 mjs_grid <- function(..., ncol=1, nrow=1, widths=1) {
 

@@ -11,4 +11,4 @@ dependencies:
   version: 1.1.0
   src: htmlwidgets/lib/metrics-graphics
   script: dist/metricsgraphics.min.js
-  style: dist/metricsgraphics.css
+  stylesheet: dist/metricsgraphics.css

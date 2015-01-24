@@ -33,6 +33,7 @@ The following functions are implemented:
 -   Version 0.4.1 released - added support for linked charts (currently only works in `Rmd` files and mebbe Shiny if I can get more than one plot to show up in Shiny). See the [online Rmd demo](http://rpubs.com/hrbrmstr/52765) (scroll to bottom); also added some parameter error checking
 -   Version 0.5 released - added histograms (`mjs_histogram` & `mjs_hist`)
 -   Version 0.6 relased - added `mjs_grid` for `grid.arrange`-like functionality for placing multiple charts (ref: [<http://rpubs.com/hrbrmstr/metricsgraphics0-6>](http://rpubs.com/hrbrmstr/metricsgraphics0-6))
+-   Version 0.6.1 released - Fixed bug that broke widget in new shiny/shinydashboard context
 
 ### Installation
 
@@ -154,16 +155,37 @@ library(metricsgraphics)
 
 ui = shinyUI(fluidPage(
   h3("MetricsGraphics Example", style="text-align:center"),
-  metricsgraphicsOutput('mjs')
+  metricsgraphicsOutput('mjs1'),
+  br(),
+  metricsgraphicsOutput('mjs2')
 ))
 
 server = function(input, output) {
-  output$mjs <- renderMetricsgraphics(
-    mtcars %>% 
-      mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
-      mjs_point(color_accessor=carb, size_accessor=carb) %>%
-      mjs_labs(x="Weight of Car", y="Miles per Gallon")
-  )
+
+  mtcars %>%
+    mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
+    mjs_point(color_accessor=carb, size_accessor=carb) %>%
+    mjs_labs(x="Weight of Car", y="Miles per Gallon") -> m1
+
+  set.seed(1492)
+  stocks <- data.frame(
+    time = as.Date('2009-01-01') + 0:9,
+    X = rnorm(10, 0, 1),
+    Y = rnorm(10, 0, 2),
+    Z = rnorm(10, 0, 4))
+
+  stocks %>%
+    mjs_plot(x=time, y=X) %>%
+    mjs_line() %>%
+    mjs_add_line(Y) %>%
+    mjs_add_line(Z) %>%
+    mjs_axis_x(xax_format="date") %>%
+    mjs_add_legend(legend=c("X", "Y", "Z")) -> m2
+
+  output$mjs1 <- renderMetricsgraphics(m1)
+
+  output$mjs2 <- renderMetricsgraphics(m2)
+
 }
 
 shinyApp(ui = ui, server = server)
