@@ -7,6 +7,8 @@
 mjs_add_legend(mjs, legend)
 }
 \arguments{
+\item{mjs}{plot object}
+
 \item{legend}{character vector of labels for the legend}
 }
 \value{

@@ -10,6 +10,13 @@ tmp %>%
   mjs_add_baseline(150, "Something Awful")
 
 
+mjs_plot(rnorm(10000)) %>%
+  mjs_histogram(bins=30, bar_margin=1)
+
+movies <- ggplot2::movies[sample(nrow(ggplot2::movies), 1000), ]
+
+mjs_plot(movies$rating) %>% mjs_histogram()
+
 tmp %>%
   mjs_plot(x=year, y=uspop, width=600) %>%
   mjs_line(area=TRUE)
@@ -55,6 +62,15 @@ dat %>%
   mjs_line() %>%
   mjs_axis_x(xax_format = "date")
 
+dat %>%
+  mjs_plot(x=date, y=value) %>%
+  mjs_line() %>%
+  mjs_axis_x(xax_format = "date") %>%
+  mjs_add_mouseover("function(d, i) {
+                $('{{ID}} svg .mg-active-datapoint')
+                    .text('custom text : ' + d.date + ' ' + i);
+                 }")
+
 set.seed(1492)
 stocks <- data.frame(
   time = as.Date('2009-01-01') + 0:9,
@@ -73,7 +89,7 @@ stocks2 <- data.frame(
 
 stocks %>%
   mjs_plot(x=time, y=X) %>%
-  mjs_line(interpolate="fish") %>%
+  mjs_line() %>%
   mjs_add_line(Y) %>%
   mjs_add_line(Z) %>%
   mjs_axis_x(xax_format="date") %>%

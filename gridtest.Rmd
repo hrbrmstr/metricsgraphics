@@ -1,8 +1,10 @@
 ---
 title: "mjs_grid"
 author: '@hrbrmstr'
-date: "January 16, 2015"
-output: html_document
+date: "February 1, 2015"
+output: 
+  html_document:
+    toc: false
 ---
 
 ```{r}

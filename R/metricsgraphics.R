@@ -44,7 +44,9 @@ mjs_plot <- function(data, x, y,
                      top = 40, bottom = 60, buffer = 8,
                      width = NULL, height = NULL) {
 
-  stopifnot(format %in% c("percentage", "count"))
+  if (!format %in% c("percentage", "count")) {
+    stop("'format' must be either 'percentage' or 'count'")
+  }
 
   eid <- sprintf("mjs-%s",
                  paste(sample(c(letters[1:6], 0:9), 30, replace=TRUE), collapse=""))
@@ -53,6 +55,8 @@ mjs_plot <- function(data, x, y,
     data=data,
     x_axis=TRUE,
     y_axis=TRUE,
+    baseline_accessor=NULL,
+    predictor_accessor=NULL,
     show_confidence_band=NULL,
     chart_type="line",
     xax_format="plain",
@@ -205,6 +209,7 @@ mjs_hist <- function(data, bins=NULL, bar_margin=1) {
 #'
 mjs_bar <- function(mjs,
                     bar_height=20, binned=TRUE) {
+  mjs$x$data[, mjs$x$y_accessor] <- as.character(mjs$x$data[, mjs$x$y_accessor])
   mjs$x$chart_type <- "bar"
   mjs$x$bar_height <- bar_height
   mjs$x$binned <- binned
@@ -237,10 +242,12 @@ mjs_line <- function(mjs,
                      area=FALSE, animate_on_load=FALSE,
                      interpolate="cardinal") {
 
-  stopifnot(interpolate %in% c("cardinal", "linear", "linear-closed", "step",
+  if(!interpolate %in% c("cardinal", "linear", "linear-closed", "step",
                                "step-before", "step-after", "basis", "basis-open",
                                "basis-closed", "bundle", "cardinal-open",
-                               "cardinal-closed", "monotone"))
+                               "cardinal-closed", "monotone")) {
+    stop("'interpolate' must be a valid value")
+  }
 
 
   mjs$x$area <- area
@@ -323,7 +330,9 @@ mjs_point <- function(mjs,
                       x_rug=FALSE,
                       y_rug=FALSE) {
 
-  stopifnot(color_type %in% c("category", "number"))
+  if (!color_type %in% c("category", "number")) {
+    stop("'color_type' must be either 'category' or 'number'")
+  }
 
   mjs$x$chart_type <- "point"
   mjs$x$least_squares<- least_squares
@@ -375,7 +384,9 @@ mjs_axis_x <- function(mjs,
                        extended_ticks=FALSE,
                        xax_format="plain") {
 
-  stopifnot(xax_format %in% c("plain", "comma", "date"))
+  if (!xax_format %in% c("plain", "comma", "date")) {
+    stop("'xax_format' must be either 'plain', 'comma' or 'date'")
+  }
 
   mjs$x$x_axis <- show
   mjs$x$xax_count <- xax_count
@@ -410,7 +421,9 @@ mjs_axis_y <- function(mjs,
                        extended_ticks=FALSE,
                        y_scale_type="linear") {
 
-  stopifnot(y_scale_type %in% c("linear", "log"))
+  if (!y_scale_type %in% c("linear", "log")) {
+    stop("'y_scale_type' must be either 'linear' or 'log'")
+  }
 
   mjs$x$y_axis <- show
   mjs$x$yax_count <- yax_count
@@ -493,6 +506,7 @@ mjs_add_baseline <- function(mjs,
 
 #' Adds a legend to a metricsgraphics chart
 #'
+#' @param mjs plot object
 #' @param legend character vector of labels for the legend
 #' @export
 #' @return metricsgraphics object
@@ -515,6 +529,35 @@ mjs_add_baseline <- function(mjs,
 mjs_add_legend <- function(mjs, legend) {
   mjs$x$legend <- legend
   mjs$x$legend_target <- sprintf("#%s-legend", mjs$elementId)
+  mjs
+}
+
+#' @title Adds a custom rollover to a metricsgraphics chart
+#' @details MetricsGraphics charts allow for \href{https://github.com/mozilla/metrics-graphics/wiki/Graphic#mouseover}{custom rollovers}.
+#'     \code{mjs_add_mouseover} lets you add a custom rollover to a metricsgraphics object. You must be
+#'     familiar with javascript and D3 idioms since you are supplying a javascript function as
+#'     a parameter.\cr
+#'     \cr
+#'     Since targeting is done by element id, you will need to add a special string - \code{\{\{ID\}\}} -
+#'     to the target element selector so metricsgraphics can add the unique object identifier
+#'     to the selector. See Examples for basic usage.
+#' @param mjs plot object
+#' @param func text for javascript function to be used for the custom rollover. See Details for usage.
+#' @export
+#' @return metricsgraphics object
+#' @examples \dontrun{
+#' dat %>%
+#'   mjs_plot(x=date, y=value) %>%
+#'   mjs_line() %>%
+#'   mjs_axis_x(xax_format = "date") %>%
+#'   mjs_add_mouseover("function(d, i) {
+#'                 $('{{ID}} svg .mg-active-datapoint')
+#'                     .text('custom text : ' + d.date + ' ' + i);
+#'                  }")
+#' }
+#' @export
+mjs_add_mouseover <- function(mjs, func) {
+  mjs$x$mouseover <- JS(gsub("\\{\\{ID\\}\\}", sprintf("%s", mjs$x$target), func))
   mjs
 }
 
