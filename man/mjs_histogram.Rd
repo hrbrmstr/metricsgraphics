@@ -17,7 +17,7 @@ mjs_histogram(mjs, bar_margin = 1, bins = NULL)
 metricsgraphics plot object
 }
 \description{
-Given a numeric vector or a data frame and numeric column name (bare),
+Given a numeric vector or a data frame and numeric column name (bare or quoted),
 plot a histogram with the specified parameter. This function automatically a y
 axis label "Frequency" which you can override with a call to
 \code{mjs_labs}.

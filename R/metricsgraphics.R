@@ -1,7 +1,7 @@
 #' Create a new metricsgraphics.js  plot
 #'
 #' \code{mjs_plot()} initializes the metricsgraphics.js html widget
-#' and takes a data frame & (bare) x & y column names as minimum input.
+#' and takes a data frame & (bare or quoted) x & y column names as minimum input.
 #' This must be piped to a "geom" (metricsgraphics.js only supports single
 #' "geom" layers) and can also be piped to other \code{mjs_} functions that
 #' manipulate aesthetics.
@@ -9,8 +9,8 @@
 #' See \href{http://metricsgraphicsjs.org/}{MetricsGraphics.js} for more information.
 #'
 #' @param data data frame
-#' @param x bare name of column to use for x values
-#' @param y bare name of column to use for y values
+#' @param x bare or quoted name of column to use for x values
+#' @param y bare or quoted name of column to use for y values
 #' @param show_rollover_text determines whether or not to show any text when a data point is rolled over.
 #' @param linked inks together all other graphs whose linked option is set to true.
 #'        When one graphic in that set is rolled over, the corresponding values in the other
@@ -33,6 +33,13 @@
 #'            uspop=as.numeric(uspop)) %>%
 #'   mjs_plot(x=year, y=uspop) %>%
 #'   mjs_line()
+#'
+#' # accessor params can also be quoted
+#'
+#' data.frame(year=seq(1790, 1970, 10),
+#'            uspop=as.numeric(uspop)) %>%
+#'   mjs_plot(x="year", y="uspop") %>%
+#'   mjs_line()#'
 #' }
 #'
 mjs_plot <- function(data, x, y,
@@ -50,6 +57,20 @@ mjs_plot <- function(data, x, y,
 
   eid <- sprintf("mjs-%s",
                  paste(sample(c(letters[1:6], 0:9), 30, replace=TRUE), collapse=""))
+
+  if (!missing(x)) {
+    x <- substitute(x)
+    if (inherits(x, "name")) { x <- as.character(x) }
+  } else {
+    x <- as.character(substitute(x))
+  }
+
+  if (!missing(y)) {
+    y <- substitute(y)
+    if (inherits(y, "name")) { y <- as.character(y) }
+  } else {
+    y <- as.character(substitute(y))
+  }
 
   params = list(
     data=data,
@@ -95,8 +116,8 @@ mjs_plot <- function(data, x, y,
     interpolate="cardinal",
     decimals=decimals,
     show_rollover_text=show_rollover_text,
-    x_accessor=as.character(substitute(x)),
-    y_accessor=as.character(substitute(y)),
+    x_accessor=x,
+    y_accessor=y,
     multi_line=NULL,
     geom="line",
     legend=NULL,
@@ -122,7 +143,7 @@ mjs_plot <- function(data, x, y,
 
 #' Plot Histograms with MetrisGraphics
 #'
-#' Given a numeric vector or a data frame and numeric column name (bare),
+#' Given a numeric vector or a data frame and numeric column name (bare or quoted),
 #' plot a histogram with the specified parameter. This function automatically a y
 #' axis label "Frequency" which you can override with a call to
 #' \code{mjs_labs}.
@@ -260,12 +281,12 @@ mjs_line <- function(mjs,
 #' Add a new line to a metricsgraphics.js linechart "geom"
 #'
 #' This function adds a line to an existing \code{mjs_line} "geom". Specify
-#' the bare name of the column to use in \code{y_accessor} and it will be added
+#' the bare or quoted name of the column to use in \code{y_accessor} and it will be added
 #' to the plot.
 #'
 #' @note You must have called \code{mjs_line} first before adding additional columns
 #' @param mjs plot object
-#' @param y_accessor bare name of column to add to the existing line plot
+#' @param y_accessor bare or quoted name of column to add to the existing line plot
 #' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
@@ -286,9 +307,12 @@ mjs_line <- function(mjs,
 mjs_add_line <- function(mjs,
                          y_accessor) {
 
+  y_accessor <- substitute(y_accessor)
+  if (inherits(y_accessor, "name")) { y_accessor <- as.character(y_accessor) }
+
   multi_line <- mjs$x$multi_line
   if (is.null(multi_line)) multi_line <- list()
-  new_line <- as.character(substitute(y_accessor))
+  new_line <- y_accessor
   multi_line <- c(multi_line, new_line)
   mjs$x$multi_line <- multi_line
   mjs
@@ -303,8 +327,8 @@ mjs_add_line <- function(mjs,
 #' @param mjs plot object
 #' @param point_size the radius of the dots in the scatterplot
 #' @param least_squares add a least squares line? (default: \code{FALSE} - no)
-#' @param size_accessor bare name of a column to use to scale the size of the points
-#' @param color_accessor bare name of a column to use to scale the color of the points
+#' @param size_accessor bare or quoted name of a column to use to scale the size of the points
+#' @param color_accessor bare or quoted name of a column to use to scale the color of the points
 #' @param color_type specifies whether the color scale is quantitative or qualitative.
 #'        By setting this option to category, you can color the points according to some other discrete value
 #' @param size_range specifies the range of point sizes, when point sizes are mapped to data
@@ -338,8 +362,16 @@ mjs_point <- function(mjs,
   mjs$x$least_squares<- least_squares
   mjs$x$x_rug <- x_rug
   mjs$x$y_rug <- y_rug
-  if (class(substitute(size_accessor)) != "NULL") mjs$x$size_accessor <- as.character(substitute(size_accessor))
-  if (class(substitute(color_accessor)) != "NULL") mjs$x$color_accessor <-as.character(substitute(color_accessor))
+  if (class(substitute(size_accessor)) != "NULL") {
+    size_accessor <- substitute(size_accessor)
+    if (inherits(size_accessor, "name")) { size_accessor <- as.character(size_accessor) }
+    mjs$x$size_accessor <- size_accessor
+  }
+  if (class(substitute(color_accessor)) != "NULL") {
+    color_accessor <- substitute(color_accessor)
+    if (inherits(color_accessor, "name")) { color_accessor <- as.character(color_accessor) }
+    mjs$x$color_accessor <- color_accessor
+  }
   mjs$x$color_type <- color_type
   mjs$x$color_range <- color_range
   mjs$x$size_range <- size_range

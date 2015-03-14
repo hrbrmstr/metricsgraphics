@@ -9,14 +9,14 @@ mjs_add_line(mjs, y_accessor)
 \arguments{
 \item{mjs}{plot object}
 
-\item{y_accessor}{bare name of column to add to the existing line plot}
+\item{y_accessor}{bare or quoted name of column to add to the existing line plot}
 }
 \value{
 metricsgraphics object
 }
 \description{
 This function adds a line to an existing \code{mjs_line} "geom". Specify
-the bare name of the column to use in \code{y_accessor} and it will be added
+the bare or quoted name of the column to use in \code{y_accessor} and it will be added
 to the plot.
 }
 \note{

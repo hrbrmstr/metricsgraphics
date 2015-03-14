@@ -36,6 +36,7 @@ The following functions are implemented:
 -   Version 0.6 relased - added `mjs_grid` for `grid.arrange`-like functionality for placing multiple charts (ref: [<http://rpubs.com/hrbrmstr/metricsgraphics0-6>](http://rpubs.com/hrbrmstr/metricsgraphics0-6))
 -   Version 0.6.1 released - Fixed bug that broke widget in new shiny/shinydashboard context
 -   Version 0.7 released - Updated widget for MetricsGraphics 2.1.0; added `mjs_add_mouseover` and tweaked `mjs_bar`. NOTE: As the Mozilla folks said, the bar charts API is quite unstable. There won't be much effort to support them in this package until the API stabilizes a bit more.
+-   Version 0.7.5 released - updated all functions that take bare inputs and made them flexible enough to take bare or quoted inputs.
 
 ### Installation
 

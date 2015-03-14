@@ -12,9 +12,9 @@ mjs_plot(data, x, y, show_rollover_text = TRUE, linked = FALSE,
 \arguments{
 \item{data}{data frame}
 
-\item{x}{bare name of column to use for x values}
+\item{x}{bare or quoted name of column to use for x values}
 
-\item{y}{bare name of column to use for y values}
+\item{y}{bare or quoted name of column to use for y values}
 
 \item{show_rollover_text}{determines whether or not to show any text when a data point is rolled over.}
 
@@ -47,7 +47,7 @@ metricsgraphics object
 }
 \description{
 \code{mjs_plot()} initializes the metricsgraphics.js html widget
-and takes a data frame & (bare) x & y column names as minimum input.
+and takes a data frame & (bare or quoted) x & y column names as minimum input.
 This must be piped to a "geom" (metricsgraphics.js only supports single
 "geom" layers) and can also be piped to other \code{mjs_} functions that
 manipulate aesthetics.
@@ -61,6 +61,13 @@ data.frame(year=seq(1790, 1970, 10),
            uspop=as.numeric(uspop)) \%>\%
   mjs_plot(x=year, y=uspop) \%>\%
   mjs_line()
+
+# accessor params can also be quoted
+
+data.frame(year=seq(1790, 1970, 10),
+           uspop=as.numeric(uspop)) \%>\%
+  mjs_plot(x="year", y="uspop") \%>\%
+  mjs_line()#'
 }
 }
 

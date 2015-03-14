@@ -16,9 +16,9 @@ mjs_point(mjs, point_size = 2.5, least_squares = FALSE,
 
 \item{least_squares}{add a least squares line? (default: \code{FALSE} - no)}
 
-\item{size_accessor}{bare name of a column to use to scale the size of the points}
+\item{size_accessor}{bare or quoted name of a column to use to scale the size of the points}
 
-\item{color_accessor}{bare name of a column to use to scale the color of the points}
+\item{color_accessor}{bare or quoted name of a column to use to scale the color of the points}
 
 \item{color_type}{specifies whether the color scale is quantitative or qualitative.
 By setting this option to category, you can color the points according to some other discrete value}
