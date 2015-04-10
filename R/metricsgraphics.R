@@ -72,6 +72,10 @@ mjs_plot <- function(data, x, y,
     y <- as.character(substitute(y))
   }
 
+  if (inherits(data[, x], c('Date', 'POSIXct', 'POSIXlt'))) {
+    data[, x] <- as.numeric(data[, x])
+  }
+
   params = list(
     data=data,
     x_axis=TRUE,
