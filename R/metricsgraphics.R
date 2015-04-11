@@ -433,7 +433,7 @@ mjs_axis_x <- function(mjs,
 
   if (xax_format == "date") {
     mjs$x$data[,as.character(mjs$x$x_accessor)] <-
-      format(mjs$x$data[,as.character(mjs$x$x_accessor)], "%Y-%m-%d")
+      format(as.Date(mjs$x$data[,as.character(mjs$x$x_accessor)],origin='1970-01-01'), "%Y-%m-%d")
   }
 
   mjs
