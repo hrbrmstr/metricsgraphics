@@ -27,6 +27,10 @@ MetricsGraphics charts allow for \href{https://github.com/mozilla/metrics-graphi
     to the target element selector so metricsgraphics can add the unique object identifier
     to the selector. See Examples for basic usage.
 }
+\note{
+you need to use \code{d.point.THING} vs \code{d.THING} when trying to add mouseovers to a
+    metricsgraphics scatterplot.
+}
 \examples{
 \dontrun{
 dat \%>\%
@@ -37,6 +41,21 @@ dat \%>\%
                 $('{{ID}} svg .mg-active-datapoint')
                     .text('custom text : ' + d.date + ' ' + i);
                  }")
+
+dat <- data.frame(value=rnorm(n=30, mean=5, sd=1),
+                  value2=rnorm(n=30, mean=4, sd=1),
+                  test = c(rep(c('test', 'test2'), 15)))
+
+# slightly different for scatterplots
+
+dat \%>\%
+  mjs_plot(x = value, y = value2) \%>\%
+  mjs_point() \%>\%
+  mjs_add_mouseover("function(d, i) {
+                $('{{ID}} svg .mg-active-datapoint')
+                    .text('custom text : ' + d.point.test + ' ' + i);
+                 }")
+
 }
 }
 

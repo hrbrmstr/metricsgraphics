@@ -18,7 +18,7 @@ HTMLWidgets.widget({
     while (el.firstChild)
       el.removeChild(el.firstChild);
 
-    dbg = params;
+    //dbg = params;
 
     wide = null;
 
@@ -26,7 +26,6 @@ HTMLWidgets.widget({
 
       if (params.binned === false) {
          wide = params.data;
-         console.log(params);
       }
 
     } else {
@@ -89,7 +88,7 @@ HTMLWidgets.widget({
 
     if (params.xax_format == "comma") xax_format = mjs_comma ;
 
-    dbg = params;
+    //dbg = params;
 
     if (params.geom == "bar") {
 

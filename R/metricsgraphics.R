@@ -588,6 +588,8 @@ mjs_add_legend <- function(mjs, legend) {
 #' @param func text for javascript function to be used for the custom rollover. See Details for usage.
 #' @export
 #' @return metricsgraphics object
+#' @note you need to use \code{d.point.THING} vs \code{d.THING} when trying to add mouseovers to a
+#'     metricsgraphics scatterplot.
 #' @examples \dontrun{
 #' dat %>%
 #'   mjs_plot(x=date, y=value) %>%
@@ -597,6 +599,21 @@ mjs_add_legend <- function(mjs, legend) {
 #'                 $('{{ID}} svg .mg-active-datapoint')
 #'                     .text('custom text : ' + d.date + ' ' + i);
 #'                  }")
+#'
+#' dat <- data.frame(value=rnorm(n=30, mean=5, sd=1),
+#'                   value2=rnorm(n=30, mean=4, sd=1),
+#'                   test = c(rep(c('test', 'test2'), 15)))
+#'
+#' # slightly different for scatterplots
+#'
+#' dat %>%
+#'   mjs_plot(x = value, y = value2) %>%
+#'   mjs_point() %>%
+#'   mjs_add_mouseover("function(d, i) {
+#'                 $('{{ID}} svg .mg-active-datapoint')
+#'                     .text('custom text : ' + d.point.test + ' ' + i);
+#'                  }")
+#'
 #' }
 #' @export
 mjs_add_mouseover <- function(mjs, func) {
@@ -611,7 +628,7 @@ mjs_add_mouseover <- function(mjs, func) {
 #' @param height height
 #' @export
 metricsgraphicsOutput <- function(outputId, width = '100%', height = '400px'){
-  shinyWidgetOutput(outputId, 'metricsgraphics', width, height, package = 'metricsgraphics')
+  htmlwidgets::shinyWidgetOutput(outputId, 'metricsgraphics', width, height, package = 'metricsgraphics')
 }
 
 #' Widget render function for use in Shiny
@@ -622,7 +639,7 @@ metricsgraphicsOutput <- function(outputId, width = '100%', height = '400px'){
 #' @export
 renderMetricsgraphics <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
-  shinyRenderWidget(expr, metricsgraphicsOutput, env, quoted = TRUE)
+  htmlwidgets::shinyRenderWidget(expr, metricsgraphicsOutput, env, quoted = TRUE)
 }
 
 metricsgraphics_html <- function(id, style, class, ...) {

@@ -2,8 +2,6 @@
 
 metricsgraphics is an 'htmlwidget' interface to the [MetricsGraphics.js](http://metricsgraphicsjs.org/) D3 chart library.
 
-The current `htmlwidget` wrapper for it is minimaly functional and does not provide support for metricsgraphics histograms and provides nascent support for metricsgraphics' best feature - time series charts.
-
 Charts look best in a Boostrap page (unless you customize your own CSS).
 
 You can see [core examples] (<http://rpubs.com/hrbrmstr/53741>) and [fairly extended grid example](http://rpubs.com/hrbrmstr/mjs_grid_07) on RPubs.
@@ -39,6 +37,7 @@ The following functions are implemented:
 -   Version 0.6.1 released - Fixed bug that broke widget in new shiny/shinydashboard context
 -   Version 0.7 released - Updated widget for MetricsGraphics 2.1.0; added `mjs_add_mouseover` and tweaked `mjs_bar`. NOTE: As the Mozilla folks said, the bar charts API is quite unstable. There won't be much effort to support them in this package until the API stabilizes a bit more.
 -   Version 0.7.5 released - updated all functions that take bare inputs and made them flexible enough to take bare or quoted inputs.
+-   Version 0.8.0 released - updated `mjs_rollover` to show scatterplot example and cleaned up some of the base code & package layout for an attempt at a CRAN release. Also updated MetricsGraphics.js to latest release version (2.5)
 
 ### Installation
 
@@ -115,6 +114,20 @@ dat %>%
                 $('{{ID}} svg .mg-active-datapoint')
                     .text('custom text : ' + d.date + ' ' + i);
                  }")
+
+# also works for scatterplots with a slight mod
+
+set.seed(1492)
+dat <- data.frame(value=rnorm(n=30, mean=5, sd=1),
+                 value2=rnorm(n=30, mean=4, sd=1),
+                 test = c(rep(c('test', 'test2'), 15)))
+dat %>%
+ mjs_plot(x = value, y = value2) %>%
+ mjs_point() %>%
+ mjs_add_mouseover("function(d, i) {
+               $('{{ID}} svg .mg-active-datapoint')
+                   .text('custom text : ' + d.point.test + ' ' + i);
+                }")
 
 set.seed(1492)
 stocks <- data.frame(

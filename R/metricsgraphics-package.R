@@ -3,8 +3,7 @@
 #' @name metricsgraphics
 #' @docType package
 #' @author Bob Rudis (@@hrbrmstr)
-#' @import htmlwidgets htmltools
-#' @export JS saveWidget
+#' @import htmltools
 NULL
 
 #' metricsgraphics exported operators
@@ -18,6 +17,18 @@ NULL
 
 #' @importFrom magrittr %>%
 #' @name %>%
+#' @export
+#' @rdname metricsgraphics-exports
+NULL
+
+#' @importFrom htmlwidgets JS
+#' @name JS
+#' @export
+#' @rdname metricsgraphics-exports
+NULL
+
+#' @importFrom htmlwidgets saveWidget
+#' @name saveWidget
 #' @export
 #' @rdname metricsgraphics-exports
 NULL
