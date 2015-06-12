@@ -27,6 +27,15 @@ tmp %>%
   mjs_add_baseline(150, "Something Awful")
 
 
+x <- "year"
+y <- "uspop"
+
+tmp %>%
+  mjs_plot(x=x, y=y) %>%
+  mjs_line() %>%
+  mjs_add_marker(1850, "Something Wonderful") %>%
+  mjs_add_baseline(150, "Something Awful")
+
 
 tmp %>%
   mjs_plot(x=year, y=uspop, width=600) %>%

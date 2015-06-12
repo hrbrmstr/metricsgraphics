@@ -385,6 +385,9 @@ mjs_point <- function(mjs,
 
 #' Configure axis labels & plot description
 #'
+#' @param mjs metricsgraphics object
+#' @param x_label label for x asis
+#' @param y_label label for y axis
 #' @export
 #' @return metricsgraphics object
 #' @examples \dontrun{
@@ -408,7 +411,7 @@ mjs_labs <- function(mjs,
 #' @param xax_count tick count
 #' @param min_x min limit for x axis
 #' @param max_x max limit for x axis
-#' @param extended ticks extend ticks on x axis?
+#' @param extended_ticks extend ticks on x axis?
 #' @param xax_format how to format tick labels. Currently one of "plain", "comma" or "date"
 #' @note xax_format is likely to undergo a drastic change in future releases but
 #'       support for these three formats will also likely remain.
@@ -446,7 +449,7 @@ mjs_axis_x <- function(mjs,
 #' @param yax_count tick count
 #' @param min_y min limit for y axis
 #' @param max_y max limit for y axis
-#' @param extended ticks extend ticks on y axis?
+#' @param extended_ticks extend ticks on y axis?
 #' @param y_scale_type scale for y axis; either "linear" (default) or "log"
 #' @return metricsgraphics object
 #' @export
@@ -599,6 +602,9 @@ mjs_add_mouseover <- function(mjs, func) {
 
 #' Widget output function for use in Shiny
 #'
+#' @param outputId output id
+#' @param width width
+#' @param height height
 #' @export
 metricsgraphicsOutput <- function(outputId, width = '100%', height = '400px'){
   shinyWidgetOutput(outputId, 'metricsgraphics', width, height, package = 'metricsgraphics')
@@ -606,6 +612,9 @@ metricsgraphicsOutput <- function(outputId, width = '100%', height = '400px'){
 
 #' Widget render function for use in Shiny
 #'
+#' @param expr expr
+#' @param env env
+#' @param quoted quoted
 #' @export
 renderMetricsgraphics <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
