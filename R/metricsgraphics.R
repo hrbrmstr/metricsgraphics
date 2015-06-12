@@ -25,7 +25,6 @@
 #' @param buffer the buffer size in pixels between the actual chart area and the margins.
 #' @param width Width in pixels (optional, defaults to automatic sizing)
 #' @param height Height in pixels (optional, defaults to automatic sizing)
-#' @import htmlwidgets htmltools
 #' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
@@ -39,7 +38,7 @@
 #' data.frame(year=seq(1790, 1970, 10),
 #'            uspop=as.numeric(uspop)) %>%
 #'   mjs_plot(x="year", y="uspop") %>%
-#'   mjs_line()#'
+#'   mjs_line()
 #' }
 #'
 mjs_plot <- function(data, x, y,
