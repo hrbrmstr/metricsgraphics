@@ -72,7 +72,12 @@ mjs_plot <- function(data, x, y,
     y <- as.character(substitute(y))
   }
 
-  if (inherits(data[, x], c('Date', 'POSIXct', 'POSIXlt'))) {
+  is_datetime <- function(x) {
+    inherits(x, c('Date', 'POSIXct', 'POSIXlt'))
+  }
+  if (is.null(dim(data))) {
+    if (is_datetime(data)) data <- as.numeric(data)
+  } else if (is_datetime(data[, x])) {
     data[, x] <- as.numeric(data[, x])
   }
 
