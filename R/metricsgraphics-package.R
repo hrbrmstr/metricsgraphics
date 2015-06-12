@@ -4,7 +4,7 @@
 #' @docType package
 #' @author Bob Rudis (@@hrbrmstr)
 #' @import htmlwidgets htmltools
-# @exportPattern ^[[:alpha:]]+
+#' @export JS saveWidget
 NULL
 
 #' metricsgraphics exported operators

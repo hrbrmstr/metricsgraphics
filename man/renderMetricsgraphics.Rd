@@ -6,6 +6,13 @@
 \usage{
 renderMetricsgraphics(expr, env = parent.frame(), quoted = FALSE)
 }
+\arguments{
+\item{expr}{expr}
+
+\item{env}{env}
+
+\item{quoted}{quoted}
+}
 \description{
 Widget render function for use in Shiny
 }

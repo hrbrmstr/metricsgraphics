@@ -6,6 +6,13 @@
 \usage{
 metricsgraphicsOutput(outputId, width = "100\%", height = "400px")
 }
+\arguments{
+\item{outputId}{output id}
+
+\item{width}{width}
+
+\item{height}{height}
+}
 \description{
 Widget output function for use in Shiny
 }

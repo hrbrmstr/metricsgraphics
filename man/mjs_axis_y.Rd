@@ -18,9 +18,9 @@ mjs_axis_y(mjs, show = TRUE, yax_count = 5, min_y = NULL, max_y = NULL,
 
 \item{max_y}{max limit for y axis}
 
-\item{y_scale_type}{scale for y axis; either "linear" (default) or "log"}
+\item{extended_ticks}{extend ticks on y axis?}
 
-\item{extended}{ticks extend ticks on y axis?}
+\item{y_scale_type}{scale for y axis; either "linear" (default) or "log"}
 }
 \value{
 metricsgraphics object

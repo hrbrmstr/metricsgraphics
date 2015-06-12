@@ -25,7 +25,6 @@
 #' @param buffer the buffer size in pixels between the actual chart area and the margins.
 #' @param width Width in pixels (optional, defaults to automatic sizing)
 #' @param height Height in pixels (optional, defaults to automatic sizing)
-#' @import htmlwidgets htmltools
 #' @return metricsgraphics object
 #' @export
 #' @examples \dontrun{
@@ -39,7 +38,7 @@
 #' data.frame(year=seq(1790, 1970, 10),
 #'            uspop=as.numeric(uspop)) %>%
 #'   mjs_plot(x="year", y="uspop") %>%
-#'   mjs_line()#'
+#'   mjs_line()
 #' }
 #'
 mjs_plot <- function(data, x, y,
@@ -70,6 +69,15 @@ mjs_plot <- function(data, x, y,
     if (inherits(y, "name")) { y <- as.character(y) }
   } else {
     y <- as.character(substitute(y))
+  }
+
+  is_datetime <- function(x) {
+    inherits(x, c('Date', 'POSIXct', 'POSIXlt'))
+  }
+  if (is.null(dim(data))) {
+    if (is_datetime(data)) data <- as.numeric(data)
+  } else if (is_datetime(data[, x])) {
+    data[, x] <- as.numeric(data[, x])
   }
 
   params = list(
@@ -381,6 +389,9 @@ mjs_point <- function(mjs,
 
 #' Configure axis labels & plot description
 #'
+#' @param mjs metricsgraphics object
+#' @param x_label label for x asis
+#' @param y_label label for y axis
 #' @export
 #' @return metricsgraphics object
 #' @examples \dontrun{
@@ -404,7 +415,7 @@ mjs_labs <- function(mjs,
 #' @param xax_count tick count
 #' @param min_x min limit for x axis
 #' @param max_x max limit for x axis
-#' @param extended ticks extend ticks on x axis?
+#' @param extended_ticks extend ticks on x axis?
 #' @param xax_format how to format tick labels. Currently one of "plain", "comma" or "date"
 #' @note xax_format is likely to undergo a drastic change in future releases but
 #'       support for these three formats will also likely remain.
@@ -429,7 +440,7 @@ mjs_axis_x <- function(mjs,
 
   if (xax_format == "date") {
     mjs$x$data[,as.character(mjs$x$x_accessor)] <-
-      format(mjs$x$data[,as.character(mjs$x$x_accessor)], "%Y-%m-%d")
+      format(as.Date(mjs$x$data[,as.character(mjs$x$x_accessor)],origin='1970-01-01'), "%Y-%m-%d")
   }
 
   mjs
@@ -442,7 +453,7 @@ mjs_axis_x <- function(mjs,
 #' @param yax_count tick count
 #' @param min_y min limit for y axis
 #' @param max_y max limit for y axis
-#' @param extended ticks extend ticks on y axis?
+#' @param extended_ticks extend ticks on y axis?
 #' @param y_scale_type scale for y axis; either "linear" (default) or "log"
 #' @return metricsgraphics object
 #' @export
@@ -595,6 +606,9 @@ mjs_add_mouseover <- function(mjs, func) {
 
 #' Widget output function for use in Shiny
 #'
+#' @param outputId output id
+#' @param width width
+#' @param height height
 #' @export
 metricsgraphicsOutput <- function(outputId, width = '100%', height = '400px'){
   shinyWidgetOutput(outputId, 'metricsgraphics', width, height, package = 'metricsgraphics')
@@ -602,6 +616,9 @@ metricsgraphicsOutput <- function(outputId, width = '100%', height = '400px'){
 
 #' Widget render function for use in Shiny
 #'
+#' @param expr expr
+#' @param env env
+#' @param quoted quoted
 #' @export
 renderMetricsgraphics <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted

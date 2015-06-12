@@ -18,9 +18,9 @@ mjs_axis_x(mjs, show = TRUE, xax_count = 6, min_x = NULL, max_x = NULL,
 
 \item{max_x}{max limit for x axis}
 
-\item{xax_format}{how to format tick labels. Currently one of "plain", "comma" or "date"}
+\item{extended_ticks}{extend ticks on x axis?}
 
-\item{extended}{ticks extend ticks on x axis?}
+\item{xax_format}{how to format tick labels. Currently one of "plain", "comma" or "date"}
 }
 \description{
 Configure x axis ticks & limits

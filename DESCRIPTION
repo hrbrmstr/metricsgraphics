@@ -1,21 +1,26 @@
 Package: metricsgraphics
 Type: Package
-Title: An htmlwidgets interface to the metricsgraphics.js d3 charting library
-Version: 0.7.5
-Date: 2015-03-14
+Title: An htmlwidgets Interface to the MetricsGraphics.js D3 Charting Library
+Version: 0.8.0
+Date: 2015-06-12
 Author: Bob Rudis (@hrbrmstr)
 Maintainer: Bob Rudis <bob@rudis.net>
 Description: MetricsGraphics.js is a D3-based charting libary and this package
-    provided an htmlwidgets interface to it.
+    provides an htmlwidgets interface to it.
 URL: http://github.com/hrbrmstr/metricsgraphics
 BugReports: https://github.com/hrbrmstr/metricsgraphics/issues
 License: MIT + file LICENSE
 Suggests:
-    testthat
+    testthat,
+    RColorBrewer,
+    ggplot2,
+    jsonlite (>= 0.9.16),
+    knitr (>= 1.8),
+    shiny (>= 0.12.0)
 Depends:
-    R (>= 3.0.0),
+    R (>= 3.0.0)
+Imports:
+    magrittr,
     htmlwidgets,
     htmltools
-Imports:
-    magrittr
 

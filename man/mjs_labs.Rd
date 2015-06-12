@@ -6,6 +6,13 @@
 \usage{
 mjs_labs(mjs, x_label = NULL, y_label = NULL)
 }
+\arguments{
+\item{mjs}{metricsgraphics object}
+
+\item{x_label}{label for x asis}
+
+\item{y_label}{label for y axis}
+}
 \value{
 metricsgraphics object
 }
