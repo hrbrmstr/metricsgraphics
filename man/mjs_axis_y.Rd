@@ -5,7 +5,8 @@
 \title{Configure y axis ticks & limits}
 \usage{
 mjs_axis_y(mjs, show = TRUE, yax_count = 5, min_y = NULL, max_y = NULL,
-  extended_ticks = FALSE, y_scale_type = "linear")
+  extended_ticks = FALSE, y_scale_type = "linear", yax_units = "",
+  rug = FALSE)
 }
 \arguments{
 \item{mjs}{plot object}
@@ -21,6 +22,11 @@ mjs_axis_y(mjs, show = TRUE, yax_count = 5, min_y = NULL, max_y = NULL,
 \item{extended_ticks}{extend ticks on y axis?}
 
 \item{y_scale_type}{scale for y axis; either "linear" (default) or "log"}
+
+\item{yax_units}{a prefix symbol to be shown alongside the y axis' labels.
+Useful for currencies, for instance.}
+
+\item{rug}{show a "rug" plot next to the y axis? (default: \code{FALSE} - no)}
 }
 \value{
 metricsgraphics object

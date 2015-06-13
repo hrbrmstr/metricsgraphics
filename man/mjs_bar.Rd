@@ -23,11 +23,9 @@ This function adds a bar "geom" to a metricsgraphics.js html widget.
 metricsgraphics.js currently has "meh" support for bar charts
 }
 \examples{
-\dontrun{
 data.frame(year=seq(1790, 1970, 10),
            uspop=as.numeric(uspop)) \%>\%
-  mjs_plot(x=year, y=uspop, width=300, height=400)
+  mjs_plot(x=year, y=uspop, width=300, height=400) \%>\%
   mjs_bar()
-}
 }
 

@@ -1,12 +1,15 @@
-#' Lays out metricsgraphics widgets into a "grid", similar to \code{grid.arrange} from \code{gridExtra}
+#' Lays out metricsgraphics widgets into a "grid", similar to
+#' \code{grid.arrange} from \code{gridExtra}
 #'
-#' @param ... either individual \code{metricsgraphics} objects or a mixture of individual \code{metricsgraphics} objects
+#' @param ... either individual \code{metricsgraphics} objects or a mixture of
+#'     individual \code{metricsgraphics} objects
 #' and \code{list}s of \code{metricsgrahics} objects.
 #' @param ncol how many columns in the grid
 #' @param nrow how many rows in the grid
 #' @param widths widths of the cells per row
 #' @return \code{htmltools} tag with wrapped \code{metricsgraphics} objects suitable
-#'         for knitting with \code{echo=FALSE} & \code{results="asis"} or rendering in Viewer with \code{html_print}
+#'         for knitting with \code{echo=FALSE} & \code{results="asis"} or
+#'         rendering in Viewer with \code{html_print}
 #' @note \code{mjs_grid} does not work in a Shiny context
 #' @export
 mjs_grid <- function(..., ncol=1, nrow=1, widths=1) {

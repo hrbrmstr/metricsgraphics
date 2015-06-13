@@ -5,7 +5,7 @@
 \title{Create a new metricsgraphics.js  plot}
 \usage{
 mjs_plot(data, x, y, show_rollover_text = TRUE, linked = FALSE,
-  decimals = 2, format = "count", missing_is_zero = FALSE, left = 80,
+  decimals = 2, format = "count", missing_is_hidden = FALSE, left = 80,
   right = 10, top = 40, bottom = 60, buffer = 8, width = NULL,
   height = NULL)
 }
@@ -24,9 +24,10 @@ graphics are also rolled over (default: \code{FALSE} - not linked)}
 
 \item{decimals}{the number of decimals to show in a rollover (default: \code{2})}
 
-\item{format}{sets the format of the data object, which is to say, counts or percentages}
+\item{format}{sets the format of the data object, which is to say,
+\code{count}s or \code{percentage}s}
 
-\item{missing_is_zero}{if true and if the data object is a time series, missing data points will be treated as zeros}
+\item{missing_is_hidden}{if true and if the data object is a time series, missing data points will be treated as zeros}
 
 \item{left}{the size of the left margin in pixels.}
 
@@ -56,7 +57,6 @@ manipulate aesthetics.
 See \href{http://metricsgraphicsjs.org/}{MetricsGraphics.js} for more information.
 }
 \examples{
-\dontrun{
 data.frame(year=seq(1790, 1970, 10),
            uspop=as.numeric(uspop)) \%>\%
   mjs_plot(x=year, y=uspop) \%>\%
@@ -68,6 +68,5 @@ data.frame(year=seq(1790, 1970, 10),
            uspop=as.numeric(uspop)) \%>\%
   mjs_plot(x="year", y="uspop") \%>\%
   mjs_line()
-}
 }
 

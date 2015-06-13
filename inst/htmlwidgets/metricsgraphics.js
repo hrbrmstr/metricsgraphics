@@ -18,7 +18,7 @@ HTMLWidgets.widget({
     while (el.firstChild)
       el.removeChild(el.firstChild);
 
-    //dbg = params;
+    dbg = params;
 
     wide = null;
 
@@ -48,6 +48,8 @@ HTMLWidgets.widget({
       }
     }
 
+    console.log(wide) ;
+
     var xax_format = mjs_plain;
 
     if (params.xax_format == "date") {
@@ -55,7 +57,15 @@ HTMLWidgets.widget({
       xax_format = mjs_date ;
 
       if (params.multi_line === null) {
-        MG.convert.date(wide, params.x_accessor);
+        if (params.orig_posix) {
+          for (var i=0; i<wide.length; i++) {
+            wide[i][params.x_accessor] = Date(wide[i][params.x_accessor] );
+            console.log("====> ", Date(wide[i][params.x_accessor]));
+            console.log("====> ", wide[i][params.x_accessor]);
+          }
+        } else {
+          MG.convert.date(wide, params.x_accessor);
+        }
       } else {
         for (var i=0; i<wide.length; i++) {
           wide[i] = MG.convert.date(wide[i], params.x_accessor);
@@ -70,6 +80,8 @@ HTMLWidgets.widget({
       }
 
     }
+
+    console.log(wide) ;
 
     if (params.multi_line !== null) {
 
@@ -86,9 +98,11 @@ HTMLWidgets.widget({
 
     }
 
+    console.log(wide) ;
+
     if (params.xax_format == "comma") xax_format = mjs_comma ;
 
-    //dbg = params;
+    dbg = params;
 
     if (params.geom == "bar") {
 
@@ -163,6 +177,11 @@ HTMLWidgets.widget({
 
           legend: params.legend,
           legend_target: params.legend_target,
+
+          yax_units: params.yax_units,
+
+          show_confidence_band: params.show_confidence_band,
+          show_secondary_x_label: params.show_secondary_x_label,
 
           linked: params.linked,
 

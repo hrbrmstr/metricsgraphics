@@ -5,7 +5,8 @@
 \title{Configure x axis ticks & limits}
 \usage{
 mjs_axis_x(mjs, show = TRUE, xax_count = 6, min_x = NULL, max_x = NULL,
-  extended_ticks = FALSE, xax_format = "plain")
+  extended_ticks = FALSE, xax_format = "plain",
+  show_secondary_x_label = NULL, rug = FALSE)
 }
 \arguments{
 \item{mjs}{plot object}
@@ -20,7 +21,14 @@ mjs_axis_x(mjs, show = TRUE, xax_count = 6, min_x = NULL, max_x = NULL,
 
 \item{extended_ticks}{extend ticks on x axis?}
 
-\item{xax_format}{how to format tick labels. Currently one of "plain", "comma" or "date"}
+\item{xax_format}{how to format tick labels. Currently one of "plain", "comma"
+or "date"}
+
+\item{show_secondary_x_label}{determines whether to show the year, or another
+unit of time in the case of smaller series, on the x-axis below
+the x-axis labels.}
+
+\item{rug}{show a "rug" plot next to the x axis? (default: \code{FALSE} - no)}
 }
 \description{
 Configure x axis ticks & limits

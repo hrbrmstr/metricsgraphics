@@ -23,6 +23,7 @@ The following functions are implemented:
 -   `mjs_add_marker`: Sets a marker line/label
 -   `mjs_grid`: `grid.arrange`-like functionality for `metricsgraphics` charts
 -   `mjs_add_mouseover`: provides support for MetricsGraphics [custom rollovers](https://github.com/mozilla/metrics-graphics/wiki/Graphic#mouseover)
+-   `mjs_add_confidence_band`: provides support for confidence bands
 
 ### News
 
@@ -38,6 +39,7 @@ The following functions are implemented:
 -   Version 0.7 released - Updated widget for MetricsGraphics 2.1.0; added `mjs_add_mouseover` and tweaked `mjs_bar`. NOTE: As the Mozilla folks said, the bar charts API is quite unstable. There won't be much effort to support them in this package until the API stabilizes a bit more.
 -   Version 0.7.5 released - updated all functions that take bare inputs and made them flexible enough to take bare or quoted inputs.
 -   Version 0.8.0 released - updated `mjs_rollover` to show scatterplot example and cleaned up some of the base code & package layout for an attempt at a CRAN release. Also updated MetricsGraphics.js to latest release version (2.5)
+-   Version 0.8.5 released - enhanced & changed some of the package functions to match MG's new javascript interface. Added `mjs_add_confidence_band`. Added package vignette.
 
 ### Installation
 

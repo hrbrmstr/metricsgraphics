@@ -32,7 +32,9 @@ you need to use \code{d.point.THING} vs \code{d.THING} when trying to add mouseo
     metricsgraphics scatterplot.
 }
 \examples{
-\dontrun{
+set.seed(1492)
+dat <- data.frame(date=as.Date('2009-01-01') + 0:9,
+                  value=rnorm(10, 0, 2))
 dat \%>\%
   mjs_plot(x=date, y=value) \%>\%
   mjs_line() \%>\%
@@ -42,11 +44,11 @@ dat \%>\%
                     .text('custom text : ' + d.date + ' ' + i);
                  }")
 
+# slightly different for scatterplots
+
 dat <- data.frame(value=rnorm(n=30, mean=5, sd=1),
                   value2=rnorm(n=30, mean=4, sd=1),
                   test = c(rep(c('test', 'test2'), 15)))
-
-# slightly different for scatterplots
 
 dat \%>\%
   mjs_plot(x = value, y = value2) \%>\%
@@ -55,7 +57,5 @@ dat \%>\%
                 $('{{ID}} svg .mg-active-datapoint')
                     .text('custom text : ' + d.point.test + ' ' + i);
                  }")
-
-}
 }
 

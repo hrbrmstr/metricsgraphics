@@ -1,0 +1,279 @@
+---
+title: "Introduction to metricsgraphics"
+author: "Bob Rudis"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to metricsgraphics}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+[MetricsGraphics.js](http://metricsgraphicsjs.org/) is a library built on top of [D3](http://d3js.org/) that is optimized for visualizing and laying out time-series data. It provides a simple way to produce common types of graphics in a principled, consistent and responsive way. The library currently supports line charts, scatterplots and histograms as well as features like rug plots and basic linear regression.
+
+The `metricsgraphics` R package wraps most of the functionality of MetricsGraphics.js into an [htmlwidget](http://htmlwidgets.org/). This package will replicate many of [the MetricsGraphics.js examples](http://metricsgraphicsjs.org/examples.htm) to demonstrate the functionality of the package.
+
+```{r}
+suppressPackageStartupMessages(library(metricsgraphics))
+suppressPackageStartupMessages(library(jsonlite))
+suppressPackageStartupMessages(library(RColorBrewer))
+suppressPackageStartupMessages(library(htmltools))
+suppressPackageStartupMessages(library(dplyr))
+
+# this lets us add a title to the plot since the package follows the guidance
+# of the htmlwidgets authors and does not include the MetricsGraphics.js title
+# option to ensure consistent div sizing.
+
+show_plot <- function(plot_object, title) {
+  div(style="margin:auto;text-align:center", strong(title), br(), plot_object)
+}
+```
+
+This is a simple line chart. You can remove the area portion by changing `area=TRUE` to `area=FALSE`. NOTE that you do _not_ have to use `show_plot` for normal `metricsgraphics` usage. It's used here for example purposes only.
+
+```{r}
+fake_users_1 <- fromJSON("http://metricsgraphicsjs.org/data/fake_users1.json")
+fake_users_1$date <- as.Date(fake_users_1$date)
+
+fake_users_1 %>%
+  mjs_plot(x=date, y=value, width=600, height=200) %>%
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_line(area=TRUE) %>% 
+  show_plot("Line Chart")
+
+```
+
+This is an example of a graphic with a confidence band and extended x-axis ticks enabled. NOTE that by specifying the `xaxformat="date"` we do not, then, have to pre-convert `date` with `as.Date()`
+
+```{r}
+confidence_band <- fromJSON("http://metricsgraphicsjs.org/data/confidence_band.json")
+
+confidence_band %>%
+  mjs_plot(x=date, y=value, format="percentage", width=600, height=200) %>%
+  mjs_axis_x(xax_format="date", 
+             show_secondary_x_label=FALSE, 
+             extended_ticks=TRUE) %>% 
+  mjs_line() %>% 
+  mjs_add_confidence_band() %>% 
+  show_plot("Confidence Band")
+```
+
+When we have a data object of integers and a small range of values, the auto-generated set of y-axis ticks are filtered so that we don't include fractional values.
+
+```{r}
+small_range <- fromJSON("http://metricsgraphicsjs.org/data/small-range.json")
+
+small_range %>% 
+  mjs_plot(x=date, y=value, width=600, height=200) %>%
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_line(interpolate="basic", area=TRUE) %>% 
+  show_plot("Small Range of Integers")
+  
+```
+
+The two graphics in this section are linked together. A rollover in one causes a rollover in the other. NOTE that setting `linked=TRUE` links _all_ the charts on
+a given page/document that have that setting. This is a limitation of the MetricsGraphics.js library, not the package.
+
+```{r}
+brief_1 <- fromJSON("http://metricsgraphicsjs.org/data/brief-1.json")
+brief_2 <- fromJSON("http://metricsgraphicsjs.org/data/brief-2.json")
+
+brief_1 %>% 
+  mjs_plot(x=date, y=value, width=600, height=200, linked=TRUE) %>%
+  mjs_axis_x(xax_format="date", xax_count=4) %>% 
+  mjs_line(area=TRUE) -> mjs_brief_1
+
+brief_2 %>% 
+  mjs_plot(x=date, y=value, width=600, height=200, linked=TRUE) %>%
+  mjs_axis_x(xax_format="date", xax_count=4) %>% 
+  mjs_line() -> mjs_brief_2
+
+div(style="margin:auto;text-align:center", 
+    strong("Linked Graphic"), br(), mjs_brief_1,
+    strong("Other Linked Graphic"), br(), mjs_brief_2)
+```
+
+Handling a solitary data point. NOTE that date+time objects (e.g. `POSIXct`) are a TODO for `metricsgraphics`.
+
+
+```{r}
+solitary <- data.frame(
+  date=as.Date("2015-03-05"),
+  value=12000
+)
+
+solitary %>% 
+  mjs_plot(x=date, y=value, width=600, height=200) %>%
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_point() %>% 
+  show_plot("Singleton")
+```
+
+This line chart contains multiple lines. NOTE that the example build a data frame from the MetricsGraphics.js example JSON data. Unlike icky straight JavaScript constructs, we get to work with our own sane, native data types.
+
+```{r}
+fake_users2_list <- fromJSON("http://metricsgraphicsjs.org/data/fake_users2.json")
+fake_users2 <- data.frame(
+  date=fake_users2_list[[1]]$date,
+  value_1=fake_users2_list[[1]]$value,
+  value_2=fake_users2_list[[2]]$value,
+  value_3=fake_users2_list[[3]]$value
+)
+
+fake_users2 %>% 
+  mjs_plot(x=date, y=value_1, width=600, height=200) %>%
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_line() %>% 
+  mjs_add_line(value_2) %>% 
+  mjs_add_line(value_3) %>% 
+  mjs_add_legend(c("Line 1", "Line 2", "Line 3")) %>% 
+  show_plot("Multi-Line Chart")
+```
+
+Since we pass in whole data frames, there is no "missing" data points or columns. Also, since a linked chart example was shown already, we can't show that multi-line example, so all three will not be reproduced here.
+
+We _can_ show inline legend labels (placed to the right) vs bottom.
+
+```{r}
+fake_users3_list <- fromJSON("http://metricsgraphicsjs.org/data/fake_users3.json")
+fake_users3 <- data.frame(
+  date=fake_users3_list[[1]]$date,
+  value_1=fake_users3_list[[1]]$value,
+  value_2=fake_users3_list[[2]]$value,
+  value_3=fake_users3_list[[3]]$value
+)
+
+fake_users3 %>% 
+  mjs_plot(x=date, y=value_1, width=600, height=200, right=40) %>%
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_line() %>% 
+  mjs_add_line(value_2) %>% 
+  mjs_add_line(value_3) %>% 
+  mjs_add_legend(c('US', 'CA', 'DE'), inline=TRUE) %>% 
+  show_plot("Labeling Lines")
+```
+
+This is an example of a graphic where we're not plotting dates on the x-axis and where the axes include labels and the line animates on load. We've also enabled extended ticks along the y-axis.
+
+```{r}
+xnotondate <- fromJSON("http://metricsgraphicsjs.org/data/xnotdate.json")
+
+xnotondate %>% 
+  mjs_plot(x=males, y=females, width=600, height=240, 
+           left=80, right=40, bottom=50) %>% 
+  mjs_line(animate_on_load=TRUE, area=FALSE) %>% 
+  mjs_labs("Males", "Females") %>% 
+  mjs_axis_y(extended_ticks=TRUE) %>% 
+  show_plot("Axis Labels")
+```
+
+Here is an example that shows percentages.
+
+```{r}
+some_percentages <- fromJSON("http://metricsgraphicsjs.org/data/some_percentage.json")
+
+some_percentages[[1]] %>% 
+  mjs_plot(x=date, y=value, format="percentage", width=600, height=200) %>% 
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_line(area=TRUE) %>% 
+  show_plot("Some Percentages")
+```
+
+Here is an example that uses custom units for currency.
+
+```{r}
+some_currency <- fromJSON("http://metricsgraphicsjs.org/data/some_currency.json")
+
+some_currency %>% 
+  mjs_plot(x=date, y=value, width=600, height=200) %>% 
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_line() %>% 
+  mjs_axis_y(yax_units="$") %>% 
+  show_plot("Some Currency")
+```
+
+You can change the y-axis' scale to logarithmic by setting `y_scale_type` to `"log"`.
+
+```{r}
+log_scale <- fromJSON("http://metricsgraphicsjs.org/data/log.json")
+
+log_scale %>% 
+  mjs_plot(x=date, y=value, width=600, height=200) %>% 
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_line(area=TRUE) %>% 
+  mjs_axis_y(y_scale_type="log") %>% 
+  show_plot("Log Scale")
+```
+
+You can hide either axis by setting `show=FALSE` in `mjs_axis_x` or `mjs_axis_y`.
+
+```{r}
+fake_users_1 <- fromJSON("http://metricsgraphicsjs.org/data/fake_users1.json")
+brief_1 <- fromJSON("http://metricsgraphicsjs.org/data/brief-1.json")
+
+fake_users_1 %>% 
+  mjs_plot(x=date, y=value, width=600, height=200) %>% 
+  mjs_axis_x(xax_format="date", show=FALSE) %>% 
+  mjs_line() -> no_x
+  
+brief_1 %>% 
+  mjs_plot(x=date, y=value, width=600, height=200) %>% 
+  mjs_axis_x(xax_format="date") %>%
+  mjs_axis_y(show=FALSE) %>% 
+  mjs_line() -> no_y
+
+div(style="margin:auto;text-align:center", 
+    strong("No X Axis"), br(), no_x,
+    strong("No Y Axis"), br(), no_y)
+```
+
+You can set rug plots on either axis by setting `rug=TRUE` in `mjs_axis_x` or `mjs_axis_y`.
+
+```{r}
+fake_users_1 <- fromJSON("http://metricsgraphicsjs.org/data/fake_users1.json")
+
+fake_users_1 %>% 
+  mjs_plot(x=date, y=value, width=600, height=200) %>% 
+  mjs_axis_x(xax_format="date", show=FALSE) %>% 
+  mjs_line() %>% 
+  mjs_axis_y(rug=TRUE) %>% 
+  show_plot("Rug Plots")
+```
+
+Markers are vertical lines that can be added at arbitrary points. Markers that are close to each other won't collide. NOTE that `metricsgraphics` will do date conversions from strings automagically.
+
+```{r}
+some_percentages <- fromJSON("http://metricsgraphicsjs.org/data/some_percentage.json")
+
+some_percentages[[1]] %>% 
+  mjs_plot(x=date, y=value, format="percentage", width=600, height=200) %>% 
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_line(area=TRUE) %>% 
+  mjs_add_marker("2014-02-01", "1st Milestone") %>% 
+  mjs_add_marker(as.Date("2014-03-15"), "2nd Milestone") %>% 
+  show_plot("Markers")
+```
+
+Baselines are horizontal lines that can added at arbitrary points.
+
+```{r}
+fake_users_1 <- fromJSON("http://metricsgraphicsjs.org/data/fake_users1.json")
+
+fake_users_1 %>% 
+  mjs_plot(x=date, y=value, width=600, height=200) %>% 
+  mjs_axis_x(xax_format="date", show=FALSE) %>% 
+  mjs_add_baseline(160000000, "a baseline") %>% 
+  mjs_line(area=TRUE) %>% 
+  show_plot("Baselines")
+```
+
+This does not mimic the MetricsGraphics.js examples but shows off `mjs_grid` functionality:
+
+```{r}
+moar_plots <- lapply(1:7, function(x) {
+  mjs_plot(rbeta(10000, x, x), width="250px", height="250px", linked=TRUE) %>%
+    mjs_histogram(bar_margin=2) %>%
+    mjs_labs(x_label=sprintf("Plot %d", x))
+})
+
+mjs_grid(moar_plots, nrow=4, ncol=3, widths=c(rep(0.33, 3)))
+```

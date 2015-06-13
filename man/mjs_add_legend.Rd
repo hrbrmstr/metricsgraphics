@@ -4,12 +4,15 @@
 \alias{mjs_add_legend}
 \title{Adds a legend to a metricsgraphics chart}
 \usage{
-mjs_add_legend(mjs, legend)
+mjs_add_legend(mjs, legend, inline = FALSE)
 }
 \arguments{
 \item{mjs}{plot object}
 
 \item{legend}{character vector of labels for the legend}
+
+\item{inline}{\code{TRUE} if you want line labes to the right of the chart
+vs in a legend block (experimental)}
 }
 \value{
 metricsgraphics object
@@ -18,7 +21,6 @@ metricsgraphics object
 Adds a legend to a metricsgraphics chart
 }
 \examples{
-\dontrun{
 set.seed(1492)
 stocks <- data.frame(
   time = as.Date('2009-01-01') + 0:9,
@@ -33,6 +35,5 @@ stocks \%>\%
   mjs_add_line(Z) \%>\%
   mjs_axis_x(xax_format="date") \%>\%
   mjs_add_legend(legend=c("X", "Y", "Z"))
-}
 }
 

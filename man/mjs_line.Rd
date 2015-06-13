@@ -17,7 +17,7 @@ mjs_line(mjs, area = FALSE, animate_on_load = FALSE,
 \item{interpolate}{the interpolation function to use when rendering lines.
 possible values: ("cardinal", "linear", "linear-closed", "step", "step-before",
 "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal-open",
-"cardinal-closed", "monotone")}
+"cardinal-closed", "monotone", "basic")}
 }
 \value{
 metricsgraphics object
@@ -26,11 +26,9 @@ metricsgraphics object
 This function adds a line "geom" to a metricsgraphics.js html widget.
 }
 \examples{
-\dontrun{
 data.frame(year=seq(1790, 1970, 10),
            uspop=as.numeric(uspop)) \%>\%
   mjs_plot(x=year, y=uspop) \%>\%
   mjs_line()
-}
 }
 

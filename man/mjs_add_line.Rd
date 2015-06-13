@@ -23,7 +23,6 @@ to the plot.
 You must have called \code{mjs_line} first before adding additional columns
 }
 \examples{
-\dontrun{
 set.seed(1492)
 stocks <- data.frame(
   time = as.Date('2009-01-01') + 0:9,
@@ -37,6 +36,5 @@ stocks \%>\%
   mjs_add_line(Y) \%>\%
   mjs_add_line(Z) \%>\%
   mjs_axis_x(xax_format="date")
-}
 }
 

@@ -22,14 +22,13 @@ or target to be reached. This function lets you add baselines to a plot object.
 you can add as many as you need to.
 }
 \examples{
-\dontrun{
-tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
-
-tmp \%>\%
+data.frame(
+  year=seq(1790, 1970, 10),
+  uspop=as.numeric(uspop)
+) \%>\%
   mjs_plot(x=year, y=uspop) \%>\%
   mjs_line() \%>\%
   mjs_add_marker(1850, "Something Wonderful") \%>\%
   mjs_add_baseline(150, "Something Awful")
-}
 }
 

@@ -1,12 +1,18 @@
 Package: metricsgraphics
 Type: Package
-Title: An HTML Widgets Interface to the MetricsGraphics.js D3 Charting Library
-Version: 0.8.0
-Date: 2015-06-12
-Author: Bob Rudis (@hrbrmstr)
+Title: Create Interactive Charts with the JavaScript MetricsGraphics Library
+Version: 0.8.5
+Date: 2015-06-13
+Authors@R: c(
+      person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
+      person("Ali", "Almossawi", role = c("ctb", "cph"), comment = "MetricsGraphics library"),
+      person("Hamilton", "Ulmer", role = c("ctb", "cph"), comment = "MetricsGraphics library"),
+      person("Mozilla", role = c("cph"), comment = "MetricsGraphics library"),
+      person("jQuery Foundation and contributors", role = c("ctb", "cph"), comment = "jQuery library")
+    )
 Maintainer: Bob Rudis <bob@rudis.net>
-Description: An htmlwidgets interface to the metrics-graphics (D3.js-based) charting libary
-    which is geared towards displaying time-series data.
+Description: Provides An htmlwidgets interface to the MetricsGraphics.js (D3-based) charting
+    libary which is geared towards displaying time-series data.
 URL: http://github.com/hrbrmstr/metricsgraphics
 BugReports: https://github.com/hrbrmstr/metricsgraphics/issues
 License: MIT + file LICENSE
@@ -16,11 +22,13 @@ Suggests:
     ggplot2,
     jsonlite (>= 0.9.16),
     knitr (>= 1.8),
-    shiny (>= 0.12.0)
+    shiny (>= 0.12.0),
+    binom,
+    dplyr
 Depends:
     R (>= 3.0.0)
 Imports:
     magrittr,
     htmlwidgets,
     htmltools
-
+VignetteBuilder: knitr

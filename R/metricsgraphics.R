@@ -16,8 +16,9 @@
 #'        When one graphic in that set is rolled over, the corresponding values in the other
 #'        graphics are also rolled over (default: \code{FALSE} - not linked)
 #' @param decimals the number of decimals to show in a rollover (default: \code{2})
-#' @param format sets the format of the data object, which is to say, counts or percentages
-#' @param missing_is_zero if true and if the data object is a time series, missing data points will be treated as zeros
+#' @param format sets the format of the data object, which is to say,
+#'        \code{count}s or \code{percentage}s
+#' @param missing_is_hidden if true and if the data object is a time series, missing data points will be treated as zeros
 #' @param left the size of the left margin in pixels.
 #' @param right the size of the right margin in pixels.
 #' @param top the size of the top margin in pixels.
@@ -27,7 +28,7 @@
 #' @param height Height in pixels (optional, defaults to automatic sizing)
 #' @return metricsgraphics object
 #' @export
-#' @examples \dontrun{
+#' @examples
 #' data.frame(year=seq(1790, 1970, 10),
 #'            uspop=as.numeric(uspop)) %>%
 #'   mjs_plot(x=year, y=uspop) %>%
@@ -39,13 +40,12 @@
 #'            uspop=as.numeric(uspop)) %>%
 #'   mjs_plot(x="year", y="uspop") %>%
 #'   mjs_line()
-#' }
 #'
 mjs_plot <- function(data, x, y,
                      show_rollover_text = TRUE,
                      linked = FALSE,
                      decimals=2, format="count",
-                     missing_is_zero=FALSE,
+                     missing_is_hidden=FALSE,
                      left = 80, right = 10,
                      top = 40, bottom = 60, buffer = 8,
                      width = NULL, height = NULL) {
@@ -74,6 +74,18 @@ mjs_plot <- function(data, x, y,
   is_datetime <- function(x) {
     inherits(x, c('Date', 'POSIXct', 'POSIXlt'))
   }
+
+  is_posix <- function(x) {
+    inherits(x, c('POSIXct', 'POSIXlt'))
+  }
+
+  orig_posix <- FALSE
+  if (is.null(dim(data))) {
+    if (is_posix(data)) orig_posix <- TRUE
+  } else if (is_posix(data[, x])) {
+    orig_posix <- TRUE
+  }
+
   if (is.null(dim(data))) {
     if (is_datetime(data)) data <- as.numeric(data)
   } else if (is_datetime(data[, x])) {
@@ -81,12 +93,14 @@ mjs_plot <- function(data, x, y,
   }
 
   params = list(
+    orig_posix=orig_posix,
     data=data,
     x_axis=TRUE,
     y_axis=TRUE,
     baseline_accessor=NULL,
     predictor_accessor=NULL,
     show_confidence_band=NULL,
+    show_secondary_x_label=NULL,
     chart_type="line",
     xax_format="plain",
     x_label=NULL,
@@ -100,13 +114,14 @@ mjs_plot <- function(data, x, y,
     right=right,
     bottom=bottom,
     buffer=buffer,
+    format=format,
     y_scale_type="linear",
     yax_count=5,
     xax_count=6,
     x_rug=FALSE,
     y_rug=FALSE,
     area=FALSE,
-    missing_is_zero=missing_is_zero,
+    missing_is_hidden=missing_is_hidden,
     size_accessor=NULL,
     color_accessor=NULL,
     color_type="number",
@@ -128,6 +143,7 @@ mjs_plot <- function(data, x, y,
     y_accessor=y,
     multi_line=NULL,
     geom="line",
+    yax_units="",
     legend=NULL,
     legend_target=NULL,
     y_extended_ticks=FALSE,
@@ -161,13 +177,21 @@ mjs_plot <- function(data, x, y,
 #' @param bins numbenr of bins for the histogram (\code{NULL} == let MetricsGraphcis.js library compute)
 #' @return metricsgraphics plot object
 #' @export
-#' @examples \dontrun{
-#' movies <- movies[sample(nrow(movies), 1000), ]
+#' @examples
+#' movies <- ggplot2::movies[sample(nrow(ggplot2::movies), 1000), ]
+#'
 #' mjs_plot(movies$rating) %>% mjs_histogram()
-#' mjs_plot(movies, rating) %>% mjs_histogram() %>% mjs_labs(x_label="Histogram of movie ratings")
-#' mjs_plot(movies$rating) %>% mjs_histogram(bins=30)
-#' mjs_plot(runif(10000)) %>% mjs_histogram() %>% mjs_labs(x_label="runif(10000)")
-#' }
+#'
+#' mjs_plot(movies, rating) %>%
+#'   mjs_histogram() %>%
+#'   mjs_labs(x_label="Histogram of movie ratings")
+#'
+#' mjs_plot(movies$rating) %>%
+#'   mjs_histogram(bins=30)
+#'
+#' mjs_plot(runif(10000)) %>%
+#'   mjs_histogram() %>%
+#'   mjs_labs(x_label="runif(10000)")
 mjs_histogram <- function(mjs, bar_margin=1, bins=NULL) {
 
   mjs$x$chart_type <- "histogram"
@@ -204,7 +228,7 @@ mjs_histogram <- function(mjs, bar_margin=1, bins=NULL) {
 #' @param bar_margin space between bars (defaults to \code{1})
 #' @return metricsgraphics object
 #' @export
-#' @examples \dontrun{
+#' @examples
 #' bimod <- c(rnorm(1000, 0, 1), rnorm(1000, 3, 1))
 #'
 #' mjs_plot(bimod) %>% mjs_histogram()
@@ -212,7 +236,6 @@ mjs_histogram <- function(mjs, bar_margin=1, bins=NULL) {
 #'
 #' mjs_plot(bimod) %>% mjs_histogram(bins=30)
 #' bimod %>% mjs_hist(30)
-#' }
 mjs_hist <- function(data, bins=NULL, bar_margin=1) {
   mjs_plot(data) %>%
     mjs_histogram(bins=bins, bar_margin=bar_margin) %>%
@@ -229,12 +252,11 @@ mjs_hist <- function(data, bins=NULL, bar_margin=1) {
 #' @return metricsgraphics object
 #' @note metricsgraphics.js currently has "meh" support for bar charts
 #' @export
-#' @examples \dontrun{
+#' @examples
 #' data.frame(year=seq(1790, 1970, 10),
 #'            uspop=as.numeric(uspop)) %>%
-#'   mjs_plot(x=year, y=uspop, width=300, height=400)
+#'   mjs_plot(x=year, y=uspop, width=300, height=400) %>%
 #'   mjs_bar()
-#' }
 #'
 mjs_bar <- function(mjs,
                     bar_height=20, binned=TRUE) {
@@ -257,24 +279,23 @@ mjs_bar <- function(mjs,
 #' @param interpolate the interpolation function to use when rendering lines.
 #'        possible values: ("cardinal", "linear", "linear-closed", "step", "step-before",
 #'        "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal-open",
-#'        "cardinal-closed", "monotone")
+#'        "cardinal-closed", "monotone", "basic")
 #' @return metricsgraphics object
 #' @export
-#' @examples \dontrun{
+#' @examples
 #' data.frame(year=seq(1790, 1970, 10),
 #'            uspop=as.numeric(uspop)) %>%
 #'   mjs_plot(x=year, y=uspop) %>%
 #'   mjs_line()
-#' }
 #'
 mjs_line <- function(mjs,
                      area=FALSE, animate_on_load=FALSE,
                      interpolate="cardinal") {
 
   if(!interpolate %in% c("cardinal", "linear", "linear-closed", "step",
-                               "step-before", "step-after", "basis", "basis-open",
-                               "basis-closed", "bundle", "cardinal-open",
-                               "cardinal-closed", "monotone")) {
+                          "step-before", "step-after", "basis", "basis-open",
+                          "basis-closed", "bundle", "cardinal-open",
+                          "cardinal-closed", "monotone", "basic")) {
     stop("'interpolate' must be a valid value")
   }
 
@@ -297,7 +318,7 @@ mjs_line <- function(mjs,
 #' @param y_accessor bare or quoted name of column to add to the existing line plot
 #' @return metricsgraphics object
 #' @export
-#' @examples \dontrun{
+#' @examples
 #' set.seed(1492)
 #' stocks <- data.frame(
 #'   time = as.Date('2009-01-01') + 0:9,
@@ -311,7 +332,6 @@ mjs_line <- function(mjs,
 #'   mjs_add_line(Y) %>%
 #'   mjs_add_line(Z) %>%
 #'   mjs_axis_x(xax_format="date")
-#' }
 mjs_add_line <- function(mjs,
                          y_accessor) {
 
@@ -345,11 +365,10 @@ mjs_add_line <- function(mjs,
 #' @param color_range the range of colors, used to color different groups of points.
 #' @return metricsgraphics object
 #' @export
-#' @examples \dontrun{
+#' @examples
 #' mtcars %>%
 #'  mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
 #'  mjs_point(least_squares=TRUE)
-#' }
 #'
 mjs_point <- function(mjs,
                       point_size=2.5,
@@ -394,12 +413,11 @@ mjs_point <- function(mjs,
 #' @param y_label label for y axis
 #' @export
 #' @return metricsgraphics object
-#' @examples \dontrun{
+#' @examples
 #' mtcars %>%
 #'  mjs_plot(x=wt, y=mpg, width=400, height=300) %>%
 #'  mjs_point(color_accessor=carb, size_accessor=carb) %>%
 #'  mjs_labs(x="Weight of Car", y="Miles per Gallon")
-#' }
 #'
 mjs_labs <- function(mjs,
                      x_label=NULL, y_label=NULL) {
@@ -416,7 +434,12 @@ mjs_labs <- function(mjs,
 #' @param min_x min limit for x axis
 #' @param max_x max limit for x axis
 #' @param extended_ticks extend ticks on x axis?
-#' @param xax_format how to format tick labels. Currently one of "plain", "comma" or "date"
+#' @param xax_format how to format tick labels. Currently one of "plain", "comma"
+#'        or "date"
+#' @param show_secondary_x_label determines whether to show the year, or another
+#'        unit of time in the case of smaller series, on the x-axis below
+#'        the x-axis labels.
+#' @param rug show a "rug" plot next to the x axis? (default: \code{FALSE} - no)
 #' @note xax_format is likely to undergo a drastic change in future releases but
 #'       support for these three formats will also likely remain.
 #' @export
@@ -425,7 +448,9 @@ mjs_axis_x <- function(mjs,
                        xax_count=6,
                        min_x=NULL, max_x=NULL,
                        extended_ticks=FALSE,
-                       xax_format="plain") {
+                       xax_format="plain",
+                       show_secondary_x_label=NULL,
+                       rug=FALSE) {
 
   if (!xax_format %in% c("plain", "comma", "date")) {
     stop("'xax_format' must be either 'plain', 'comma' or 'date'")
@@ -436,11 +461,26 @@ mjs_axis_x <- function(mjs,
   mjs$x$min_x <- min_x
   mjs$x$max_x <- max_x
   mjs$x$x_extended_ticks <- extended_ticks
+  mjs$x$show_secondary_x_label <- show_secondary_x_label
   mjs$x$xax_format <- xax_format
+  mjs$x$x_rug <- rug
 
   if (xax_format == "date") {
-    mjs$x$data[,as.character(mjs$x$x_accessor)] <-
-      format(as.Date(mjs$x$data[,as.character(mjs$x$x_accessor)],origin='1970-01-01'), "%Y-%m-%d")
+
+    if (mjs$x$orig_posix) {
+
+      mjs$x$data[,as.character(mjs$x$x_accessor)] <-
+      format(as.POSIXct(mjs$x$data[,as.character(mjs$x$x_accessor)],
+                        origin="1970-01-01 00:00:00"),
+             "%Y-%m-%dT%H:%M:%SZ")
+
+      message(mjs$x$data[,as.character(mjs$x$x_accessor)])
+
+    } else {
+      mjs$x$data[,as.character(mjs$x$x_accessor)] <-
+        format(as.Date(mjs$x$data[,as.character(mjs$x$x_accessor)],
+                       origin='1970-01-01'), "%Y-%m-%d")
+    }
   }
 
   mjs
@@ -455,6 +495,9 @@ mjs_axis_x <- function(mjs,
 #' @param max_y max limit for y axis
 #' @param extended_ticks extend ticks on y axis?
 #' @param y_scale_type scale for y axis; either "linear" (default) or "log"
+#' @param yax_units a prefix symbol to be shown alongside the y axis' labels.
+#'        Useful for currencies, for instance.
+#' @param rug show a "rug" plot next to the y axis? (default: \code{FALSE} - no)
 #' @return metricsgraphics object
 #' @export
 mjs_axis_y <- function(mjs,
@@ -462,7 +505,9 @@ mjs_axis_y <- function(mjs,
                        yax_count=5,
                        min_y=NULL, max_y=NULL,
                        extended_ticks=FALSE,
-                       y_scale_type="linear") {
+                       y_scale_type="linear",
+                       yax_units="",
+                       rug=FALSE) {
 
   if (!y_scale_type %in% c("linear", "log")) {
     stop("'y_scale_type' must be either 'linear' or 'log'")
@@ -474,9 +519,56 @@ mjs_axis_y <- function(mjs,
   mjs$x$max_y <- max_y
   mjs$x$y_extended_ticks <- extended_ticks
   mjs$x$y_scale_type <- y_scale_type
+  mjs$x$yax_units <- ""
+  mjs$x$y_rug <- rug
   mjs
 }
 
+#' Add a confidence band to line plot
+#'
+#' If you have lower & upper points associated with your line in a data frame,
+#' you can specify their accessors (defaults to \code{"l"} & \code{"u"}) here
+#' which will result in a shaded confidence band being plotted with the line.
+#'
+#' @param mjs plot object
+#' @param lower_accessor bare or quoted name of column to use for the lower
+#'        bound of the confidence band
+#' @param upper_accessor bare or quoted name of column to use for the upper
+#'        boudn of the confidence band
+#' @export
+#' @examples
+#' require(binom)
+#' require(dplyr)
+#'
+#' set.seed(1492)
+#' binom.confint(x=sample(2:30, 100, replace=TRUE), n = 100, tol = 1e-8,
+#'               methods="bayes") %>%
+#'   mutate(x=1:100) -> bdat
+#'
+#' bdat %>%
+#'   mjs_plot(x=x, y=mean, width=600, height=240) %>%
+#'   mjs_axis_x(show_secondary_x_label=FALSE,
+#'              extended_ticks=TRUE) %>%
+#'   mjs_line() %>%
+#'   mjs_add_confidence_band(lower_accessor="lower",
+#'                           upper_accessor="upper")
+mjs_add_confidence_band <- function(mjs, lower_accessor="l", upper_accessor="u") {
+
+  lower_accessor <- substitute(lower_accessor)
+  if (inherits(lower_accessor, "name")) {
+    lower_accessor <- as.character(lower_accessor)
+  }
+
+  upper_accessor <- substitute(upper_accessor)
+  if (inherits(upper_accessor, "name")) {
+    upper_accessor <- as.character(upper_accessor)
+  }
+
+  mjs$x$show_confidence_band = c(lower_accessor, upper_accessor)
+
+  mjs
+
+}
 
 #' Sets a marker line/label
 #'
@@ -489,15 +581,15 @@ mjs_axis_y <- function(mjs,
 #' @param label text label for the marker
 #' @return metricsgraphics object
 #' @export
-#' @examples \dontrun{
-#' tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
-#'
-#' tmp %>%
+#' @examples
+#' data.frame(
+#'   year=seq(1790, 1970, 10),
+#'   uspop=as.numeric(uspop)
+#' ) %>%
 #'   mjs_plot(x=year, y=uspop) %>%
 #'   mjs_line() %>%
 #'   mjs_add_marker(1850, "Something Wonderful") %>%
 #'   mjs_add_baseline(150, "Something Awful")
-#' }
 mjs_add_marker <- function(mjs,
                            x_value, label) {
 
@@ -526,15 +618,15 @@ mjs_add_marker <- function(mjs,
 #' @param label text label for the marker
 #' @return metricsgraphics object
 #' @export
-#' @examples \dontrun{
-#' tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
-#'
-#' tmp %>%
+#' @examples
+#' data.frame(
+#'   year=seq(1790, 1970, 10),
+#'   uspop=as.numeric(uspop)
+#' ) %>%
 #'   mjs_plot(x=year, y=uspop) %>%
 #'   mjs_line() %>%
 #'   mjs_add_marker(1850, "Something Wonderful") %>%
 #'   mjs_add_baseline(150, "Something Awful")
-#' }
 mjs_add_baseline <- function(mjs,
                              y_value, label) {
   baselines <- mjs$x$baselines
@@ -551,9 +643,11 @@ mjs_add_baseline <- function(mjs,
 #'
 #' @param mjs plot object
 #' @param legend character vector of labels for the legend
+#' @param inline \code{TRUE} if you want line labes to the right of the chart
+#'        vs in a legend block (experimental)
 #' @export
 #' @return metricsgraphics object
-#' @examples \dontrun{
+#' @examples
 #' set.seed(1492)
 #' stocks <- data.frame(
 #'   time = as.Date('2009-01-01') + 0:9,
@@ -568,10 +662,9 @@ mjs_add_baseline <- function(mjs,
 #'   mjs_add_line(Z) %>%
 #'   mjs_axis_x(xax_format="date") %>%
 #'   mjs_add_legend(legend=c("X", "Y", "Z"))
-#' }
-mjs_add_legend <- function(mjs, legend) {
+mjs_add_legend <- function(mjs, legend, inline=FALSE) {
   mjs$x$legend <- legend
-  mjs$x$legend_target <- sprintf("#%s-legend", mjs$elementId)
+  if (!inline) mjs$x$legend_target <- sprintf("#%s-legend", mjs$elementId)
   mjs
 }
 
@@ -590,7 +683,11 @@ mjs_add_legend <- function(mjs, legend) {
 #' @return metricsgraphics object
 #' @note you need to use \code{d.point.THING} vs \code{d.THING} when trying to add mouseovers to a
 #'     metricsgraphics scatterplot.
-#' @examples \dontrun{
+#' @export
+#' @examples
+#' set.seed(1492)
+#' dat <- data.frame(date=as.Date('2009-01-01') + 0:9,
+#'                   value=rnorm(10, 0, 2))
 #' dat %>%
 #'   mjs_plot(x=date, y=value) %>%
 #'   mjs_line() %>%
@@ -600,11 +697,11 @@ mjs_add_legend <- function(mjs, legend) {
 #'                     .text('custom text : ' + d.date + ' ' + i);
 #'                  }")
 #'
+#' # slightly different for scatterplots
+#'
 #' dat <- data.frame(value=rnorm(n=30, mean=5, sd=1),
 #'                   value2=rnorm(n=30, mean=4, sd=1),
 #'                   test = c(rep(c('test', 'test2'), 15)))
-#'
-#' # slightly different for scatterplots
 #'
 #' dat %>%
 #'   mjs_plot(x = value, y = value2) %>%
@@ -614,8 +711,6 @@ mjs_add_legend <- function(mjs, legend) {
 #'                     .text('custom text : ' + d.point.test + ' ' + i);
 #'                  }")
 #'
-#' }
-#' @export
 mjs_add_mouseover <- function(mjs, func) {
   mjs$x$mouseover <- JS(gsub("\\{\\{ID\\}\\}", sprintf("%s", mjs$x$target), func))
   mjs

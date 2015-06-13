@@ -24,7 +24,6 @@ axis label "Frequency" which you can override with a call to
 \code{mjs_labs}.
 }
 \examples{
-\dontrun{
 bimod <- c(rnorm(1000, 0, 1), rnorm(1000, 3, 1))
 
 mjs_plot(bimod) \%>\% mjs_histogram()
@@ -32,6 +31,5 @@ bimod \%>\% mjs_hist()
 
 mjs_plot(bimod) \%>\% mjs_histogram(bins=30)
 bimod \%>\% mjs_hist(30)
-}
 }
 
