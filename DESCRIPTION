@@ -1,8 +1,8 @@
 Package: metricsgraphics
 Type: Package
-Title: Create Interactive Charts with the JavaScript MetricsGraphics Library
+Title: Create Interactive Charts with the JavaScript 'MetricsGraphics' Library
 Version: 0.8.5
-Date: 2015-06-13
+Date: 2015-06-14
 Authors@R: c(
       person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
       person("Ali", "Almossawi", role = c("ctb", "cph"), comment = "MetricsGraphics library"),
@@ -11,8 +11,8 @@ Authors@R: c(
       person("jQuery Foundation and contributors", role = c("ctb", "cph"), comment = "jQuery library")
     )
 Maintainer: Bob Rudis <bob@rudis.net>
-Description: Provides An htmlwidgets interface to the MetricsGraphics.js (D3-based) charting
-    libary which is geared towards displaying time-series data.
+Description: Provides an 'htmlwidgets' interface to the 'MetricsGraphics.js' ('D3'-based) charting
+    library which is geared towards displaying time-series data.
 URL: http://github.com/hrbrmstr/metricsgraphics
 BugReports: https://github.com/hrbrmstr/metricsgraphics/issues
 License: MIT + file LICENSE
