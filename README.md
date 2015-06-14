@@ -2,6 +2,10 @@
 
 On CRAN: [<http://cran.r-project.org/web/packages/metricsgraphics/index.html>](http://cran.r-project.org/web/packages/metricsgraphics/index.html)
 
+Vignette: [<http://cran.r-project.org/web/packages/metricsgraphics/vignettes/introductiontometricsgraphics.html>](http://cran.r-project.org/web/packages/metricsgraphics/vignettes/introductiontometricsgraphics.html)
+
+============
+
 metricsgraphics is an 'htmlwidget' interface to the [MetricsGraphics.js](http://metricsgraphicsjs.org/) D3 chart library.
 
 Charts look best in a Boostrap page (unless you customize your own CSS).
