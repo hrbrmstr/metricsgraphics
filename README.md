@@ -1,10 +1,9 @@
-[![Build Status](https://travis-ci.org/hrbrmstr/metricsgraphics.svg)](https://travis-ci.org/hrbrmstr/metricsgraphics) [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/metricsgraphics)
+[![Build Status](https://travis-ci.org/hrbrmstr/metricsgraphics.svg)](https://travis-ci.org/hrbrmstr/metricsgraphics) [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/metricsgraphics)](http://cran.r-project.org/web/packages/metricsgraphics) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/metricsgraphics)
 
 On CRAN: [<http://cran.r-project.org/web/packages/metricsgraphics/index.html>](http://cran.r-project.org/web/packages/metricsgraphics/index.html)
 
 Vignette: [<http://cran.r-project.org/web/packages/metricsgraphics/vignettes/introductiontometricsgraphics.html>](http://cran.r-project.org/web/packages/metricsgraphics/vignettes/introductiontometricsgraphics.html)
-
-============
+======================================================================================================================================================================================================================
 
 metricsgraphics is an 'htmlwidget' interface to the [MetricsGraphics.js](http://metricsgraphicsjs.org/) D3 chart library.
 
