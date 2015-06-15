@@ -61,7 +61,7 @@ The following functions are implemented:
 
 ```{r eval=FALSE}
 # stable
-install.pacakges("metricsgraphics")
+install.packages("metricsgraphics")
 # development
 # devtools::install_github("hrbrmstr/metricsgraphics")
 ```
