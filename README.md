@@ -49,7 +49,7 @@ The following functions are implemented:
 
 ``` r
 # stable
-install.pacakges("metricsgraphics")
+install.packages("metricsgraphics")
 # development
 # devtools::install_github("hrbrmstr/metricsgraphics")
 ```
@@ -228,3 +228,7 @@ server = function(input, output) {
 
 shinyApp(ui = ui, server = server)
 ```
+
+### Code of Conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.

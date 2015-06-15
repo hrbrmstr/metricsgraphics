@@ -5,3 +5,4 @@
 \.bower\.json
 \.bowerrc
 ^gridtest.*
+^CONDUCT\.md$
