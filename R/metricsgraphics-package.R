@@ -4,6 +4,7 @@
 #' @docType package
 #' @author Bob Rudis (@@hrbrmstr)
 #' @import htmltools
+#' @importFrom ggplot2 ggplot_build
 NULL
 
 #' metricsgraphics exported operators

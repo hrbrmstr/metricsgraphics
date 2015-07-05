@@ -25,6 +25,8 @@ You can see [core examples] (http://rpubs.com/hrbrmstr/53741) and [fairly extend
 The following functions are implemented:
 
 - `mjs_plot`:  Create a new metricsgraphics.js plot
+- `mjs_plot_`:  Create a new metricsgraphics.js plot with variable s for x & y parameters *[NEW]*
+- `as_mjsplot`: Create a new metricsgraphics.js plot from basic ggplot objects *[NEW]*
 - `mjs_line`:  metricsgraphics.js linechart "geom"
 - `mjs_add_line`: used to add additional columns for a multi-line chart
 - `mjs_hist`: Shortcut for plotting MetricsGraphics histograms
@@ -56,14 +58,12 @@ The following functions are implemented:
 - Version 0.7.5 released - updated all functions that take bare inputs and made them flexible enough to take bare or quoted inputs.
 - Version 0.8.0 released - updated `mjs_rollover` to show scatterplot example and cleaned up some of the base code & package layout for an attempt at a CRAN release. Also updated MetricsGraphics.js to latest release version (2.5)
 - Version 0.8.5 released - enhanced & changed some of the package functions to match MG's new javascript interface. Added `mjs_add_confidence_band`. Added package vignette.
+- Version 0.9.0.9000 released - Added support for using variables for x & y parameters and also a way to convert simple ggplot objects to metricsgraphics object with `as_mjsplot`
 
 ### Installation
 
 ```{r eval=FALSE}
-# stable
-install.packages("metricsgraphics")
-# development
-# devtools::install_github("hrbrmstr/metricsgraphics")
+install_github("hrbrmstr/metricsgraphics", ref="dev01")
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE, error=FALSE}
@@ -75,6 +75,29 @@ options(width=120)
 ```{r eval=FALSE}
 library(metricsgraphics)
 library(RColorBrewer)
+library(ggplot2)
+
+#NEW ggplot CONVERSION ROUTINES
+
+library(ggplot2)
+
+dat <- data.frame(year=seq(1790, 1970, 10),
+                  uspop=as.numeric(uspop))
+
+set.seed(5689)
+movies <- movies[sample(nrow(movies), 1000), ]
+
+gg1 <- ggplot(dat, aes(x=year, y=uspop)) + geom_line()
+gg2 <- ggplot(dat, aes(x=year, y=uspop)) + geom_point()
+gg3 <- ggplot(movies, aes(rating)) + geom_histogram()
+gg4 <- ggplot(movies, aes(rating)) + geom_histogram(binwidth = 0.1)
+
+as_mjsplot(gg1)
+as_mjsplot(gg2)
+as_mjsplot(gg3)
+as_mjsplot(gg4)
+
+# (same old docs)
 
 tmp <- data.frame(year=seq(1790, 1970, 10), uspop=as.numeric(uspop))
 

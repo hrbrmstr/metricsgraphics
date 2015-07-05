@@ -1,8 +1,8 @@
 Package: metricsgraphics
 Type: Package
 Title: Create Interactive Charts with the JavaScript 'MetricsGraphics' Library
-Version: 0.8.5
-Date: 2015-06-14
+Version: 0.9.0.9000
+Date: 2015-07-04
 Authors@R: c(
       person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
       person("Ali", "Almossawi", role = c("ctb", "cph"), comment = "MetricsGraphics library"),
@@ -19,7 +19,6 @@ License: MIT + file LICENSE
 Suggests:
     testthat,
     RColorBrewer,
-    ggplot2,
     jsonlite (>= 0.9.16),
     knitr (>= 1.8),
     shiny (>= 0.12.0),
@@ -28,6 +27,7 @@ Suggests:
 Depends:
     R (>= 3.0.0)
 Imports:
+    ggplot2,
     magrittr,
     htmlwidgets,
     htmltools
