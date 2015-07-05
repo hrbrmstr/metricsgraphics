@@ -25,8 +25,8 @@ You can see [core examples] (http://rpubs.com/hrbrmstr/53741) and [fairly extend
 The following functions are implemented:
 
 - `mjs_plot`:  Create a new metricsgraphics.js plot
-- `mjs_plot_`:  Create a new metricsgraphics.js plot with variable s for x & y parameters *[NEW]*
-- `as_mjsplot`: Create a new metricsgraphics.js plot from basic ggplot objects *[NEW]*
+- `mjs_plot_`:  Create a new metricsgraphics.js plot with variable s for x & y parameters **[NEW]**
+- `as_mjsplot`: Create a new metricsgraphics.js plot from basic ggplot objects **[NEW]**
 - `mjs_line`:  metricsgraphics.js linechart "geom"
 - `mjs_add_line`: used to add additional columns for a multi-line chart
 - `mjs_hist`: Shortcut for plotting MetricsGraphics histograms
