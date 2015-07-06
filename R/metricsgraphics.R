@@ -59,14 +59,20 @@ mjs_plot <- function(data, x, y,
 
   if (!missing(x)) {
     x <- substitute(x)
-    if (inherits(x, "name")) { x <- as.character(x) }
+    res <- try(eval(x, data, parent.frame()), silent = TRUE)
+    if (!inherits(res, "try-error") && inherits(res, "character"))
+      x <- res
+    else if (inherits(x, "name")) { x <- as.character(x) }
   } else {
     x <- as.character(substitute(x))
   }
-
+  
   if (!missing(y)) {
     y <- substitute(y)
-    if (inherits(y, "name")) { y <- as.character(y) }
+    res <- try(eval(y, data, parent.frame()), silent = TRUE)
+    if (!inherits(res, "try-error") && inherits(res, "character"))
+      y <- res
+    else if (inherits(y, "name")) { y <- as.character(y) }
   } else {
     y <- as.character(substitute(y))
   }

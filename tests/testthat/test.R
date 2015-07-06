@@ -27,6 +27,13 @@ tmp %>%
   mjs_axis_x(xax_format = 'plain')
 
 
+x = "wt"
+y = "mpg"
+mtcars %>%
+  mjs_plot(x=x, y=y, width=600, height=500) %>%
+  mjs_point(color_accessor=carb, size_accessor=carb) %>%
+  mjs_labs(x="Weight of Car", y="Miles per Gallon")
+
 mtcars %>%
   mjs_plot(x=wt, y=mpg, width=600, height=500) %>%
   mjs_point(color_accessor=carb, size_accessor=carb) %>%
