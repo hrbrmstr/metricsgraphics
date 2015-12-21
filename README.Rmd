@@ -1,7 +1,5 @@
 ---
 title: "README"
-author: "Bob Rudis"
-date: "`r Sys.Date()`"
 output:
   html_document:
     keep_md: true
