@@ -13,7 +13,7 @@ tmp %>%
 mjs_plot(rnorm(10000)) %>%
   mjs_histogram(bins=30, bar_margin=1)
 
-movies <- ggplot2::movies[sample(nrow(ggplot2::movies), 1000), ]
+movies <- ggplot2movies::movies[sample(nrow(ggplot2movies::movies), 1000), ]
 
 mjs_plot(movies$rating) %>% mjs_histogram()
 
@@ -27,8 +27,9 @@ tmp %>%
   mjs_axis_x(xax_format = 'plain')
 
 
-x = "wt"
-y = "mpg"
+x <- "wt"
+y <- "mpg"
+
 mtcars %>%
   mjs_plot(x=x, y=y, width=600, height=500) %>%
   mjs_point(color_accessor=carb, size_accessor=carb) %>%

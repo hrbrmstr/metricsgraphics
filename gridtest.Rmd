@@ -7,10 +7,16 @@ output:
     toc: false
 ---
 
-```{r}
+```{r echo=FALSE}
 suppressPackageStartupMessages(library(metricsgraphics))
 suppressPackageStartupMessages(library(htmltools))
 suppressPackageStartupMessages(library(dplyr))
+```
+
+```{r eval=FALSE}
+library(metricsgraphics)
+library(htmltools)
+library(dplyr)
 ```
 
 ```{r}

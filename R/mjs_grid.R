@@ -11,6 +11,7 @@
 #'         for knitting with \code{echo=FALSE} & \code{results="asis"} or
 #'         rendering in Viewer with \code{html_print}
 #' @note \code{mjs_grid} does not work in a Shiny context
+#' @importFrom grDevices n2mfrow
 #' @export
 mjs_grid <- function(..., ncol=1, nrow=1, widths=1) {
 

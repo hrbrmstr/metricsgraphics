@@ -48,8 +48,6 @@ HTMLWidgets.widget({
       }
     }
 
-    console.log(wide) ;
-
     var xax_format = mjs_plain;
 
     if (params.xax_format == "date") {
@@ -81,8 +79,6 @@ HTMLWidgets.widget({
 
     }
 
-    console.log(wide) ;
-
     if (params.multi_line !== null) {
 
       for (var i=0; i<wide.length; i++) {
@@ -97,8 +93,6 @@ HTMLWidgets.widget({
       }
 
     }
-
-    console.log(wide) ;
 
     if (params.xax_format == "comma") xax_format = mjs_comma ;
 
@@ -179,6 +173,9 @@ HTMLWidgets.widget({
           legend_target: params.legend_target,
 
           yax_units: params.yax_units,
+
+          color: params.color,
+          colors: params.colors,
 
           show_confidence_band: params.show_confidence_band,
           show_secondary_x_label: params.show_secondary_x_label,

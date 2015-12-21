@@ -1,8 +1,8 @@
 Package: metricsgraphics
 Type: Package
 Title: Create Interactive Charts with the JavaScript 'MetricsGraphics' Library
-Version: 0.8.5
-Date: 2015-06-14
+Version: 0.9.0
+Date: 2015-12-20
 Authors@R: c(
       person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
       person("Ali", "Almossawi", role = c("ctb", "cph"), comment = "MetricsGraphics library"),
@@ -11,8 +11,9 @@ Authors@R: c(
       person("jQuery Foundation and contributors", role = c("ctb", "cph"), comment = "jQuery library")
     )
 Maintainer: Bob Rudis <bob@rudis.net>
-Description: Provides an 'htmlwidgets' interface to the 'MetricsGraphics.js' ('D3'-based) charting
-    library which is geared towards displaying time-series data.
+Description: Provides an 'htmlwidgets' interface to the
+    'MetricsGraphics.js' ('D3'-based) charting library which is geared towards
+    displaying time-series data.
 URL: http://github.com/hrbrmstr/metricsgraphics
 BugReports: https://github.com/hrbrmstr/metricsgraphics/issues
 License: MIT + file LICENSE
@@ -20,11 +21,13 @@ Suggests:
     testthat,
     RColorBrewer,
     ggplot2,
+    ggplot2movies,
     jsonlite (>= 0.9.16),
     knitr (>= 1.8),
     shiny (>= 0.12.0),
     binom,
-    dplyr
+    dplyr,
+    grDevices
 Depends:
     R (>= 3.0.0)
 Imports:
@@ -32,3 +35,4 @@ Imports:
     htmlwidgets,
     htmltools
 VignetteBuilder: knitr
+RoxygenNote: 5.0.1

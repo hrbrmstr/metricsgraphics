@@ -1,62 +1,74 @@
-[![Build Status](https://travis-ci.org/hrbrmstr/metricsgraphics.svg)](https://travis-ci.org/hrbrmstr/metricsgraphics) [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/metricsgraphics)](http://cran.r-project.org/web/packages/metricsgraphics) ![downloads](http://cranlogs.r-pkg.org/badges/grand-total/metricsgraphics)
+# README
+Bob Rudis  
+`r Sys.Date()`  
 
-On CRAN: [<http://cran.r-project.org/web/packages/metricsgraphics/index.html>](http://cran.r-project.org/web/packages/metricsgraphics/index.html)
+[![Build Status](https://travis-ci.org/hrbrmstr/metricsgraphics.svg)](https://travis-ci.org/hrbrmstr/metricsgraphics) 
+[![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active) 
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/metricsgraphics)](http://cran.r-project.org/web/packages/metricsgraphics) 
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/metricsgraphics)
 
-Vignette: [<http://cran.r-project.org/web/packages/metricsgraphics/vignettes/introductiontometricsgraphics.html>](http://cran.r-project.org/web/packages/metricsgraphics/vignettes/introductiontometricsgraphics.html)
+On CRAN: [http://cran.r-project.org/web/packages/metricsgraphics/index.html](http://cran.r-project.org/web/packages/metricsgraphics/index.html)
+
+Vignette: [http://cran.r-project.org/web/packages/metricsgraphics/vignettes/introductiontometricsgraphics.html](http://cran.r-project.org/web/packages/metricsgraphics/vignettes/introductiontometricsgraphics.html)
 
 metricsgraphics is an 'htmlwidget' interface to the [MetricsGraphics.js](http://metricsgraphicsjs.org/) D3-based charting library.
 
 Charts look best in a Boostrap page (unless you customize your own CSS).
 
-You can see [core examples] (<http://rpubs.com/hrbrmstr/53741>) and [fairly extended grid example](http://rpubs.com/hrbrmstr/mjs_grid_07) on RPubs.
+You can see [core examples] (http://rpubs.com/hrbrmstr/53741) and [fairly extended grid example](http://rpubs.com/hrbrmstr/mjs_grid_07) on RPubs.
 
 The following functions are implemented:
 
--   `mjs_plot`: Create a new metricsgraphics.js plot
--   `mjs_line`: metricsgraphics.js linechart "geom"
--   `mjs_add_line`: used to add additional columns for a multi-line chart
--   `mjs_hist`: Shortcut for plotting MetricsGraphics histograms
--   `mjs_histogram`: Plot Histograms with MetrisGraphics
--   `mjs_add_legend`: adds a legend to a line (or mult-line) chart
--   `mjs_point`: metricsgraphics.js scatterplot "geom"
--   `mjs_bar`: metricsgraphics.js bar chart "geom"
--   `mjs_axis_x`: Configure x axis ticks & limits
--   `mjs_axis_y`: Configure y axis ticks & limits
--   `mjs_labs`: Configure axis labels & plot description
--   `mjs_add_baseline`: Sets a baseline line/label
--   `mjs_add_marker`: Sets a marker line/label
--   `mjs_grid`: `grid.arrange`-like functionality for `metricsgraphics` charts
--   `mjs_add_mouseover`: provides support for MetricsGraphics [custom rollovers](https://github.com/mozilla/metrics-graphics/wiki/Graphic#mouseover)
--   `mjs_add_confidence_band`: provides support for confidence bands
+- `mjs_plot`:  Create a new metricsgraphics.js plot
+- `mjs_line`:  metricsgraphics.js linechart "geom"
+- `mjs_add_line`: used to add additional columns for a multi-line chart
+- `mjs_hist`: Shortcut for plotting MetricsGraphics histograms
+- `mjs_histogram`: Plot Histograms with MetrisGraphics
+- `mjs_add_legend`: adds a legend to a line (or mult-line) chart
+- `mjs_point`:	metricsgraphics.js scatterplot "geom"
+- `mjs_bar`:  metricsgraphics.js bar chart "geom"
+- `mjs_axis_x`:  Configure x axis ticks & limits
+- `mjs_axis_y`:	Configure y axis ticks & limits
+- `mjs_labs`:	Configure axis labels & plot description
+- `mjs_add_baseline`: Sets a baseline line/label
+- `mjs_add_marker`: Sets a marker line/label
+- `mjs_grid`: `grid.arrange`-like functionality for `metricsgraphics` charts
+- `mjs_add_mouseover`: provides support for MetricsGraphics [custom rollovers](https://github.com/mozilla/metrics-graphics/wiki/Graphic#mouseover)
+- `mjs_add_confidence_band`: provides support for confidence bands
 
 ### News
 
--   Version 0.1 released
--   Version 0.2 released - added support for markers & baselines + minimal support for time-series
--   Version 0.3 released - coded up more config parameters (including color and point sizes) and added support for multi-line plots
--   Version 0.3.1 released - `mjs_marker` will now convert dates properly
--   Version 0.4 released - added `mjs_add_legend` to support legends in line/multi-line charts
--   Version 0.4.1 released - added support for linked charts (currently only works in `Rmd` files and mebbe Shiny if I can get more than one plot to show up in Shiny). See the [online Rmd demo](http://rpubs.com/hrbrmstr/52765) (scroll to bottom); also added some parameter error checking
--   Version 0.5 released - added histograms (`mjs_histogram` & `mjs_hist`)
--   Version 0.6 relased - added `mjs_grid` for `grid.arrange`-like functionality for placing multiple charts (ref: [<http://rpubs.com/hrbrmstr/metricsgraphics0-6>](http://rpubs.com/hrbrmstr/metricsgraphics0-6))
--   Version 0.6.1 released - Fixed bug that broke widget in new shiny/shinydashboard context
--   Version 0.7 released - Updated widget for MetricsGraphics 2.1.0; added `mjs_add_mouseover` and tweaked `mjs_bar`. NOTE: As the Mozilla folks said, the bar charts API is quite unstable. There won't be much effort to support them in this package until the API stabilizes a bit more.
--   Version 0.7.5 released - updated all functions that take bare inputs and made them flexible enough to take bare or quoted inputs.
--   Version 0.8.0 released - updated `mjs_rollover` to show scatterplot example and cleaned up some of the base code & package layout for an attempt at a CRAN release. Also updated MetricsGraphics.js to latest release version (2.5)
--   Version 0.8.5 released - enhanced & changed some of the package functions to match MG's new javascript interface. Added `mjs_add_confidence_band`. Added package vignette.
+- Version 0.1 released
+- Version 0.2 released - added support for markers & baselines + minimal support for time-series
+- Version 0.3 released - coded up more config parameters (including color and point sizes) and added support for multi-line plots
+- Version 0.3.1 released - `mjs_marker` will now convert dates properly
+- Version 0.4 released - added `mjs_add_legend` to support legends in line/multi-line charts
+- Version 0.4.1 released - added support for linked charts (currently only works in `Rmd` files and mebbe Shiny if I can get more than one plot to show up in Shiny). See the [online Rmd demo](http://rpubs.com/hrbrmstr/52765) (scroll to bottom); also added some parameter error checking
+- Version 0.5 released - added histograms (`mjs_histogram` & `mjs_hist`)
+- Version 0.6 relased - added `mjs_grid` for `grid.arrange`-like functionality for placing multiple charts (ref: [http://rpubs.com/hrbrmstr/metricsgraphics0-6](http://rpubs.com/hrbrmstr/metricsgraphics0-6))
+- Version 0.6.1 released - Fixed bug that broke widget in new shiny/shinydashboard context
+- Version 0.7 released - Updated widget for MetricsGraphics 2.1.0; added `mjs_add_mouseover` and tweaked `mjs_bar`. NOTE: As the Mozilla folks said, the bar charts API is quite unstable. There won't be much effort to support them in this package until the API stabilizes a bit more.
+- Version 0.7.5 released - updated all functions that take bare inputs and made them flexible enough to take bare or quoted inputs.
+- Version 0.8.0 released - updated `mjs_rollover` to show scatterplot example and cleaned up some of the base code & package layout for an attempt at a CRAN release. Also updated MetricsGraphics.js to latest release version (2.5)
+- Version 0.8.5 released - enhanced & changed some of the package functions to match MG's new javascript interface. Added `mjs_add_confidence_band`. Added package vignette.
+- Version 0.9.0 released - updated all JS libs to latest versions (including the core Metrics Graphics library). Also added the ability to individually color lines without resorting to CSS (a new feature in the underlying JS lib). Along with bare or quoted inputs, you can also now make the column names variables. The vignette has also been updated to show more examples. Finally, examples that depended upon the `ggplot2::movies` data set work with the new ggplot2 which has separated out `movies` into `ggplot2movies::movies`.
 
 ### Installation
 
-``` r
+
+```r
 # stable
 install.packages("metricsgraphics")
 # development
 # devtools::install_github("hrbrmstr/metricsgraphics")
 ```
 
+
+
 ### Usage
 
-``` r
+
+```r
 library(metricsgraphics)
 library(RColorBrewer)
 

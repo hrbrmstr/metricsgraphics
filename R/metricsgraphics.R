@@ -54,25 +54,36 @@ mjs_plot <- function(data, x, y,
     stop("'format' must be either 'percentage' or 'count'")
   }
 
+  if (inherits(data, "data.frame")) data <- data.frame(data, stringsAsFactors=FALSE)
+
   eid <- sprintf("mjs-%s",
                  paste(sample(c(letters[1:6], 0:9), 30, replace=TRUE), collapse=""))
 
   if (!missing(x)) {
     x <- substitute(x)
     res <- try(eval(x, data, parent.frame()), silent = TRUE)
-    if (!inherits(res, "try-error") && inherits(res, "character"))
-      x <- res
-    else if (inherits(x, "name")) { x <- as.character(x) }
+    if (!inherits(res, "try-error") && inherits(res, "character")) {
+      message(length(res))
+      if (length(res) != 1) {
+        x <- as.character(substitute(x))
+      } else {
+        x <- res
+      }
+    } else if (inherits(x, "name")) { x <- as.character(x) }
   } else {
     x <- as.character(substitute(x))
   }
-  
+
   if (!missing(y)) {
     y <- substitute(y)
     res <- try(eval(y, data, parent.frame()), silent = TRUE)
-    if (!inherits(res, "try-error") && inherits(res, "character"))
-      y <- res
-    else if (inherits(y, "name")) { y <- as.character(y) }
+    if (!inherits(res, "try-error") && inherits(res, "character")) {
+      if (length(res) != 1) {
+        y <- as.character(substitute(y))
+      } else {
+        y <- res
+      }
+    } else if (inherits(y, "name")) { y <- as.character(y) }
   } else {
     y <- as.character(substitute(y))
   }
@@ -184,7 +195,7 @@ mjs_plot <- function(data, x, y,
 #' @return metricsgraphics plot object
 #' @export
 #' @examples
-#' movies <- ggplot2::movies[sample(nrow(ggplot2::movies), 1000), ]
+#' movies <- ggplot2movies::movies[sample(nrow(ggplot2movies::movies), 1000), ]
 #'
 #' mjs_plot(movies$rating) %>% mjs_histogram()
 #'
@@ -230,7 +241,7 @@ mjs_histogram <- function(mjs, bar_margin=1, bins=NULL) {
 #' \code{mjs_labs}.
 #'
 #' @param data numeric vector
-#' @param bins numbenr of bins for the histogram (\code{NULL} == let MetricsGraphcis.js library compute)
+#' @param bins number of bins for the histogram (\code{NULL} == let MetricsGraphcis.js library compute)
 #' @param bar_margin space between bars (defaults to \code{1})
 #' @return metricsgraphics object
 #' @export
@@ -282,11 +293,15 @@ mjs_bar <- function(mjs,
 #' @param mjs plot object
 #' @param area fill in area under line? (default: \code{FALSE} - no)
 #' @param animate_on_load animate the drawing of the plot on page load? (default: \code{FALSE} - no)
+#' @param color line color (hex string or valid HTML color string). Use \code{NULL} (the default)
+#'        to use the default Metrics Graphics colors or if you plan on controlling the colors with CSS.
 #' @param interpolate the interpolation function to use when rendering lines.
 #'        possible values: ("cardinal", "linear", "linear-closed", "step", "step-before",
 #'        "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal-open",
 #'        "cardinal-closed", "monotone", "basic")
 #' @return metricsgraphics object
+#' @note If you plan on using cusom colors, all lines must have a color value or the result is
+#'       non-deterministic.
 #' @export
 #' @examples
 #' data.frame(year=seq(1790, 1970, 10),
@@ -296,6 +311,7 @@ mjs_bar <- function(mjs,
 #'
 mjs_line <- function(mjs,
                      area=FALSE, animate_on_load=FALSE,
+                     color=NULL,
                      interpolate="cardinal") {
 
   if(!interpolate %in% c("cardinal", "linear", "linear-closed", "step",
@@ -309,6 +325,8 @@ mjs_line <- function(mjs,
   mjs$x$area <- area
   mjs$x$animate_on_load <- animate_on_load
   mjs$x$geom <- "line"
+  mjs$x$color <- color
+  mjs$x$colors <- color
   mjs$x$interpolate <- interpolate
   mjs
 }
@@ -319,9 +337,12 @@ mjs_line <- function(mjs,
 #' the bare or quoted name of the column to use in \code{y_accessor} and it will be added
 #' to the plot.
 #'
-#' @note You must have called \code{mjs_line} first before adding additional columns
+#' @note You must have called \code{mjs_line} first before adding additional columns. If you plan on
+#'       using cusom colors, all lines must have a color value or the result is non-deterministic.
 #' @param mjs plot object
 #' @param y_accessor bare or quoted name of column to add to the existing line plot
+#' @param color line color. Use \code{NULL} (the default) to use default Metrics Graphics colors
+#'        or if you plan on using CSS to control the colors.
 #' @return metricsgraphics object
 #' @export
 #' @examples
@@ -338,8 +359,7 @@ mjs_line <- function(mjs,
 #'   mjs_add_line(Y) %>%
 #'   mjs_add_line(Z) %>%
 #'   mjs_axis_x(xax_format="date")
-mjs_add_line <- function(mjs,
-                         y_accessor) {
+mjs_add_line <- function(mjs, y_accessor, color=NULL) {
 
   y_accessor <- substitute(y_accessor)
   if (inherits(y_accessor, "name")) { y_accessor <- as.character(y_accessor) }
@@ -349,6 +369,8 @@ mjs_add_line <- function(mjs,
   new_line <- y_accessor
   multi_line <- c(multi_line, new_line)
   mjs$x$multi_line <- multi_line
+  mjs$x$color <- NULL
+  if (!is.null(color)) { mjs$x$colors <- c(mjs$x$colors, color) }
   mjs
 
 }
@@ -364,7 +386,8 @@ mjs_add_line <- function(mjs,
 #' @param size_accessor bare or quoted name of a column to use to scale the size of the points
 #' @param color_accessor bare or quoted name of a column to use to scale the color of the points
 #' @param color_type specifies whether the color scale is quantitative or qualitative.
-#'        By setting this option to category, you can color the points according to some other discrete value
+#'        By setting this option to "\code{category}", you can color the points according to some
+#'        other discrete value
 #' @param size_range specifies the range of point sizes, when point sizes are mapped to data
 #' @param x_rug show a "rug" plot next to the x axis? (default: \code{FALSE} - no)
 #' @param y_rug show a "rug" plot next to the y axis? (default: \code{FALSE} - no)
@@ -674,15 +697,17 @@ mjs_add_legend <- function(mjs, legend, inline=FALSE) {
   mjs
 }
 
-#' @title Adds a custom rollover to a metricsgraphics chart
-#' @details MetricsGraphics charts allow for \href{https://github.com/mozilla/metrics-graphics/wiki/Graphic#mouseover}{custom rollovers}.
-#'     \code{mjs_add_mouseover} lets you add a custom rollover to a metricsgraphics object. You must be
-#'     familiar with javascript and D3 idioms since you are supplying a javascript function as
-#'     a parameter.\cr
-#'     \cr
-#'     Since targeting is done by element id, you will need to add a special string - \code{\{\{ID\}\}} -
-#'     to the target element selector so metricsgraphics can add the unique object identifier
-#'     to the selector. See Examples for basic usage.
+#' Adds a custom rollover to a metricsgraphics chart
+#'
+#' MetricsGraphics charts allow for \href{https://github.com/mozilla/metrics-graphics/wiki/Graphic#mouseover}{custom rollovers}.
+#' \code{mjs_add_mouseover} lets you add a custom rollover to a metricsgraphics object. You must be
+#' familiar with javascript and D3 idioms since you are supplying a javascript function as
+#' a parameter.\cr
+#' \cr
+#' Since targeting is done by element id, you will need to add a special string - \code{\{\{ID\}\}} -
+#' to the target element selector so metricsgraphics can add the unique object identifier
+#' to the selector. See Examples for basic usage.
+#'
 #' @param mjs plot object
 #' @param func text for javascript function to be used for the custom rollover. See Details for usage.
 #' @export
