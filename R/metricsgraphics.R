@@ -63,7 +63,6 @@ mjs_plot <- function(data, x, y,
     x <- substitute(x)
     res <- try(eval(x, data, parent.frame()), silent = TRUE)
     if (!inherits(res, "try-error") && inherits(res, "character")) {
-      message(length(res))
       if (length(res) != 1) {
         x <- as.character(substitute(x))
       } else {
@@ -502,8 +501,6 @@ mjs_axis_x <- function(mjs,
       format(as.POSIXct(mjs$x$data[,as.character(mjs$x$x_accessor)],
                         origin="1970-01-01 00:00:00"),
              "%Y-%m-%dT%H:%M:%SZ")
-
-      message(mjs$x$data[,as.character(mjs$x$x_accessor)])
 
     } else {
       mjs$x$data[,as.character(mjs$x$x_accessor)] <-

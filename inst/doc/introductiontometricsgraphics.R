@@ -1,9 +1,16 @@
-## ------------------------------------------------------------------------
+## ----echo=FALSE----------------------------------------------------------
 suppressPackageStartupMessages(library(metricsgraphics))
 suppressPackageStartupMessages(library(jsonlite))
 suppressPackageStartupMessages(library(RColorBrewer))
 suppressPackageStartupMessages(library(htmltools))
 suppressPackageStartupMessages(library(dplyr))
+
+## ------------------------------------------------------------------------
+library(metricsgraphics)
+library(jsonlite)
+library(RColorBrewer)
+library(htmltools)
+library(dplyr)
 
 # this lets us add a title to the plot since the package follows the guidance
 # of the htmlwidgets authors and does not include the MetricsGraphics.js title
@@ -94,6 +101,15 @@ fake_users2 %>%
   mjs_add_legend(c("Line 1", "Line 2", "Line 3")) %>% 
   show_plot("Multi-Line Chart")
 
+fake_users2 %>% 
+  mjs_plot(x=date, y=value_1, width=600, height=200) %>%
+  mjs_axis_x(xax_format="date") %>% 
+  mjs_line(color="blue") %>% 
+  mjs_add_line(value_2, color="rgb(255,100,43)") %>% 
+  mjs_add_line(value_3, color="#ccccff") %>% 
+  mjs_add_legend(c("Line 1", "Line 2", "Line 3")) %>% 
+  show_plot("Multi-Line Char with Custom Colors")
+
 ## ------------------------------------------------------------------------
 fake_users3_list <- fromJSON("http://metricsgraphicsjs.org/data/fake_users3.json")
 fake_users3 <- data.frame(
@@ -177,6 +193,16 @@ fake_users_1 <- fromJSON("http://metricsgraphicsjs.org/data/fake_users1.json")
 fake_users_1 %>% 
   mjs_plot(x=date, y=value, width=600, height=200) %>% 
   mjs_axis_x(xax_format="date", show=FALSE) %>% 
+  mjs_line(color="#8c001a", area=TRUE) %>% 
+  mjs_axis_y(rug=TRUE) %>% 
+  show_plot("Colors!")
+
+## ------------------------------------------------------------------------
+fake_users_1 <- fromJSON("http://metricsgraphicsjs.org/data/fake_users1.json")
+
+fake_users_1 %>% 
+  mjs_plot(x=date, y=value, width=600, height=200) %>% 
+  mjs_axis_x(xax_format="date", show=FALSE) %>% 
   mjs_line() %>% 
   mjs_axis_y(rug=TRUE) %>% 
   show_plot("Rug Plots")
@@ -201,6 +227,29 @@ fake_users_1 %>%
   mjs_add_baseline(160000000, "a baseline") %>% 
   mjs_line(area=TRUE) %>% 
   show_plot("Baselines")
+
+## ------------------------------------------------------------------------
+points_1 <- fromJSON("http://metricsgraphicsjs.org/data/points1.json")
+
+points_1 %>% 
+  mjs_plot(x=x, y=y, width=600, height=460) %>% 
+  mjs_point(y_rug=TRUE) %>% 
+  mjs_axis_x() %>% 
+  show_plot("Simple Scatterplot")
+
+## ------------------------------------------------------------------------
+points_1 %>% 
+  mjs_plot(x=x, y=y, width=600, height=460) %>% 
+  mjs_point(y_rug=TRUE, color_accessor=v, color_type="category", color_range=c("green", "orange")) %>% 
+  mjs_axis_x() %>% 
+  show_plot("Color mapping")
+
+## ------------------------------------------------------------------------
+points_1 %>% 
+  mjs_plot(x=x, y=y, width=600, height=460) %>% 
+  mjs_point(y_rug=TRUE, x_rug=TRUE, color_accessor=z, size_accessor=w, color_type="category") %>% 
+  mjs_axis_x(rug=TRUE) %>% 
+  show_plot("Size Too!")
 
 ## ------------------------------------------------------------------------
 moar_plots <- lapply(1:7, function(x) {
