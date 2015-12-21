@@ -13,7 +13,10 @@ Authors@R: c(
 Maintainer: Bob Rudis <bob@rudis.net>
 Description: Provides an 'htmlwidgets' interface to the
     'MetricsGraphics.js' ('D3'-based) charting library which is geared towards
-    displaying time-series data.
+    displaying time-series data. Chart types include line charts, scatterplots,
+    histograms and rudimentary bar charts. Support for laying out mutiple charts
+    into a grid layout is also provided. All charts are interactive and many
+    have an option for line, label and region annotations.
 URL: http://github.com/hrbrmstr/metricsgraphics
 BugReports: https://github.com/hrbrmstr/metricsgraphics/issues
 License: MIT + file LICENSE

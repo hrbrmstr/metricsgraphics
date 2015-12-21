@@ -33,6 +33,8 @@ The following functions are implemented:
 - `mjs_grid`: `grid.arrange`-like functionality for `metricsgraphics` charts
 - `mjs_add_mouseover`: provides support for MetricsGraphics [custom rollovers](https://github.com/mozilla/metrics-graphics/wiki/Graphic#mouseover)
 - `mjs_add_confidence_band`: provides support for confidence bands
+- `mjs_annotate_region`: Region annotations for line charts [EXPERIMENTAL]
+- `mjs_add_css_rule`: Add a CSS rule to the rendered htmlwidget
 
 ### News
 
@@ -49,7 +51,7 @@ The following functions are implemented:
 - Version 0.7.5 released - updated all functions that take bare inputs and made them flexible enough to take bare or quoted inputs.
 - Version 0.8.0 released - updated `mjs_rollover` to show scatterplot example and cleaned up some of the base code & package layout for an attempt at a CRAN release. Also updated MetricsGraphics.js to latest release version (2.5)
 - Version 0.8.5 released - enhanced & changed some of the package functions to match MG's new javascript interface. Added `mjs_add_confidence_band`. Added package vignette.
-- Version 0.9.0 released - updated all JS libs to latest versions (including the core Metrics Graphics library). Also added the ability to individually color lines without resorting to CSS (a new feature in the underlying JS lib). Along with bare or quoted inputs, you can also now make the column names variables. The vignette has also been updated to show more examples. Finally, examples that depended upon the `ggplot2::movies` data set work with the new ggplot2 which has separated out `movies` into `ggplot2movies::movies`.
+- Version 0.9.0 released - updated all JS libs to latest versions (including the core Metrics Graphics library). Incorporated the `mg-region` region annotation addon (use with `mjs_annotate_region`). Borrwed the ability to add custom CSS rules to a chart (via `mjs_add_css_rule`) from [taucharts](http://github.com/hrbrmstr/taucharts). Also added the ability to individually color lines without resorting to CSS (a new feature in the underlying JS lib). Along with bare or quoted inputs, you can also now make the column names variables. The vignette has also been updated to show more examples. Finally, examples that depended upon the `ggplot2::movies` data set work with the new ggplot2 which has separated out `movies` into `ggplot2movies::movies`.
 
 ### Installation
 

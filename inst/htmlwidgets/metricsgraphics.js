@@ -48,6 +48,19 @@ HTMLWidgets.widget({
       }
     }
 
+    var sheet_element = document.createElement('style');
+    document.head.appendChild(sheet_element) ;
+    var sheet = sheet_element.sheet;
+    if (params.forCSS !== null) {
+      if (typeof(params.forCSS) === "string") {
+        params.forCSS = [ params.forCSS ] ;
+      }
+      params.forCSS.map(function(v) {
+        v = v.replace("{{ID}}", '#'+el.id+' ');
+        sheet.insertRule(v, sheet.cssRules.length);
+      });
+    }
+
     var xax_format = mjs_plain;
 
     if (params.xax_format == "date") {
@@ -74,6 +87,15 @@ HTMLWidgets.widget({
         for (var i=0; i<params.markers.length; i++) {
           params.markers[i][params.x_accessor] =
             d3.time.format("%Y-%m-%d").parse(params.markers[i][params.x_accessor]);
+        }
+      }
+
+      if (params.regions !== null) {
+        for (var i=0; i<params.regions.length; i++) {
+          params.regions[i][params.x_accessor][0] =
+            d3.time.format("%Y-%m-%d").parse(params.regions[i][params.x_accessor][0]);
+          params.regions[i][params.x_accessor][1] =
+            d3.time.format("%Y-%m-%d").parse(params.regions[i][params.x_accessor][1]);
         }
       }
 
@@ -177,6 +199,8 @@ HTMLWidgets.widget({
           color: params.color,
           colors: params.colors,
 
+          regions: params.regions,
+
           show_confidence_band: params.show_confidence_band,
           show_secondary_x_label: params.show_secondary_x_label,
 
@@ -207,6 +231,7 @@ HTMLWidgets.widget({
 
           x_label: params.x_label,
           y_label: params.y_label,
+
           title: params.title,
           description: params.description
 

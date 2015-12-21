@@ -1,7 +1,8 @@
 ## Why the need for an update?
 * 0.8.5 used ggplot2::movies which is now ggplot2movies::movies
 * Updated to latest javascript libraries
-* Added functionality for column parameters and for new javascript lib params
+* Added a region annotation plugin
+* Added region annotations, support for custom CSS styles and custom line colors
 
 ## Test environments
 * local OS X install (devel & release)
