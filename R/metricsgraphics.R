@@ -214,5 +214,6 @@ renderMetricsgraphics <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 metricsgraphics_html <- function(id, style, class, ...) {
   list(tags$div(id = id, class = class, style = style),
-       tags$div(id = sprintf("%s-legend", id), class = sprintf("%s-legend", class)))
+       tags$div(id = sprintf("%s-legend", id),
+                class = gsub("metricsgraphics", "metricsgraphics-legend", class)))
 }
