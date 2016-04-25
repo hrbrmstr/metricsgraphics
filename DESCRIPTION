@@ -1,8 +1,8 @@
 Package: metricsgraphics
 Type: Package
 Title: Create Interactive Charts with the JavaScript 'MetricsGraphics' Library
-Version: 0.9.0
-Date: 2015-12-20
+Version: 0.9.1
+Date: 2016-04-24
 Authors@R: c(
       person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
       person("Ali", "Almossawi", role = c("ctb", "cph"), comment = "MetricsGraphics library"),
