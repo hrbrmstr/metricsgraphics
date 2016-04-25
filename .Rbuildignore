@@ -8,3 +8,5 @@
 ^CONDUCT\.md$
 ^README\.html$
 ^cran-comments\.md$
+^paper\.md$
+^paper\.bib$
