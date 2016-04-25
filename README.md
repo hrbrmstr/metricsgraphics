@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/hrbrmstr/metricsgraphics.svg)](https://travis-ci.org/hrbrmstr/metricsgraphics) 
 [![Project Status: Active - The project has reached a stable, usable state and is being actively developed.](http://www.repostatus.org/badges/0.1.0/active.svg)](http://www.repostatus.org/#active) 
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/metricsgraphics)](http://cran.r-project.org/web/packages/metricsgraphics) 
-![downloads](http://cranlogs.r-pkg.org/badges/grand-total/metricsgraphics)
+![downloads](http://cranlogs.r-pkg.org/badges/grand-total/metricsgraphics) [![DOI](https://zenodo.org/badge/5630/hrbrmstr/metricsgraphics.svg)](https://zenodo.org/badge/latestdoi/5630/hrbrmstr/metricsgraphics)
 
 On CRAN: [http://cran.r-project.org/web/packages/metricsgraphics/index.html](http://cran.r-project.org/web/packages/metricsgraphics/index.html)
 
