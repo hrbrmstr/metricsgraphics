@@ -60,8 +60,6 @@ HTMLWidgets.widget({
         if (params.orig_posix) {
           for (var i=0; i<wide.length; i++) {
             wide[i][params.x_accessor] = Date(wide[i][params.x_accessor] );
-            console.log("====> ", Date(wide[i][params.x_accessor]));
-            console.log("====> ", wide[i][params.x_accessor]);
           }
         } else {
           MG.convert.date(wide, params.x_accessor);
