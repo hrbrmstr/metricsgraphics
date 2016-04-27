@@ -37,6 +37,7 @@ mjs_point <- function(mjs,
   }
 
   mjs$x$chart_type <- "point"
+  mjs$x$point_size <- point_size
   mjs$x$least_squares<- least_squares
   mjs$x$x_rug <- x_rug
   mjs$x$y_rug <- y_rug
