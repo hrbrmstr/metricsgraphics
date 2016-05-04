@@ -1,6 +1,9 @@
 ---
 title: "metricsgraphics: An R htmlwidget interface to the MetricsGraphics.js D3-based visualization library"
-author: Bob Rudis
+authors:
+ - name: Bob Rudis
+   orcid: 0000-0001-5670-2640
+   affiliation: Rapid7
 date: 2016-04-24
 bibliography: paper.bib
 ---
