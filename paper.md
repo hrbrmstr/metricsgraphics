@@ -6,6 +6,8 @@ authors:
    affiliation: Rapid7
 date: 2016-04-24
 bibliography: paper.bib
+nocite: |
+  @R-base, @R-htmltools, @R-htmlwidgets, @R-jsonlite, @R-yaml, @metrics-graphics.js, @Bostock:2011:DDD:2068462.2068631
 ---
 
 # Summary
