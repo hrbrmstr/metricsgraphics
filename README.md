@@ -224,6 +224,9 @@ server = function(input, output) {
 shinyApp(ui = ui, server = server)
 ```
 
+There's another example provided by https://github.com/DocOfi which can be viewed at http://rpubs.com/DocOfi/352947. The Rmd file that created the example can be found at https://github.com/DocOfi/datasciencecoursera/tree/master/Exploratory_Data_Analysis/MetricsGraphics
+
+
 ### Code of Conduct
 
 Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
