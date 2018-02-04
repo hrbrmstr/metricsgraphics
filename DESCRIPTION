@@ -2,13 +2,14 @@ Package: metricsgraphics
 Type: Package
 Title: Create Interactive Charts with the JavaScript 'MetricsGraphics' Library
 Version: 0.9.1
-Date: 2016-04-24
+Date: 2016-04-28
 Authors@R: c(
       person("Bob", "Rudis", email = "bob@rudis.net", role = c("aut", "cre")),
       person("Ali", "Almossawi", role = c("ctb", "cph"), comment = "MetricsGraphics library"),
       person("Hamilton", "Ulmer", role = c("ctb", "cph"), comment = "MetricsGraphics library"),
       person("Mozilla", role = c("cph"), comment = "MetricsGraphics library"),
-      person("jQuery Foundation and contributors", role = c("ctb", "cph"), comment = "jQuery library")
+      person("jQuery Foundation and contributors", role = c("ctb", "cph"), comment = "jQuery library"),
+      person("Paul", "James", role = c("ctb"))
     )
 Maintainer: Bob Rudis <bob@rudis.net>
 Description: Provides an 'htmlwidgets' interface to the
